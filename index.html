@@ -1,78 +1,942 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Be come</title>
+  <meta charset="UTF-8" />
+  <title>Design Vips — desv.online</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #050608;
+      --bg-card: #111317;
+      --bg-chip: #181b22;
+      --text-main: #f5f5f5;
+      --text-muted: #9b9ca3;
+      --accent: #f5f5f5;
+      --accent-soft: #a9a9b3;
+      --border-soft: #2b2e36;
+      --radius-xl: 999px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow-strong: 0 32px 80px rgba(0,0,0,0.75);
+      --shadow-soft: 0 18px 40px rgba(0,0,0,0.55);
+      --transition-fast: 0.2s ease-out;
+    }
 
-<style>
-body{
-  margin:0;
-  background:#080808;
-  color:#fff;
-  font-family:'Tajawal',sans-serif;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  height:100vh;
-}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
 
-/* النص */
-.title{
-  font-family:'Cinzel',serif;
-  font-size:clamp(3rem,8vw,6rem);
-  font-weight:900;
-  text-align:center;
-  background:linear-gradient(135deg,#fff,#777,#fff);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  margin-bottom:30px;
-}
+    body {
+      font-family: "Manrope", system-ui, sans-serif;
+      background: radial-gradient(circle at 0% 0%, #181b22 0, #050608 40%, #020308 100%);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+    }
 
-/* تحميل (داخل الصفحة وليس شاشة كاملة) */
-.loader-wrapper{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  margin-top:10px;
-}
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+    }
 
-.loader{
-  width:50px;
-  height:50px;
-  border:3px solid rgba(255,255,255,0.2);
-  border-top:3px solid #fff;
-  border-radius:50%;
-  animation:spin 1s linear infinite;
-  margin-bottom:10px;
-}
+    .shell {
+      max-width: 1160px;
+      width: 100%;
+      margin: auto;
+      background: radial-gradient(circle at 0% 0%, #151822 0, #050608 65%, #020308 100%);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.04);
+      box-shadow: var(--shadow-strong);
+      padding: 24px 28px 28px;
+      position: relative;
+      overflow: hidden;
+    }
 
-@keyframes spin{
-  to{ transform:rotate(360deg); }
-}
+    .shell::before, .shell::after {
+      content: "";
+      position: absolute;
+      inset: -50%;
+      background: radial-gradient(circle at 0% 0%, rgba(255,255,255,0.028), transparent 60%);
+      opacity: 0.7;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+    .shell::after {
+      inset: auto -45% -45% auto;
+      background: radial-gradient(circle at 100% 100%, rgba(255,255,255,0.04), transparent 60%);
+      opacity: 0.35;
+    }
 
-.loading-text{
-  color:#aaa;
-  font-size:14px;
-}
-</style>
+    /* ── NAV ── */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .nav-left { display: flex; align-items: center; gap: 14px; }
+
+    .brand-mark {
+      width: 36px; height: 36px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 30% 20%, #fafafa 0, #b9bcc6 24%, #555a66 60%, #10131a 100%);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.9);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .brand-mark::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(145deg, rgba(255,255,255,0.35), transparent 45%, rgba(0,0,0,0.7) 80%);
+      mix-blend-mode: soft-light;
+    }
+    .brand-mark span {
+      position: relative;
+      font-weight: 800; font-size: 14px; color: #050608; letter-spacing: -0.04em;
+    }
+
+    .brand-name { font-weight: 700; letter-spacing: 0.05em; font-size: 16px; color: #f4f5fb; }
+    .brand-domain { font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em; }
+
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+
+    .nav-cta {
+      padding: 8px 20px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255,255,255,0.09);
+      background: radial-gradient(circle at 0% 0%, rgba(255,255,255,0.22), transparent 55%), linear-gradient(135deg, #282b34, #101218);
+      color: #f9fafb;
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 10px;
+      cursor: pointer; box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(18px); border: none; text-decoration: none;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+    }
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      background: radial-gradient(circle at 0% 0%, rgba(255,255,255,0.32), transparent 60%), linear-gradient(135deg, #313540, #151720);
+      box-shadow: 0 20px 45px rgba(0,0,0,0.85);
+    }
+    .nav-cta.wa { color: #4ade80; border: 1px solid rgba(74,222,128,0.2); background: rgba(74,222,128,0.07); }
+    .nav-cta.dc { color: #818cf8; border: 1px solid rgba(129,140,248,0.2); background: rgba(129,140,248,0.07); }
+    .nav-cta.wa:hover { background: rgba(74,222,128,0.14); }
+    .nav-cta.dc:hover { background: rgba(129,140,248,0.14); }
+
+    /* ── TABS ── */
+    .tabs-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 44px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tabs {
+      display: inline-flex;
+      gap: 4px;
+      padding: 5px;
+      border-radius: var(--radius-xl);
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .tab-btn {
+      padding: 8px 24px;
+      border-radius: var(--radius-xl);
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: "Manrope", sans-serif;
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.22s;
+    }
+    .tab-btn:hover { color: var(--text-main); }
+    .tab-btn.active {
+      background: radial-gradient(circle at 0% 0%, rgba(255,255,255,0.18), transparent 55%), linear-gradient(135deg, #282b34, #101218);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text-main);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.6);
+    }
+
+    /* ── PANELS ── */
+    .panel { display: none; animation: fadeUp 0.3s ease; position: relative; z-index: 2; }
+    .panel.active { display: block; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ════ ABOUT ════ */
+    .hero {
+      display: flex;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .hero-left {
+      flex: 1.1;
+      display: flex; flex-direction: column; gap: 18px;
+    }
+
+    .eyebrow {
+      font-size: 11px; letter-spacing: 0.24em;
+      text-transform: uppercase; color: var(--accent-soft);
+    }
+
+    .hero-title {
+      font-size: clamp(32px, 5vw, 46px);
+      line-height: 1.04; font-weight: 800;
+      letter-spacing: 0.04em; text-transform: uppercase; color: #f8f9fd;
+    }
+    .hero-title span { display: block; }
+
+    .hero-sub {
+      max-width: 340px; font-size: 13px;
+      line-height: 1.6; color: var(--text-muted);
+    }
+
+    .hero-actions { display: flex; align-items: center; gap: 14px; margin-top: 6px; flex-wrap: wrap; }
+
+    .btn-primary {
+      padding: 11px 26px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255,255,255,0.28);
+      background: linear-gradient(135deg, #fdfdfd, #bcbfc8);
+      box-shadow: 0 16px 38px rgba(0,0,0,0.9);
+      color: #050608; font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.18em;
+      display: inline-flex; align-items: center; gap: 10px;
+      cursor: pointer; text-decoration: none;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, #ffffff, #d6d9e0);
+      box-shadow: 0 20px 55px rgba(0,0,0,0.95);
+    }
+
+    .btn-secondary {
+      padding: 11px 22px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255,255,255,0.08);
+      background: transparent;
+      color: var(--text-muted); font-size: 12px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 8px;
+      cursor: pointer; text-decoration: none;
+      transition: all var(--transition-fast);
+    }
+    .btn-secondary:hover { color: var(--text-main); background: rgba(255,255,255,0.04); }
+
+    /* token stack */
+    .hero-right { flex: 0.9; display: flex; justify-content: flex-end; }
+
+    .token-stack {
+      width: min(280px, 100%); height: 260px;
+      position: relative; perspective: 900px;
+      filter: drop-shadow(0 35px 80px rgba(0,0,0,0.9));
+    }
+
+    .token {
+      position: absolute; width: 110px; height: 110px;
+      border-radius: 26px;
+      background: radial-gradient(circle at 8% 0%, #444856 0, #161921 36%, #020308 100%);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.96);
+      border: 1px solid rgba(255,255,255,0.02);
+      display: flex; align-items: center; justify-content: center;
+      color: #f8f9ff; font-size: 32px;
+      transform-style: preserve-3d; overflow: hidden;
+    }
+    .token::before {
+      content: "";
+      position: absolute; inset: -40%;
+      background: linear-gradient(145deg, rgba(255,255,255,0.32), transparent 46%, rgba(0,0,0,0.9) 80%);
+      opacity: 0.7; mix-blend-mode: soft-light; pointer-events: none;
+    }
+    .token i { position: relative; text-shadow: 0 6px 14px rgba(0,0,0,0.85); }
+
+    .token-1 { top: 12%; left: 8%;  transform: rotateX(16deg) rotateY(-18deg) rotateZ(-16deg); }
+    .token-2 { top: 0%;  right: 4%; transform: rotateX(22deg) rotateY(18deg) rotateZ(20deg); }
+    .token-3 { top: 40%; left: -2%; transform: rotateX(18deg) rotateY(-14deg) rotateZ(-8deg); }
+    .token-4 { top: 40%; right: 10%; transform: rotateX(18deg) rotateY(20deg) rotateZ(10deg); }
+    .token-5 { bottom: -4%; left: 32%; transform: rotateX(12deg) rotateY(6deg) rotateZ(4deg); }
+
+    /* about cards row */
+    .about-features {
+      display: flex; gap: 14px; margin-top: 32px; flex-wrap: wrap;
+    }
+
+    .feat-card {
+      flex: 1; min-width: 160px;
+      padding: 20px 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(14px);
+      transition: all 0.22s;
+    }
+    .feat-card:hover {
+      border-color: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.055);
+      transform: translateY(-3px);
+    }
+    .feat-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; color: var(--accent-soft);
+      margin-bottom: 12px;
+    }
+    .feat-title { font-weight: 700; font-size: 13px; margin-bottom: 5px; }
+    .feat-desc  { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+
+    /* ════ PRICES ════ */
+    .prices-header {
+      text-align: center; margin-bottom: 36px;
+    }
+    .prices-header h2 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800; letter-spacing: 0.06em;
+      text-transform: uppercase; color: #f8f9fd;
+      margin-bottom: 8px;
+    }
+    .prices-header p { font-size: 13px; color: var(--text-muted); }
+
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    /* Glass card */
+    .price-card {
+      position: relative;
+      border-radius: 20px;
+      padding: 28px 24px 24px;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: linear-gradient(160deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 55%, rgba(255,255,255,0.01) 100%);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .price-card::before {
+      content: "";
+      position: absolute; inset: 0; border-radius: 20px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .price-card::after {
+      content: "";
+      position: absolute; top: -70px; right: -70px;
+      width: 180px; height: 180px; border-radius: 50%;
+      filter: blur(70px); pointer-events: none;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .price-card:hover { transform: translateY(-6px); box-shadow: 0 28px 70px rgba(0,0,0,0.7); }
+    .price-card:hover::after { opacity: 1; }
+
+    .price-card.starter::after { background: rgba(143,234,255,0.28); }
+    .price-card.pro::after     { background: rgba(255,255,255,0.18); }
+    .price-card.elite::after   { background: rgba(255,180,214,0.22); }
+
+    .price-card.pro {
+      border-color: rgba(255,255,255,0.12);
+      background: linear-gradient(160deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.04) 55%, rgba(255,255,255,0.02) 100%);
+    }
+
+    .badge-pop {
+      display: inline-block;
+      font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent-soft);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-xl);
+      padding: 3px 10px; margin-bottom: 14px;
+    }
+
+    .card-tier {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 8px;
+    }
+
+    .card-price {
+      font-size: 44px; font-weight: 800;
+      line-height: 1; letter-spacing: -0.03em;
+      color: var(--text-main); margin-bottom: 4px;
+      display: flex; align-items: flex-start; gap: 3px;
+    }
+    .card-currency { font-size: 18px; font-weight: 700; margin-top: 6px; }
+    .card-unit { font-size: 12px; color: var(--text-muted); margin-bottom: 20px; }
+
+    .card-divider { height: 1px; background: rgba(255,255,255,0.06); margin-bottom: 18px; }
+
+    .card-features {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 10px;
+      margin-bottom: 22px;
+    }
+    .card-features li {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 12px; color: var(--text-muted);
+    }
+    .card-features li.on { color: var(--text-main); }
+    .ck {
+      width: 17px; height: 17px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 8px; flex-shrink: 0;
+      background: rgba(255,255,255,0.07);
+      color: var(--accent-soft);
+    }
+    .ck.off { opacity: 0.28; }
+
+    .card-cta {
+      display: block; width: 100%; padding: 11px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255,255,255,0.09);
+      background: rgba(255,255,255,0.05);
+      color: var(--text-main);
+      font-family: "Manrope", sans-serif;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; text-decoration: none;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: all 0.22s;
+    }
+    .price-card.pro .card-cta {
+      background: radial-gradient(circle at 0% 0%, rgba(255,255,255,0.22), transparent 55%), linear-gradient(135deg, #282b34, #101218);
+      border-color: rgba(255,255,255,0.14);
+    }
+    .card-cta:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 26px rgba(0,0,0,0.5);
+    }
+    .price-card.pro .card-cta:hover {
+      background: radial-gradient(circle at 0% 0%, rgba(255,255,255,0.3), transparent 60%), linear-gradient(135deg, #313540, #151720);
+    }
+
+    .price-note {
+      text-align: center; font-size: 12px; color: var(--text-muted);
+    }
+    .price-note a { color: var(--accent-soft); text-decoration: none; }
+    .price-note a:hover { color: var(--text-main); }
+
+    /* ════ WORKS ════ */
+    .works-header { text-align: center; margin-bottom: 36px; }
+    .works-header h2 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+      color: #f8f9fd; margin-bottom: 8px;
+    }
+    .works-header p { font-size: 13px; color: var(--text-muted); }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px; margin-bottom: 28px;
+    }
+
+    .work-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.03);
+      overflow: hidden;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+    .work-card:hover {
+      border-color: rgba(255,255,255,0.1);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 50px rgba(0,0,0,0.55);
+    }
+
+    /* ── Work thumbnail with real image ── */
+    .work-thumb {
+      width: 100%;
+      aspect-ratio: 16/10;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .work-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease, filter 0.4s ease;
+      filter: brightness(0.85) saturate(0.9);
+    }
+    .work-card:hover .work-thumb img {
+      transform: scale(1.06);
+      filter: brightness(0.95) saturate(1.1);
+    }
+
+    /* overlay on hover */
+    .work-thumb-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(5,6,8,0.7) 100%);
+      pointer-events: none;
+    }
+
+    /* upload placeholder — shown when no real image, hidden when img loads */
+    .work-thumb-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.03);
+      border: 2px dashed rgba(255,255,255,0.1);
+      border-radius: 0;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .work-thumb-placeholder:hover { background: rgba(255,255,255,0.06); }
+    .work-thumb-placeholder i { font-size: 22px; color: rgba(255,255,255,0.25); }
+    .work-thumb-placeholder span { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+
+    .work-thumb-placeholder.hidden { display: none; }
+    .work-thumb img.hidden { display: none; }
+
+    .work-info { padding: 14px 16px 16px; }
+    .work-tag  { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .work-name { font-weight: 700; font-size: 13px; }
+
+    .works-cta {
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      border: 1px dashed rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.02);
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .works-cta p { font-size: 13px; color: var(--text-muted); }
+    .works-cta a {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 20px; border-radius: var(--radius-xl);
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-main); font-size: 12px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none;
+      transition: all 0.22s;
+    }
+    .works-cta a:hover { background: rgba(255,255,255,0.08); transform: translateY(-1px); }
+
+    /* ── Upload modal ── */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 999;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #111317;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 28px;
+      width: min(420px, 90vw);
+      text-align: center;
+    }
+    .modal-box h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .modal-box p  { font-size: 12px; color: var(--text-muted); margin-bottom: 20px; }
+    .modal-drop {
+      border: 2px dashed rgba(255,255,255,0.12);
+      border-radius: 14px; padding: 36px 20px;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      cursor: pointer; transition: background 0.2s;
+      background: rgba(255,255,255,0.02);
+    }
+    .modal-drop:hover { background: rgba(255,255,255,0.05); }
+    .modal-drop i { font-size: 28px; color: rgba(255,255,255,0.3); }
+    .modal-drop span { font-size: 12px; color: var(--text-muted); }
+    #modal-file-input { display: none; }
+    .modal-close {
+      margin-top: 16px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text-muted);
+      border-radius: 999px; padding: 7px 20px;
+      font-family: "Manrope", sans-serif; font-size: 11px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.05); color: var(--text-main); }
+
+    /* ── Footer ── */
+    .footer-bar {
+      margin-top: 36px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 18px; font-size: 12px; color: var(--accent-soft);
+      position: relative; z-index: 2;
+    }
+    .footer-label { text-transform: uppercase; letter-spacing: 0.18em; font-size: 10px; }
+    .brand-row    { display: flex; flex-wrap: wrap; gap: 10px; }
+    .brand-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 12px; border-radius: var(--radius-xl);
+      border: 1px solid rgba(255,255,255,0.04);
+      background: rgba(8,10,15,0.86); color: var(--accent-soft);
+      backdrop-filter: blur(16px); font-size: 11px;
+    }
+    .brand-pill i { color: #f5f5f5; font-size: 12px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 840px) {
+      .shell { padding: 18px; border-radius: 18px; }
+      .hero  { flex-direction: column; align-items: flex-start; }
+      .hero-right { width: 100%; justify-content: center; }
+      .price-grid { grid-template-columns: 1fr; }
+      .works-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-bar { flex-direction: column; align-items: flex-start; }
+      .works-cta  { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 540px) {
+      .page { padding: 14px; }
+      .shell { padding: 16px; }
+      .hero-title { font-size: 30px; }
+      .hero-actions { flex-direction: column; align-items: flex-start; }
+      .btn-primary, .nav-cta { width: 100%; justify-content: center; }
+      .works-grid { grid-template-columns: 1fr; }
+      .about-features { flex-direction: column; }
+    }
+  </style>
 </head>
-
 <body>
+<div class="page">
+  <div class="shell">
 
-<div style="text-align:center;">
-  <div class="title">...Soon</div>
+    <!-- NAV -->
+    <header class="nav">
+      <div class="nav-left">
+        <div class="brand-mark"><span>V</span></div>
+        <div>
+          <div class="brand-name">Design Vips</div>
+          <div class="brand-domain">desv.online</div>
+        </div>
+        <a href="https://discord.gg/" class="nav-cta dc" target="_blank">
+          <i class="fa-brands fa-discord"></i> Discord
+        </a>
+      </div>
+    </header>
 
-  <!-- شاشة التحميل تحت النص -->
-  <div class="loader-wrapper">
-    <div class="loader"></div>
-    <div class="loading-text">
-    ...Download</div>
+    <!-- TABS -->
+    <div class="tabs-wrapper">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="about">About Me</button>
+        <button class="tab-btn" data-tab="prices">Prices</button>
+        <button class="tab-btn" data-tab="works">Works</button>
+      </div>
+    </div>
+
+    <!-- ═══ ABOUT ═══ -->
+    <div class="panel active" id="tab-about">
+      <main class="hero">
+        <section class="hero-left">
+          <div class="eyebrow">Creative Designer · desv.online</div>
+          <h1 class="hero-title">
+            <span>Design</span>
+            <span>that speaks</span>
+            <span>for itself</span>
+          </h1>
+          <p class="hero-sub">
+            Visual identities, UI design and creative visuals — built with precision to leave a lasting impression.
+          </p>
+          <div class="hero-actions">
+            <a href="https://wa.me/0544450752" class="btn-primary" target="_blank">
+              Contact on WhatsApp
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a href="https://discord.gg/" class="btn-secondary" target="_blank">
+              <i class="fa-brands fa-discord"></i>
+              Join Discord
+            </a>
+          </div>
+        </section>
+        <aside class="hero-right">
+          <div class="token-stack">
+            <div class="token token-1"><i class="fa-solid fa-pen-nib"></i></div>
+            <div class="token token-2"><i class="fa-solid fa-layer-group"></i></div>
+            <div class="token token-3"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            <div class="token token-4"><i class="fa-solid fa-palette"></i></div>
+            <div class="token token-5"><i class="fa-solid fa-bolt"></i></div>
+          </div>
+        </aside>
+      </main>
+
+      <div class="about-features">
+        <div class="feat-card">
+          <div class="feat-icon"><i class="fa-solid fa-pen-nib"></i></div>
+          <div class="feat-title">Brand Identity</div>
+          <div class="feat-desc">Logos, color systems, typography and full visual identity kits.</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><i class="fa-solid fa-layer-group"></i></div>
+          <div class="feat-title">UI / UX Design</div>
+          <div class="feat-desc">Modern interfaces for mobile apps and websites.</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><i class="fa-solid fa-image"></i></div>
+          <div class="feat-title">Creative Visuals</div>
+          <div class="feat-desc">Social media posts, banners and eye-catching graphics.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PRICES ═══ -->
+<div class="panel" id="tab-prices">
+  <div class="prices-header">
+    <h2>Pricing Plans</h2>
+    <p>Contact me directly for a custom quote tailored to your project</p>
+  </div>
+
+  <div class="price-grid">
+
+    <!-- Starter -->
+    <div class="price-card starter">
+      <div class="card-tier">Starter</div>
+      <div class="card-price"><span class="card-currency">$</span>1</div>
+      <div class="card-unit">Posters (3) or package server</div>
+      <div class="card-divider"></div>
+
+      <ul class="card-features">
+        <li class="on"><span class="ck"><i class="fa-solid fa-check"></i></span> Posters (3) or Package Server</li>
+        <li class="on"><span class="ck"><i class="fa-solid fa-check"></i></span> Line</li>
+        <li class="on"><span class="ck"><i class="fa-solid fa-check"></i></span> 3 Info Sections</li>
+        <li class="on"><span class="ck"><i class="fa-solid fa-check"></i></span> 2 Logo Concepts</li>
+        <li class="on"><span class="ck"><i class="fa-solid fa-check"></i></span> Delivery in 24h</li>
+      </ul>
+
+      <a href="https://wa.me/966544450752" class="card-cta" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i> Order Now
+      </a>
+    </div>
+
+    <!-- Pro -->
+    <div class="price-card pro">
+      <div class="badge-pop">✦ Most Popular</div>
+      <div class="card-tier">Pro</div>
+      <div class="card-price"><span class="card-currency">$</span>5</div>
+      <div class="card-unit">Posters (5–6) or package server</div>
+
+      <div class="card-divider"></div>
+
+      <ul class="card-features">
+        <li class="on"><span class="ck"><i class="fa-solid fa-check"></i></span> Line</li>
+        <li class="on"><span class="ck"><i class="fa-solid fa-check"></i></span> 6 Info Sections</li>
+        <li class="on"><span class="ck"><i class="fa-solid fa-check"></i></span> 4 Bot Logos</li>
+        <li class="on"><span class="ck"><i class="fa-solid fa-check"></i></span> Claim within 24h</li>
+      </ul>
+
+      <a href="https://wa.me/966544450752" class="card-cta" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i> Order Now
+      </a>
+    </div>
+
+    <!-- Elite -->
+    <div class="price-card elite">
+      <div class="card-tier">Elite</div>
+      <div class="card-price"><span class="card-currency">$</span>10</div>
+      <div class="card-unit">Posters (10) or package server</div>
+
+      <div class="card-divider"></div>
+
+      <ul class="card-features">
+        <li class="on"><span class="ck"><i class="fa-solid fa-check"></i></span> Line</li>
+        <li class="on"><span class="ck"><i class="fa-solid fa-check"></i></span> Unlimited Info</li>
+        <li class="on"><span class="ck"><i class="fa-solid fa-check"></i></span> Unlimited Bot Logos</li>
+        <li class="on"><span class="ck"><i class="fa-solid fa-check"></i></span> Claim within 20h</li>
+      </ul>
+
+      <a href="https://wa.me/966544450752" class="card-cta" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i> Order Now
+      </a>
+    </div>
+
+  </div>
+
+  <div class="price-note">
+    Prices are negotiable based on your project ·
+    <a href="https://wa.me/966544450752" target="_blank">Contact me for a custom offer</a>
   </div>
 </div>
 
+<!-- ═══ WORKS ═══ -->
+<div class="panel" id="tab-works">
+  <div class="works-header">
+    <h2>My Works</h2>
+    <p>Click any card to upload your own project image</p>
+  </div>
+
+  <div class="works-grid">
+<!-- Card 1 -->
+<div class="work-card">
+  <div class="work-thumb">
+    <img src="https://cdn.discordapp.com/attachments/1495919043008270376/1496421497705730048/Rox_Banner_20260421173148.png?ex=69eb241f&is=69e9d29f&hm=0239d57381f6820b64f5b0611180894d25726632dde5e4bb3415d6ddc2765904&" alt="Brand Identity" />
+    <div class="work-thumb-overlay"></div>
+  </div>
+  <div class="work-info">
+    <div class="work-tag">Banners Server</div>
+    <div class="work-name">this banner anime (7FR)</div>
+  </div>
+</div>
+
+<!-- Card 2 -->
+<div class="work-card">
+  <div class="work-thumb">
+    <img src="https://cdn.discordapp.com/attachments/1495919043008270376/1496107697097936966/696__2_20260419172127.png?ex=69eb515f&is=69e9ffdf&hm=4ddc30d8f1c68240449a3ba7cbb60f2b013cfe012357b200cadd552d4aa0e09e&" alt="Brand Identity" />
+    <div class="work-thumb-overlay"></div>
+  </div>
+  <div class="work-info">
+    <div class="work-tag">Banners Server</div>
+    <div class="work-name">this banner anime (ROX)</div>
+  </div>
+</div>
+
+<!-- Card 3 -->
+<div class="work-card">
+  <div class="work-thumb">
+    <img src="https://cdn.discordapp.com/attachments/1489994632778616933/1496921179032653925/image-52.jpg?ex=69eba3fc&is=69ea527c&hm=c22efff41c076ad46392b16322220af4415f528c7b79e4f9b8fd30f1a7ef4e67&" />
+    <div class="work-thumb-overlay"></div>
+  </div>
+  <div class="work-info">
+    <div class="work-tag">Banners Server</div>
+    <div class="work-name">this banner modern (Cloudys)</div>
+  </div>
+</div>
+
+<!-- Card 4 -->
+<div class="work-card">
+  <div class="work-thumb">
+    <img src="https://cdn.discordapp.com/attachments/1489994632778616933/1496921328656187513/Screenshot___X.jpg?ex=69eba420&is=69ea52a0&hm=a999af1bf90fb8d8ea12e4eb34077f4fe84ffb52549fa4f82a40fca6b20b5ac8&" />
+    <div class="work-thumb-overlay"></div>
+  </div>
+  <div class="work-info">
+    <div class="work-tag">Banners Server</div>
+    <div class="work-name">this banner anime (STN)</div>
+  </div>
+</div>
+
+<!-- Card 5 -->
+<div class="work-card">
+  <div class="work-thumb">
+    <img src="https://cdn.discordapp.com/attachments/1489994632778616933/1496923990080356522/c32f20f2324189eb53f9ec3762f61e94.jpg?ex=69eba69a&is=69ea551a&hm=3f6fe44bc51605e3981e0aa49cb70b660ac630107e55b195cd8e265280aea290&" />
+    <div class="work-thumb-overlay"></div>
+  </div>
+  <div class="work-info">
+    <div class="work-tag">Poster Burger</div>
+    <div class="work-name">this Poster Burger (BURGER)</div>
+  </div>
+</div>
+
+      <div class="works-cta">
+        <p>Want to see more? Join the Discord server for the full portfolio.</p>
+        <a href="https://discord.gg/fJem2D6pZ" target="_blank">
+          <i class="fa-brands fa-discord"></i> Join Discord
+        </a>
+                <a href="https://wa.me/0544450752" target="_blank">
+          <i class="fa-brands fa-whatsapp"></i> Call WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- FOOTER BRANDS -->
+    <footer class="footer-bar">
+      <div class="footer-label">Reach me on</div>
+      <div class="brand-row">
+        <div class="brand-pill"><i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span></div>
+        <div class="brand-pill"><i class="fa-brands fa-discord"></i><span>Discord</span></div>
+        <div class="brand-pill"><i class="fa-solid fa-globe"></i><span>desv.online</span></div>
+      </div>
+    </footer>
+
+  </div>
+</div>
+
+<!-- Upload Modal -->
+<div class="modal-overlay" id="upload-modal">
+  <div class="modal-box">
+    <h3>Upload Project Image</h3>
+    <p>Choose an image from your device to display in this work card</p>
+    <div class="modal-drop" id="modal-drop">
+      <i class="fa-solid fa-image"></i>
+      <span>Click to browse or drop image here</span>
+      <input type="file" id="modal-file-input" accept="image/*" />
+    </div>
+    <button class="modal-close" id="modal-close-btn">Cancel</button>
+  </div>
+</div>
+
+<script>
+  /* ── Tab switching ── */
+  document.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab-btn").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+    });
+  });
+
+  /* ── Works: click card → open modal, upload image → show in card ── */
+  modalDrop.addEventListener("click", () => fileInput.click());
+
+  fileInput.addEventListener("change", () => {
+    if (!fileInput.files[0]) return;
+    loadImage(fileInput.files[0]);
+  });
+
+  // drag & drop support
+  modalDrop.addEventListener("dragover", e => { e.preventDefault(); modalDrop.style.background = "rgba(255,255,255,0.08)"; });
+  modalDrop.addEventListener("dragleave", () => { modalDrop.style.background = ""; });
+  modalDrop.addEventListener("drop", e => {
+    e.preventDefault();
+    modalDrop.style.background = "";
+    if (e.dataTransfer.files[0]) loadImage(e.dataTransfer.files[0]);
+  });
+
+  function loadImage(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const card = document.querySelector(`.work-card[data-slot="${activeSlot}"]`);
+      if (!card) return;
+      const img  = card.querySelector("img");
+      const ph   = card.querySelector(".work-thumb-placeholder");
+      img.src = e.target.result;
+      img.classList.remove("hidden");
+      ph.classList.add("hidden");
+      closeModal();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function closeModal() {
+    modal.classList.remove("open");
+    fileInput.value = "";
+    activeSlot = null;
+  }
+
+  closeBtn.addEventListener("click", closeModal);
+  modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+</script>
 </body>
 </html>
