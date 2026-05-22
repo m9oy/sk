@@ -29,6 +29,7 @@ input{font-family:'Tajawal',sans-serif}
 @keyframes ldFill{0%{width:0}60%{width:70%}100%{width:100%}}
 .ld-txt{font-size:.75rem;color:var(--muted);letter-spacing:.15em;animation:blink .9s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 
 /* ── APP ── */
 #app{opacity:0;transition:opacity .5s;min-height:100vh;display:flex;flex-direction:column}
@@ -501,6 +502,9 @@ main{flex:1;padding-bottom:80px}
       <div class="detail-actions">
         <button class="btn-dl" id="dDlBtn" onclick="handleDownload()"></button>
         <button class="btn-fav" id="dFavBtn" onclick="toggleFav()"></button>
+        <button class="btn-fav" id="dDelBtn" onclick="deleteItem()" style="border-color:#ff6b6b;color:#ff6b6b" title="حذف">
+          <i class="fa-solid fa-trash"></i>
+        </button>
       </div>
 
       <div class="detail-meta-row">
@@ -840,6 +844,27 @@ function openDetail(id){
 
 function closeDetail(){document.getElementById('detailPage').classList.remove('open');}
 
+function deleteItem(){
+  if(!currentItem) return;
+  
+  const confirmed = confirm('هل تريد حذف هذا المود/السيرفر؟ هذا الإجراء لا يمكن التراجع عنه.');
+  if(!confirmed) return;
+  
+  ITEMS = ITEMS.filter(x => x.id !== currentItem.id);
+  favorites = favorites.filter(x => x !== currentItem.id);
+  saveItems();
+  localStorage.setItem('desv_favs', JSON.stringify(favorites));
+  
+  buildHomeGrid();
+  buildSliderDots();
+  startSlider();
+  renderSearchAll();
+  renderFavs();
+  
+  closeDetail();
+  showToast('تم حذف المود بنجاح ✓');
+}
+
 // ============================================================
 // FAVORITES
 // ============================================================
@@ -889,7 +914,11 @@ function switchPubTab(t){
   document.getElementById('ptab-server').classList.toggle('active',t==='server');
 }
 
+let isPublishing = false;
+
 function submitContent(){
+  if(isPublishing) return;
+  
   const name=document.getElementById('pub-name').value.trim();
   const desc=document.getElementById('pub-desc').value.trim();
   const link=document.getElementById('pub-link').value.trim();
@@ -899,6 +928,12 @@ function submitContent(){
     showToast('عبّي كل الحقول المطلوبة');
     return;
   }
+
+  isPublishing = true;
+  const submitBtn = event.target;
+  submitBtn.disabled = true;
+  submitBtn.style.opacity = '0.5';
+  submitBtn.innerHTML = '<i class="fa-solid fa-spinner" style="animation:spin 1s linear infinite"></i> جاري النشر...';
 
   const type=document.getElementById('pub-type').value;
   const tagMap={addon:{tag:'ADD-ONS',cls:'tag-addon'},map:{tag:'MAPS',cls:'tag-map'},texture:{tag:'TEXTURES',cls:'tag-texture'},skin:{tag:'SKINS',cls:'tag-skin'}};
@@ -927,11 +962,20 @@ function submitContent(){
   document.getElementById('pub-desc').value='';
   document.getElementById('pub-link').value='';
   document.getElementById('pub-img').value='';
-  showToast('تم نشر المحتوى بنجاح ✓');
-  switchPage('home');
+  
+  setTimeout(() => {
+    showToast('تم نشر المحتوى بنجاح ✓');
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = '1';
+    submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> نشر الآن';
+    isPublishing = false;
+    switchPage('home');
+  }, 1000);
 }
 
 function submitServer(){
+  if(isPublishing) return;
+  
   const name=document.getElementById('pub-sname').value.trim();
   const ip=document.getElementById('pub-sip').value.trim();
   const desc=document.getElementById('pub-sdesc').value.trim();
@@ -941,6 +985,12 @@ function submitServer(){
     showToast('عبّي كل الحقول المطلوبة');
     return;
   }
+
+  isPublishing = true;
+  const submitBtn = event.target;
+  submitBtn.disabled = true;
+  submitBtn.style.opacity = '0.5';
+  submitBtn.innerHTML = '<i class="fa-solid fa-spinner" style="animation:spin 1s linear infinite"></i> جاري النشر...';
 
   const port=document.getElementById('pub-sport').value.trim()||'19132';
   
@@ -971,8 +1021,15 @@ function submitServer(){
   document.getElementById('pub-sdesc').value='';
   document.getElementById('pub-sport').value='';
   document.getElementById('pub-simg').value='';
-  showToast('تم نشر السيرفر بنجاح ✓');
-  switchPage('home');
+  
+  setTimeout(() => {
+    showToast('تم نشر السيرفر بنجاح ✓');
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = '1';
+    submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> نشر السيرفر';
+    isPublishing = false;
+    switchPage('home');
+  }, 1000);
 }
 
 // ============================================================
