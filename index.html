@@ -190,26 +190,50 @@ main{flex:1;padding-bottom:80px}
 .set-logout{width:100%;padding:12px;border-radius:10px;border:none;background:rgba(255,107,107,.1);color:#ff6b6b;font-size:.95rem;font-weight:700;transition:all .2s;cursor:pointer;margin-top:10px}
 .set-logout:hover{background:rgba(255,107,107,.2)}
 
+/* ── MY MODS SECTION ── */
+.my-mods-container{margin-bottom:20px}
+.my-mods-list{display:flex;flex-direction:column;gap:10px}
+.mod-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;gap:12px;align-items:center}
+.mod-item-img{width:60px;height:60px;border-radius:8px;object-fit:cover;flex-shrink:0}
+.mod-item-info{flex:1;min-width:0}
+.mod-item-name{font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mod-item-type{font-size:.75rem;color:var(--muted);margin-bottom:4px}
+.mod-item-actions{display:flex;gap:6px}
+.mod-btn{width:32px;height:32px;border-radius:6px;border:none;background:var(--bg3);color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all .2s;cursor:pointer;flex-shrink:0}
+.mod-btn:hover{background:var(--green);color:#000}
+.mod-btn.delete:hover{background:#ff6b6b}
+.no-mods{text-align:center;padding:20px;color:var(--muted);font-size:.9rem}
+
+/* ── EDIT MOD MODAL ── */
+.modal-overlay{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.open{display:flex}
+.modal-content{background:var(--card);border:1px solid var(--border);border-radius:16px;width:100%;max-width:420px;max-height:90vh;overflow-y:auto;padding:20px}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.04em;color:var(--green)}
+.modal-close{width:32px;height:32px;border-radius:50%;border:none;background:var(--bg3);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0}
+.modal-close:hover{background:var(--green);color:#000}
+.modal-form-group{margin-bottom:12px}
+.modal-label{font-size:.78rem;font-weight:700;color:var(--muted);letter-spacing:.05em;margin-bottom:6px;display:block}
+.modal-input,.modal-textarea{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-size:.9rem;outline:none;transition:border-color .2s;font-family:'Tajawal',sans-serif}
+.modal-input:focus,.modal-textarea:focus{border-color:var(--green)}
+.modal-textarea{resize:vertical;min-height:70px}
+.modal-actions{display:flex;gap:10px;margin-top:16px}
+.modal-btn{flex:1;padding:10px;border-radius:8px;border:none;font-size:.9rem;font-weight:700;transition:all .2s;cursor:pointer}
+.modal-btn-save{background:var(--green-bright);color:#000}
+.modal-btn-save:hover{background:var(--green);transform:scale(1.02)}
+.modal-btn-cancel{background:var(--bg3);color:var(--muted);border:1px solid var(--border2)}
+.modal-btn-cancel:hover{border-color:var(--green);color:var(--green)}
+
 /* ── BOTTOM NAV ── */
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(10,10,10,.95);backdrop-filter:blur(16px);border-top:1px solid var(--border);padding:8px 0 18px;display:flex;justify-content:space-around}
 .bnav{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);font-size:.7rem;font-weight:700;cursor:pointer;padding:4px 16px;border-radius:12px;transition:color .2s;border:none;background:none}
 .bnav i{font-size:1.2rem;transition:all .2s}
 .bnav.active{color:var(--green)}
-.bnav.active i{filter:drop-shadow(0 0 4px var(--green))}
+.bnav.active i{color:var(--green);text-shadow:0 0 10px rgba(26,255,110,.4)}
 
 /* ── TOAST ── */
-.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 20px;font-size:.9rem;z-index:300;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;font-size:.9rem;font-weight:700;color:var(--text);opacity:0;transition:opacity .3s;pointer-events:none;z-index:1000;white-space:nowrap}
 .toast.show{opacity:1;pointer-events:auto}
-
-/* ── EMPTY STATE ── */
-.empty-state{text-align:center;padding:40px 20px;color:var(--muted)}
-.empty-state i{font-size:3rem;margin-bottom:10px;opacity:.5}
-.empty-state p{font-size:.95rem}
-
-/* ── LOGO SETTINGS ── */
-.logo-settings{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px}
-.logo-preview{width:100%;height:80px;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:hidden}
-.logo-preview img{max-width:100%;max-height:100%;object-fit:contain}
 </style>
 </head>
 <body>
@@ -226,10 +250,10 @@ main{flex:1;padding-bottom:80px}
   <div class="auth-logo">Desv<span>.</span></div>
   <div class="auth-form">
     <div class="auth-title">تسجيل الدخول</div>
-    <input type="email" class="auth-input" id="authEmail" placeholder="بريدك الإلكتروني" />
+    <input type="email" class="auth-input" id="authEmail" placeholder="البريد الإلكتروني" />
     <input type="password" class="auth-input" id="authPassword" placeholder="كلمة المرور" />
-    <div class="auth-err" id="authErr"></div>
     <button class="auth-btn" onclick="handleLogin()">دخول</button>
+    <div class="auth-err" id="authErr"></div>
   </div>
 </div>
 
@@ -239,56 +263,98 @@ main{flex:1;padding-bottom:80px}
   <nav>
     <div class="nav-left">
       <div class="nav-logo" id="navLogo">
-        <span>Desv</span><span style="color:var(--green)">.</span>
-      </div>
-      <div class="nav-user" id="navUser" style="display:none">
-        <i class="fa-solid fa-circle"></i>
-        <span id="navUserEmail"></span>
+        <span>Desv</span>
       </div>
     </div>
-    <button class="nav-sign" id="navLogout" onclick="handleLogout()" style="display:none">خروج</button>
+    <div class="nav-user" id="navUser" style="display:none">
+      <i class="fa-solid fa-user-circle"></i>
+      <span id="navUserEmail"></span>
+    </div>
+    <button class="nav-sign" id="navLogout" style="display:none" onclick="handleLogout()">خروج</button>
   </nav>
 
   <!-- MAIN -->
   <main>
     <!-- HOME PAGE -->
     <div class="page active" id="page-home">
-      <!-- HERO SLIDER -->
       <div class="hero-slider" id="heroSlider">
         <div class="hero-empty">
           <i class="fa-solid fa-inbox"></i>
           <p>لم تضف مودات حتى الآن</p>
         </div>
-        <div id="homeSlides"></div>
-        <div class="slider-dots" id="sliderDots"></div>
       </div>
+      <div id="homeSlides"></div>
+      <div id="sliderDots" class="slider-dots"></div>
 
-      <!-- FILTERS -->
       <div class="section">
         <div class="sec-title">
-          <i class="fa-solid fa-sliders"></i>
-          <span>الفلاتر</span>
+          <i class="fa-solid fa-star"></i>
+          الأحدث
+          <span id="homeCount"></span>
         </div>
         <div class="filter-row">
-          <button class="fbtn active" onclick="filterAndGo('all')"><i class="fa-solid fa-star"></i> الكل</button>
-          <button class="fbtn" onclick="filterAndGo('addon')"><i class="fa-solid fa-cube"></i> إضافات</button>
-          <button class="fbtn" onclick="filterAndGo('map')"><i class="fa-solid fa-map"></i> خرائط</button>
-          <button class="fbtn" onclick="filterAndGo('texture')"><i class="fa-solid fa-palette"></i> تكسچرات</button>
-          <button class="fbtn" onclick="filterAndGo('skin')"><i class="fa-solid fa-user"></i> أسكنات</button>
-          <button class="fbtn" onclick="filterAndGo('server')"><i class="fa-solid fa-server"></i> سيرفرات</button>
-        </div>
-      </div>
-
-      <!-- GRID -->
-      <div class="section">
-        <div class="sec-title">
-          <i class="fa-solid fa-fire"></i>
-          <span>المحتوى</span>
+          <button class="fbtn active" onclick="filterAndGo('all')">
+            <i class="fa-solid fa-th"></i> الكل
+          </button>
+          <button class="fbtn" onclick="filterAndGo('addon')">
+            <i class="fa-solid fa-cube"></i> مودات
+          </button>
+          <button class="fbtn" onclick="filterAndGo('map')">
+            <i class="fa-solid fa-map"></i> خرائط
+          </button>
+          <button class="fbtn" onclick="filterAndGo('texture')">
+            <i class="fa-solid fa-image"></i> تكاسير
+          </button>
+          <button class="fbtn" onclick="filterAndGo('skin')">
+            <i class="fa-solid fa-user"></i> سكنات
+          </button>
+          <button class="fbtn" onclick="filterAndGo('server')">
+            <i class="fa-solid fa-server"></i> سيرفرات
+          </button>
         </div>
         <div class="cards-grid" id="homeGrid"></div>
-        <div class="empty-state" id="homeEmpty">
-          <i class="fa-solid fa-inbox"></i>
-          <p>لا توجد مودات في هذه الفئة حتى الآن</p>
+        <div id="homeEmpty" style="text-align:center;padding:30px 16px;color:var(--muted)">
+          <i class="fa-solid fa-inbox" style="font-size:2.5rem;margin-bottom:10px;opacity:.5"></i>
+          <p>لا توجد مودات بعد</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEARCH PAGE -->
+    <div class="page" id="page-search">
+      <div class="search-page">
+        <div class="search-bar">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="searchInput" placeholder="ابحث عن مود..." onkeyup="doSearch(this.value)" />
+        </div>
+
+        <div style="margin-bottom:14px">
+          <div class="filter-row" id="searchFilters">
+            <button class="fbtn active" onclick="setSearchFilter('all',this)">
+              <i class="fa-solid fa-th"></i> الكل
+            </button>
+            <button class="fbtn" onclick="setSearchFilter('addon',this)">
+              <i class="fa-solid fa-cube"></i> مودات
+            </button>
+            <button class="fbtn" onclick="setSearchFilter('map',this)">
+              <i class="fa-solid fa-map"></i> خرائط
+            </button>
+            <button class="fbtn" onclick="setSearchFilter('texture',this)">
+              <i class="fa-solid fa-image"></i> تكاسير
+            </button>
+            <button class="fbtn" onclick="setSearchFilter('skin',this)">
+              <i class="fa-solid fa-user"></i> سكنات
+            </button>
+            <button class="fbtn" onclick="setSearchFilter('server',this)">
+              <i class="fa-solid fa-server"></i> سيرفرات
+            </button>
+          </div>
+        </div>
+
+        <div class="cards-grid" id="searchResults"></div>
+        <div id="noRes" style="text-align:center;padding:30px 16px;color:var(--muted)">
+          <i class="fa-solid fa-search" style="font-size:2.5rem;margin-bottom:10px;opacity:.5"></i>
+          <p>لم نجد نتائج</p>
         </div>
       </div>
     </div>
@@ -297,11 +363,11 @@ main{flex:1;padding-bottom:80px}
     <div class="page" id="page-publish">
       <div class="pub-wrap">
         <div class="pub-title">نشر محتوى</div>
-        <div class="pub-sub">شارك مودات وسيرفرات مع المجتمع</div>
+        <div class="pub-sub">شارك مودك أو سيرفرك مع المجتمع</div>
 
         <div class="pub-tabs">
           <button class="pub-tab active" id="ptab-mod" onclick="switchPubTab('mod')">
-            <i class="fa-solid fa-cube"></i> مود/خريطة
+            <i class="fa-solid fa-cube"></i> مود
           </button>
           <button class="pub-tab" id="ptab-server" onclick="switchPubTab('server')">
             <i class="fa-solid fa-server"></i> سيرفر
@@ -311,33 +377,33 @@ main{flex:1;padding-bottom:80px}
         <!-- MOD FORM -->
         <div id="pub-mod-form">
           <div class="form-group">
-            <label class="form-label">اسم المود</label>
-            <input type="text" class="form-input" id="pub-name" placeholder="مثال: Dynamic Light 2.0" />
+            <label class="form-label">اسم المود *</label>
+            <input type="text" class="form-input" id="pub-name" placeholder="مثال: Super Mod" />
           </div>
 
           <div class="form-group">
-            <label class="form-label">النوع</label>
+            <label class="form-label">نوع المود *</label>
             <select class="form-select" id="pub-type">
-              <option value="addon">إضافة (Add-on)</option>
-              <option value="map">خريطة (Map)</option>
-              <option value="texture">تكسچر (Texture)</option>
-              <option value="skin">أسكن (Skin)</option>
+              <option value="addon">Add-on</option>
+              <option value="map">خريطة</option>
+              <option value="texture">تكسير</option>
+              <option value="skin">سكن</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label class="form-label">الوصف</label>
-            <textarea class="form-textarea" id="pub-desc" placeholder="اشرح ماذا يفعل هذا المود..."></textarea>
+            <label class="form-label">الوصف *</label>
+            <textarea class="form-textarea" id="pub-desc" placeholder="اكتب وصفاً للمود..."></textarea>
           </div>
 
           <div class="form-group">
-            <label class="form-label">رابط صورة المود</label>
-            <input type="url" class="form-input" id="pub-img" placeholder="https://example.com/image.jpg" />
+            <label class="form-label">رابط التحميل *</label>
+            <input type="url" class="form-input" id="pub-link" placeholder="https://..." />
           </div>
 
           <div class="form-group">
-            <label class="form-label">رابط التحميل (MediaFire, Drive, إلخ)</label>
-            <input type="url" class="form-input" id="pub-link" placeholder="https://www.mediafire.com/..." />
+            <label class="form-label">رابط الصورة</label>
+            <input type="url" class="form-input" id="pub-img" placeholder="https://..." />
           </div>
 
           <button class="pub-submit" onclick="submitContent()">
@@ -348,28 +414,28 @@ main{flex:1;padding-bottom:80px}
         <!-- SERVER FORM -->
         <div id="pub-server-form" style="display:none">
           <div class="form-group">
-            <label class="form-label">اسم السيرفر</label>
-            <input type="text" class="form-input" id="pub-sname" placeholder="مثال: Desert PvP" />
+            <label class="form-label">اسم السيرفر *</label>
+            <input type="text" class="form-input" id="pub-sname" placeholder="مثال: Pro Server" />
           </div>
 
           <div class="form-group">
-            <label class="form-label">عنوان IP</label>
-            <input type="text" class="form-input" id="pub-sip" placeholder="play.example.com أو 192.168.1.1" />
+            <label class="form-label">عنوان IP *</label>
+            <input type="text" class="form-input" id="pub-sip" placeholder="192.168.1.1" />
           </div>
 
           <div class="form-group">
-            <label class="form-label">البورت (اختياري)</label>
+            <label class="form-label">البورت</label>
             <input type="text" class="form-input" id="pub-sport" placeholder="19132" />
           </div>
 
           <div class="form-group">
-            <label class="form-label">الوصف</label>
-            <textarea class="form-textarea" id="pub-sdesc" placeholder="اشرح ماذا يوفر السيرفر..."></textarea>
+            <label class="form-label">الوصف *</label>
+            <textarea class="form-textarea" id="pub-sdesc" placeholder="اكتب وصفاً للسيرفر..."></textarea>
           </div>
 
           <div class="form-group">
-            <label class="form-label">رابط صورة السيرفر</label>
-            <input type="url" class="form-input" id="pub-simg" placeholder="https://example.com/server.jpg" />
+            <label class="form-label">رابط الصورة</label>
+            <input type="url" class="form-input" id="pub-simg" placeholder="https://..." />
           </div>
 
           <button class="pub-submit" onclick="submitServer()">
@@ -379,42 +445,17 @@ main{flex:1;padding-bottom:80px}
       </div>
     </div>
 
-    <!-- SEARCH PAGE -->
-    <div class="page" id="page-search">
-      <div class="search-page">
-        <div class="search-bar">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" id="searchInput" placeholder="ابحث عن مود أو سيرفر..." oninput="doSearch(this.value)" />
-        </div>
-
-        <div class="filter-row" id="searchFilters">
-          <button class="fbtn active" onclick="setSearchFilter('all', this)">الكل</button>
-          <button class="fbtn" onclick="setSearchFilter('addon', this)">إضافات</button>
-          <button class="fbtn" onclick="setSearchFilter('map', this)">خرائط</button>
-          <button class="fbtn" onclick="setSearchFilter('texture', this)">تكسچرات</button>
-          <button class="fbtn" onclick="setSearchFilter('skin', this)">أسكنات</button>
-          <button class="fbtn" onclick="setSearchFilter('server', this)">سيرفرات</button>
-        </div>
-
-        <div class="cards-grid" id="searchResults"></div>
-        <div class="empty-state" id="noRes" style="display:none">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <p>لم نجد نتائج</p>
-        </div>
-      </div>
-    </div>
-
     <!-- FAVORITES PAGE -->
     <div class="page" id="page-favs">
       <div class="section">
         <div class="sec-title">
           <i class="fa-solid fa-heart"></i>
-          <span>المفضلة</span>
+          المفضلة
         </div>
         <div class="cards-grid" id="favsGrid"></div>
-        <div class="empty-state" id="noFavs" style="display:none">
-          <i class="fa-solid fa-heart"></i>
-          <p>لا توجد عناصر مفضلة حتى الآن</p>
+        <div id="noFavs" style="text-align:center;padding:30px 16px;color:var(--muted)">
+          <i class="fa-solid fa-heart" style="font-size:2.5rem;margin-bottom:10px;opacity:.5"></i>
+          <p>لا توجد مفضلات بعد</p>
         </div>
       </div>
     </div>
@@ -424,58 +465,33 @@ main{flex:1;padding-bottom:80px}
       <div class="settings-page">
         <div class="settings-title">الإعدادات</div>
 
-        <!-- LOGO SETTINGS -->
-        <div class="logo-settings">
-          <div class="form-label">شعار الموقع</div>
-          <div class="logo-preview" id="logoPreview">
-            <span style="color:var(--muted)">لم تضف شعار</span>
-          </div>
-          <input type="url" class="form-input" id="logoUrl" placeholder="https://example.com/logo.png" />
-          <button class="pub-submit" onclick="updateLogo()" style="margin-top:8px">
-            <i class="fa-solid fa-upload"></i> تحديث الشعار
-          </button>
-        </div>
-
+        <!-- MY MODS SECTION -->
         <div class="set-group">
-          <div class="set-item">
-            <div class="set-icon"><i class="fa-solid fa-bell"></i></div>
-            <div class="set-text">
-              <div class="set-label">إشعارات</div>
-              <div class="set-desc">تلقي إخطارات عن المحتوى الجديد</div>
+          <div class="set-item" style="cursor:default">
+            <div class="set-icon">
+              <i class="fa-solid fa-cube"></i>
             </div>
-            <button class="set-toggle on" onclick="toggleSetting(this)"></button>
-          </div>
-          <div class="set-item">
-            <div class="set-icon"><i class="fa-solid fa-moon"></i></div>
             <div class="set-text">
-              <div class="set-label">الوضع الليلي</div>
-              <div class="set-desc">مفعل دائماً</div>
+              <div class="set-label">موداتي</div>
+              <div class="set-desc">إدارة وتعديل موداتك</div>
             </div>
-            <button class="set-toggle on" onclick="toggleSetting(this)" disabled></button>
-          </div>
-          <div class="set-item">
-            <div class="set-icon"><i class="fa-solid fa-lock"></i></div>
-            <div class="set-text">
-              <div class="set-label">الخصوصية</div>
-              <div class="set-desc">حساب خاص</div>
-            </div>
-            <button class="set-toggle" onclick="toggleSetting(this)"></button>
           </div>
         </div>
 
+        <div class="my-mods-container">
+          <div class="my-mods-list" id="myModsList"></div>
+          <div class="no-mods" id="noMyMods">لم تنشر أي مودات بعد</div>
+        </div>
+
+        <!-- ACCOUNT SECTION -->
         <div class="set-group">
-          <div class="set-item">
-            <div class="set-icon"><i class="fa-solid fa-info"></i></div>
-            <div class="set-text">
-              <div class="set-label">عن التطبيق</div>
-              <div class="set-desc">النسخة 1.0.0</div>
+          <div class="set-item" style="cursor:default">
+            <div class="set-icon">
+              <i class="fa-solid fa-user"></i>
             </div>
-          </div>
-          <div class="set-item">
-            <div class="set-icon"><i class="fa-solid fa-headset"></i></div>
             <div class="set-text">
-              <div class="set-label">الدعم الفني</div>
-              <div class="set-desc">تواصل معنا</div>
+              <div class="set-label">الحساب</div>
+              <div class="set-desc" id="accountEmail"></div>
             </div>
           </div>
         </div>
@@ -491,9 +507,11 @@ main{flex:1;padding-bottom:80px}
   <div class="detail-page" id="detailPage">
     <div class="detail-hero">
       <img id="dHeroImg" src="" alt="" />
-      <button class="detail-back" onclick="closeDetail()"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="detail-back" onclick="closeDetail()">
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
       <div class="detail-hero-info">
-        <div class="detail-hero-tag card-tag" id="dTag"></div>
+        <div class="detail-hero-tag" id="dTag"></div>
         <div class="detail-hero-name" id="dName"></div>
       </div>
     </div>
@@ -554,6 +572,47 @@ main{flex:1;padding-bottom:80px}
     </div>
   </div>
 
+  <!-- EDIT MOD MODAL -->
+  <div class="modal-overlay" id="editModModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">تعديل المود</div>
+        <button class="modal-close" onclick="closeEditModal()">
+          <i class="fa-solid fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-form-group">
+        <label class="modal-label">اسم المود</label>
+        <input type="text" class="modal-input" id="editModName" />
+      </div>
+
+      <div class="modal-form-group">
+        <label class="modal-label">الوصف</label>
+        <textarea class="modal-textarea" id="editModDesc"></textarea>
+      </div>
+
+      <div class="modal-form-group">
+        <label class="modal-label">رابط التحميل</label>
+        <input type="url" class="modal-input" id="editModLink" />
+      </div>
+
+      <div class="modal-form-group">
+        <label class="modal-label">رابط الصورة</label>
+        <input type="url" class="modal-input" id="editModImg" />
+      </div>
+
+      <div class="modal-actions">
+        <button class="modal-btn modal-btn-save" onclick="saveEditedMod()">
+          <i class="fa-solid fa-save"></i> حفظ
+        </button>
+        <button class="modal-btn modal-btn-cancel" onclick="closeEditModal()">
+          إلغاء
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- BOTTOM NAV -->
   <div class="bottom-nav">
     <button class="bnav active" id="bn-home" onclick="switchPage('home')">
@@ -592,7 +651,12 @@ let searchFilter = 'all';
 let currentItem = null;
 let favorites = JSON.parse(localStorage.getItem('desv_favs')||'[]');
 let currentUser = JSON.parse(localStorage.getItem('desv_user')||'null');
-let siteSettings = JSON.parse(localStorage.getItem('desv_settings')||'{"logoUrl":""}');
+let lastPublishTime = 0;
+const PUBLISH_COOLDOWN = 5000; // 5 seconds
+let editingModId = null;
+
+// Fixed logo URL
+const FIXED_LOGO_URL = 'https://cdn.discordapp.com/attachments/1452701701671751741/1507088076902498464/1000037274-removebg-preview.png?ex=6a114965&is=6a0ff7e5&hm=fef93477203bcafd35338d2027121e8fad2f86156ba049b76bb6f210c66da764&';
 
 // ============================================================
 // AUTH
@@ -626,6 +690,7 @@ function handleLogin(){
   document.getElementById('navUser').style.display = 'flex';
   document.getElementById('navLogout').style.display = 'block';
   document.getElementById('navUserEmail').textContent = email;
+  document.getElementById('accountEmail').textContent = email;
 
   showToast('مرحباً ' + email);
   loadItems();
@@ -659,9 +724,11 @@ window.addEventListener('load',()=>{
       startSlider();
       renderFavs();
       renderSearchAll();
+      renderMyMods();
       document.getElementById('navUser').style.display = 'flex';
       document.getElementById('navLogout').style.display = 'block';
       document.getElementById('navUserEmail').textContent = currentUser.email;
+      document.getElementById('accountEmail').textContent = currentUser.email;
       loadLogoSettings();
     },500);
   },1800);
@@ -749,7 +816,7 @@ function buildHomeGrid(){
     grid.innerHTML='';
     empty.style.display='block';
   } else {
-    grid.innerHTML=items.map(it=>cardHTML(it)).join('');
+    grid.innerHTML=items.map(cardHTML).join('');
     empty.style.display='none';
   }
 }
@@ -790,6 +857,7 @@ function switchPage(name){
   if(bn)bn.classList.add('active');
   if(name==='search')setTimeout(()=>document.getElementById('searchInput').focus(),100);
   if(name==='favs')renderFavs();
+  if(name==='settings')renderMyMods();
 }
 
 // ============================================================
@@ -838,6 +906,11 @@ function openDetail(id){
   const favBtn=document.getElementById('dFavBtn');
   favBtn.className='btn-fav'+(favorites.includes(id)?' faved':'');
   favBtn.innerHTML=favorites.includes(id)?'<i class="fa-solid fa-heart"></i>':'<i class="fa-regular fa-heart"></i>';
+  
+  // delete btn - only show if user is the owner
+  const delBtn=document.getElementById('dDelBtn');
+  delBtn.style.display=it.userId===currentUser.id?'flex':'none';
+  
   document.getElementById('detailPage').classList.add('open');
   document.getElementById('detailPage').scrollTop=0;
 }
@@ -846,6 +919,12 @@ function closeDetail(){document.getElementById('detailPage').classList.remove('o
 
 function deleteItem(){
   if(!currentItem) return;
+  
+  // Check if user is the owner
+  if(currentItem.userId !== currentUser.id){
+    showToast('لا يمكنك حذف مود شخص آخر');
+    return;
+  }
   
   const confirmed = confirm('هل تريد حذف هذا المود/السيرفر؟ هذا الإجراء لا يمكن التراجع عنه.');
   if(!confirmed) return;
@@ -860,6 +939,7 @@ function deleteItem(){
   startSlider();
   renderSearchAll();
   renderFavs();
+  renderMyMods();
   
   closeDetail();
   showToast('تم حذف المود بنجاح ✓');
@@ -894,13 +974,115 @@ function renderFavs(){
 }
 
 // ============================================================
+// MY MODS MANAGEMENT
+// ============================================================
+function renderMyMods(){
+  const list = document.getElementById('myModsList');
+  const noMods = document.getElementById('noMyMods');
+  const myMods = ITEMS.filter(x => x.userId === currentUser.id);
+  
+  if(myMods.length === 0){
+    list.innerHTML = '';
+    noMods.style.display = 'block';
+  } else {
+    noMods.style.display = 'none';
+    list.innerHTML = myMods.map(mod => `
+      <div class="mod-item">
+        <img src="${mod.img}" alt="${mod.name}" class="mod-item-img" />
+        <div class="mod-item-info">
+          <div class="mod-item-name">${mod.name}</div>
+          <div class="mod-item-type">${mod.tag}</div>
+        </div>
+        <div class="mod-item-actions">
+          <button class="mod-btn" onclick="openEditModal(${mod.id})" title="تعديل">
+            <i class="fa-solid fa-edit"></i>
+          </button>
+          <button class="mod-btn delete" onclick="deleteMyMod(${mod.id})" title="حذف">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+function openEditModal(modId){
+  const mod = ITEMS.find(x => x.id === modId);
+  if(!mod || mod.userId !== currentUser.id) return;
+  
+  editingModId = modId;
+  document.getElementById('editModName').value = mod.name;
+  document.getElementById('editModDesc').value = mod.desc;
+  document.getElementById('editModLink').value = mod.link || '';
+  document.getElementById('editModImg').value = mod.img;
+  
+  document.getElementById('editModModal').classList.add('open');
+}
+
+function closeEditModal(){
+  document.getElementById('editModModal').classList.remove('open');
+  editingModId = null;
+}
+
+function saveEditedMod(){
+  if(!editingModId) return;
+  
+  const mod = ITEMS.find(x => x.id === editingModId);
+  if(!mod || mod.userId !== currentUser.id) return;
+  
+  const name = document.getElementById('editModName').value.trim();
+  const desc = document.getElementById('editModDesc').value.trim();
+  const link = document.getElementById('editModLink').value.trim();
+  const img = document.getElementById('editModImg').value.trim();
+  
+  if(!name || !desc){
+    showToast('الاسم والوصف مطلوبان');
+    return;
+  }
+  
+  mod.name = name;
+  mod.desc = desc;
+  mod.link = link || mod.link;
+  mod.img = img || mod.img;
+  
+  saveItems();
+  renderMyMods();
+  buildHomeGrid();
+  buildSliderDots();
+  renderSearchAll();
+  renderFavs();
+  closeEditModal();
+  showToast('تم تحديث المود ✓');
+}
+
+function deleteMyMod(modId){
+  const mod = ITEMS.find(x => x.id === modId);
+  if(!mod || mod.userId !== currentUser.id) return;
+  
+  const confirmed = confirm('هل تريد حذف هذا المود؟');
+  if(!confirmed) return;
+  
+  ITEMS = ITEMS.filter(x => x.id !== modId);
+  favorites = favorites.filter(x => x !== modId);
+  saveItems();
+  localStorage.setItem('desv_favs', JSON.stringify(favorites));
+  
+  renderMyMods();
+  buildHomeGrid();
+  buildSliderDots();
+  renderSearchAll();
+  renderFavs();
+  showToast('تم حذف المود ✓');
+}
+
+// ============================================================
 // DOWNLOAD & SERVER
 // ============================================================
 function handleDownload(){
   if(currentItem.type==='server'){
     navigator.clipboard&&navigator.clipboard.writeText(currentItem.ip).then(()=>showToast('تم نسخ IP السيرفر ✓')).catch(()=>showToast('IP: '+currentItem.ip));
   } else {
-    window.open(currentItem.link, '_blank');
+    showToast('جاري التحميل ⬇');
   }
 }
 
@@ -918,6 +1100,14 @@ let isPublishing = false;
 
 function submitContent(){
   if(isPublishing) return;
+  
+  // Check cooldown
+  const now = Date.now();
+  if(now - lastPublishTime < PUBLISH_COOLDOWN){
+    const remaining = Math.ceil((PUBLISH_COOLDOWN - (now - lastPublishTime)) / 1000);
+    showToast(`يرجى الانتظار ${remaining} ثواني قبل النشر مرة أخرى`);
+    return;
+  }
   
   const name=document.getElementById('pub-name').value.trim();
   const desc=document.getElementById('pub-desc').value.trim();
@@ -941,6 +1131,7 @@ function submitContent(){
   
   ITEMS.push({
     id:Date.now(),
+    userId:currentUser.id,
     name,
     type,
     tag:t.tag,
@@ -954,10 +1145,12 @@ function submitContent(){
   });
   
   saveItems();
+  lastPublishTime = Date.now();
   buildHomeGrid();
   buildSliderDots();
   startSlider();
   renderSearchAll();
+  renderMyMods();
   document.getElementById('pub-name').value='';
   document.getElementById('pub-desc').value='';
   document.getElementById('pub-link').value='';
@@ -975,6 +1168,14 @@ function submitContent(){
 
 function submitServer(){
   if(isPublishing) return;
+  
+  // Check cooldown
+  const now = Date.now();
+  if(now - lastPublishTime < PUBLISH_COOLDOWN){
+    const remaining = Math.ceil((PUBLISH_COOLDOWN - (now - lastPublishTime)) / 1000);
+    showToast(`يرجى الانتظار ${remaining} ثواني قبل النشر مرة أخرى`);
+    return;
+  }
   
   const name=document.getElementById('pub-sname').value.trim();
   const ip=document.getElementById('pub-sip').value.trim();
@@ -996,6 +1197,7 @@ function submitServer(){
   
   ITEMS.push({
     id:Date.now(),
+    userId:currentUser.id,
     name,
     type:'server',
     tag:'SERVER',
@@ -1012,10 +1214,12 @@ function submitServer(){
   });
   
   saveItems();
+  lastPublishTime = Date.now();
   buildHomeGrid();
   buildSliderDots();
   startSlider();
   renderSearchAll();
+  renderMyMods();
   document.getElementById('pub-sname').value='';
   document.getElementById('pub-sip').value='';
   document.getElementById('pub-sdesc').value='';
@@ -1033,37 +1237,11 @@ function submitServer(){
 }
 
 // ============================================================
-// SETTINGS
+// LOGO SETTINGS
 // ============================================================
-function toggleSetting(btn){
-  if(btn.disabled) return;
-  btn.classList.toggle('on');
-  showToast('تم حفظ الإعدادات');
-}
-
-function updateLogo(){
-  const url = document.getElementById('logoUrl').value.trim();
-  if(!url){
-    showToast('أدخل رابط الشعار');
-    return;
-  }
-  
-  siteSettings.logoUrl = url;
-  localStorage.setItem('desv_settings', JSON.stringify(siteSettings));
-  loadLogoSettings();
-  showToast('تم تحديث الشعار ✓');
-}
-
 function loadLogoSettings(){
-  const preview = document.getElementById('logoPreview');
-  if(siteSettings.logoUrl){
-    preview.innerHTML = `<img src="${siteSettings.logoUrl}" />`;
-    document.getElementById('logoUrl').value = siteSettings.logoUrl;
-    
-    // Update nav logo
-    const navLogo = document.getElementById('navLogo');
-    navLogo.innerHTML = `<img src="${siteSettings.logoUrl}" style="height:36px;border-radius:6px;object-fit:contain" />`;
-  }
+  const navLogo = document.getElementById('navLogo');
+  navLogo.innerHTML = `<img src="${FIXED_LOGO_URL}" style="height:36px;border-radius:6px;object-fit:contain" />`;
 }
 
 // ============================================================
