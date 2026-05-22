@@ -720,7 +720,28 @@ main{flex:1;padding-bottom:80px}
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
+
 <script>
+// Firebase Configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDKuQJz_KPmjsJfJu2sFKPXJsJz",
+  authDomain: "desvcraft.firebaseapp.com",
+  projectId: "desvcraft",
+  storageBucket: "desvcraft.firebasestorage.app",
+  messagingSenderId: "488609817409",
+  appId: "1:488609817409:web:b9eda3668eb3f2ba3077c0",
+  measurementId: "G-1HGP7MN78M"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+
 // ============================================================
 // DATA STORAGE
 // ============================================================
@@ -729,7 +750,7 @@ let currentFilter = 'all';
 let searchFilter = 'all';
 let currentItem = null;
 let favorites = JSON.parse(localStorage.getItem('desv_favs')||'[]');
-let currentUser = JSON.parse(localStorage.getItem('desv_user')||'null');
+let currentUser = null;
 let lastPublishTime = 0;
 const PUBLISH_COOLDOWN = 5000;
 let editingModId = null;
@@ -760,68 +781,79 @@ function handleLogin(){
     return;
   }
 
-  currentUser = { email, id: Date.now() };
-  localStorage.setItem('desv_user', JSON.stringify(currentUser));
+  auth.signInWithEmailAndPassword(email, password)
+    .then(userCredential => {
+      currentUser = userCredential.user;
+      localStorage.setItem('desv_user', JSON.stringify({email: currentUser.email, id: currentUser.uid}));
+      
+      document.getElementById('authPage').classList.add('hidden');
+      document.getElementById('app').classList.add('show');
+      document.getElementById('navUser').style.display = 'flex';
+      document.getElementById('navLogout').style.display = 'block';
+      document.getElementById('navUserEmail').textContent = email;
+      document.getElementById('accountEmail').textContent = email;
 
-  document.getElementById('authPage').classList.add('hidden');
-  document.getElementById('app').classList.add('show');
-  document.getElementById('navUser').style.display = 'flex';
-  document.getElementById('navLogout').style.display = 'block';
-  document.getElementById('navUserEmail').textContent = email;
-  document.getElementById('accountEmail').textContent = email;
-
-  showToast('مرحباً ' + email);
-  loadItems();
+      showToast('مرحباً ' + email);
+      loadItemsFromFirebase();
+    })
+    .catch(error => {
+      errEl.textContent = 'فشل تسجيل الدخول: ' + error.message;
+    });
 }
 
 function handleLogout(){
-  localStorage.removeItem('desv_user');
-  currentUser = null;
-  location.reload();
+  auth.signOut().then(() => {
+    localStorage.removeItem('desv_user');
+    currentUser = null;
+    location.reload();
+  });
 }
 
 // ============================================================
 // LOADER
 // ============================================================
 window.addEventListener('load',()=>{
-  if(!currentUser){
-    document.getElementById('loader').style.display = 'none';
-    document.getElementById('authPage').classList.remove('hidden');
-    return;
-  }
+  auth.onAuthStateChanged(user => {
+    if(!user){
+      document.getElementById('loader').style.display = 'none';
+      document.getElementById('authPage').classList.remove('hidden');
+      return;
+    }
 
-  setTimeout(()=>{
-    const l=document.getElementById('loader'),a=document.getElementById('app');
-    l.style.opacity='0';
     setTimeout(()=>{
-      l.style.display='none';
-      a.classList.add('show');
-      loadItems();
-      buildHomeGrid();
-      buildSliderDots();
-      startSlider();
-      renderFavs();
-      renderSearchAll();
-      renderMyMods();
-      document.getElementById('navUser').style.display = 'flex';
-      document.getElementById('navLogout').style.display = 'block';
-      document.getElementById('navUserEmail').textContent = currentUser.email;
-      document.getElementById('accountEmail').textContent = currentUser.email;
-      loadLogoSettings();
-    },500);
-  },1800);
+      const l=document.getElementById('loader'),a=document.getElementById('app');
+      l.style.opacity='0';
+      setTimeout(()=>{
+        l.style.display='none';
+        a.classList.add('show');
+        currentUser = user;
+        loadItemsFromFirebase();
+        document.getElementById('navUser').style.display = 'flex';
+        document.getElementById('navLogout').style.display = 'block';
+        document.getElementById('navUserEmail').textContent = user.email;
+        document.getElementById('accountEmail').textContent = user.email;
+        loadLogoSettings();
+      },500);
+    },1800);
+  });
 });
 
 // ============================================================
-// LOAD & SAVE ITEMS
+// LOAD ITEMS FROM FIREBASE
 // ============================================================
-function loadItems(){
-  const saved = localStorage.getItem('desv_items');
-  ITEMS = saved ? JSON.parse(saved) : [];
-}
-
-function saveItems(){
-  localStorage.setItem('desv_items', JSON.stringify(ITEMS));
+function loadItemsFromFirebase(){
+  db.collection('mods').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
+    ITEMS = [];
+    snapshot.forEach(doc => {
+      ITEMS.push({...doc.data(), id: doc.id});
+    });
+    buildHomeGrid();
+    buildSliderDots();
+    startSlider();
+    renderFavs();
+    renderSearchAll();
+    renderMyMods();
+  });
 }
 
 // ============================================================
@@ -837,9 +869,9 @@ function setSortOrder(order){
 function getSortedItems(items){
   const sorted = [...items];
   if(sortOrder === 'newest'){
-    sorted.sort((a,b) => b.id - a.id);
+    sorted.sort((a,b) => b.createdAt - a.createdAt);
   } else if(sortOrder === 'oldest'){
-    sorted.sort((a,b) => a.id - b.id);
+    sorted.sort((a,b) => a.createdAt - b.createdAt);
   } else if(sortOrder === 'name'){
     sorted.sort((a,b) => a.name.localeCompare(b.name, 'ar'));
   }
@@ -877,7 +909,7 @@ function buildSliderDots(){
           <div class="slide-name">${it.name}</div>
           <div class="slide-tag">${it.tag}</div>
         </div>
-        <button class="slide-dl" onclick="openDetail(${it.id})"><i class="fa-solid fa-arrow-left"></i></button>
+        <button class="slide-dl" onclick="openDetail('${it.id}')"><i class="fa-solid fa-arrow-left"></i></button>
       </div>
     `;
     slidesEl.appendChild(slide);
@@ -911,7 +943,6 @@ function buildHomeGrid(){
   const grid=document.getElementById('homeGrid');
   const empty=document.getElementById('homeEmpty');
   
-  // FIXED: Show all items by default
   let items=ITEMS.filter(x=>currentFilter==='all'||x.type===currentFilter);
   items = getSortedItems(items);
   
@@ -927,7 +958,7 @@ function buildHomeGrid(){
 }
 
 function cardHTML(it){
-  return`<div class="mc-card" onclick="openDetail(${it.id})">
+  return`<div class="mc-card" onclick="openDetail('${it.id}')">
     <div class="card-img" style="background:var(--bg3)">
       <img src="${it.img}" alt="${it.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover"/>
       <div class="card-img-label">${it.tag}</div>
@@ -1033,7 +1064,7 @@ function openDetail(id){
   favBtn.innerHTML=favorites.includes(id)?'<i class="fa-solid fa-heart"></i>':'<i class="fa-regular fa-heart"></i>';
   
   const delBtn=document.getElementById('dDelBtn');
-  delBtn.style.display=it.userId===currentUser.id?'flex':'none';
+  delBtn.style.display=it.userId===currentUser.uid?'flex':'none';
   
   document.getElementById('detailPage').classList.add('open');
   document.getElementById('detailPage').scrollTop=0;
@@ -1044,7 +1075,7 @@ function closeDetail(){document.getElementById('detailPage').classList.remove('o
 function deleteItem(){
   if(!currentItem) return;
   
-  if(currentItem.userId !== currentUser.id){
+  if(currentItem.userId !== currentUser.uid){
     showToast('لا يمكنك حذف مود شخص آخر');
     return;
   }
@@ -1052,20 +1083,14 @@ function deleteItem(){
   const confirmed = confirm('هل تريد حذف هذا المود/السيرفر؟ هذا الإجراء لا يمكن التراجع عنه.');
   if(!confirmed) return;
   
-  ITEMS = ITEMS.filter(x => x.id !== currentItem.id);
-  favorites = favorites.filter(x => x !== currentItem.id);
-  saveItems();
-  localStorage.setItem('desv_favs', JSON.stringify(favorites));
-  
-  buildHomeGrid();
-  buildSliderDots();
-  startSlider();
-  renderSearchAll();
-  renderFavs();
-  renderMyMods();
-  
-  closeDetail();
-  showToast('تم حذف المود بنجاح ✓');
+  db.collection('mods').doc(currentItem.id).delete().then(() => {
+    favorites = favorites.filter(x => x !== currentItem.id);
+    localStorage.setItem('desv_favs', JSON.stringify(favorites));
+    closeDetail();
+    showToast('تم حذف المود بنجاح ✓');
+  }).catch(error => {
+    showToast('خطأ في الحذف: ' + error.message);
+  });
 }
 
 // ============================================================
@@ -1102,7 +1127,7 @@ function renderFavs(){
 function renderMyMods(){
   const list = document.getElementById('myModsList');
   const noMods = document.getElementById('noMyMods');
-  const myMods = ITEMS.filter(x => x.userId === currentUser.id);
+  const myMods = ITEMS.filter(x => x.userId === currentUser.uid);
   
   if(myMods.length === 0){
     list.innerHTML = '';
@@ -1117,10 +1142,10 @@ function renderMyMods(){
           <div class="mod-item-type">${mod.tag}</div>
         </div>
         <div class="mod-item-actions">
-          <button class="mod-btn" onclick="openEditModal(${mod.id})" title="تعديل">
+          <button class="mod-btn" onclick="openEditModal('${mod.id}')" title="تعديل">
             <i class="fa-solid fa-edit"></i>
           </button>
-          <button class="mod-btn delete" onclick="deleteMyMod(${mod.id})" title="حذف">
+          <button class="mod-btn delete" onclick="deleteMyMod('${mod.id}')" title="حذف">
             <i class="fa-solid fa-trash"></i>
           </button>
         </div>
@@ -1131,7 +1156,7 @@ function renderMyMods(){
 
 function openEditModal(modId){
   const mod = ITEMS.find(x => x.id === modId);
-  if(!mod || mod.userId !== currentUser.id) return;
+  if(!mod || mod.userId !== currentUser.uid) return;
   
   editingModId = modId;
   document.getElementById('editModName').value = mod.name;
@@ -1156,7 +1181,7 @@ function saveEditedMod(){
   if(!editingModId) return;
   
   const mod = ITEMS.find(x => x.id === editingModId);
-  if(!mod || mod.userId !== currentUser.id) return;
+  if(!mod || mod.userId !== currentUser.uid) return;
   
   const name = document.getElementById('editModName').value.trim();
   const desc = document.getElementById('editModDesc').value.trim();
@@ -1168,39 +1193,30 @@ function saveEditedMod(){
     return;
   }
   
-  mod.name = name;
-  mod.desc = desc;
-  mod.link = link || mod.link;
-  mod.img = img || mod.img;
-  
-  saveItems();
-  renderMyMods();
-  buildHomeGrid();
-  buildSliderDots();
-  renderSearchAll();
-  renderFavs();
-  closeEditModal();
-  showToast('تم تحديث المود ✓');
+  db.collection('mods').doc(editingModId).update({
+    name, desc, link: link || mod.link, img: img || mod.img
+  }).then(() => {
+    closeEditModal();
+    showToast('تم تحديث المود ✓');
+  }).catch(error => {
+    showToast('خطأ في التحديث: ' + error.message);
+  });
 }
 
 function deleteMyMod(modId){
   const mod = ITEMS.find(x => x.id === modId);
-  if(!mod || mod.userId !== currentUser.id) return;
+  if(!mod || mod.userId !== currentUser.uid) return;
   
   const confirmed = confirm('هل تريد حذف هذا المود؟');
   if(!confirmed) return;
   
-  ITEMS = ITEMS.filter(x => x.id !== modId);
-  favorites = favorites.filter(x => x !== modId);
-  saveItems();
-  localStorage.setItem('desv_favs', JSON.stringify(favorites));
-  
-  renderMyMods();
-  buildHomeGrid();
-  buildSliderDots();
-  renderSearchAll();
-  renderFavs();
-  showToast('تم حذف المود ✓');
+  db.collection('mods').doc(modId).delete().then(() => {
+    favorites = favorites.filter(x => x !== modId);
+    localStorage.setItem('desv_favs', JSON.stringify(favorites));
+    showToast('تم حذف المود ✓');
+  }).catch(error => {
+    showToast('خطأ في الحذف: ' + error.message);
+  });
 }
 
 // ============================================================
@@ -1260,27 +1276,35 @@ function submitContent(){
   const type=document.getElementById('pub-type').value;
   const tagMap={addon:{tag:'ADD-ONS',cls:'tag-addon'},map:{tag:'MAPS',cls:'tag-map'},texture:{tag:'TEXTURES',cls:'tag-texture'},skin:{tag:'SKINS',cls:'tag-skin'}};
   const t=tagMap[type];
-  ITEMS.push({id:Date.now(),userId:currentUser.id,name,type,tag:t.tag,tagClass:t.cls,img:img||'https://via.placeholder.com/640x360?text=No+Image',rating:0,ver:'1.20+',date:'الآن',desc,link});
-  saveItems();
-  lastPublishTime = Date.now();
-  buildHomeGrid();
-  buildSliderDots();
-  startSlider();
-  renderSearchAll();
-  renderMyMods();
-  document.getElementById('pub-name').value='';
-  document.getElementById('pub-desc').value='';
-  document.getElementById('pub-link').value='';
-  document.getElementById('pub-img').value='';
-  document.getElementById('pub-preview').style.display='none';
-  setTimeout(() => {
-    showToast('تم نشر المحتوى بنجاح ✓');
+  
+  db.collection('mods').add({
+    userId: currentUser.uid,
+    name, type, tag: t.tag, tagClass: t.cls,
+    img: img || 'https://via.placeholder.com/640x360?text=No+Image',
+    rating: 0, ver: '1.20+', date: 'الآن', desc, link,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  }).then(() => {
+    lastPublishTime = Date.now();
+    document.getElementById('pub-name').value='';
+    document.getElementById('pub-desc').value='';
+    document.getElementById('pub-link').value='';
+    document.getElementById('pub-img').value='';
+    document.getElementById('pub-preview').style.display='none';
+    setTimeout(() => {
+      showToast('تم نشر المحتوى بنجاح ✓');
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '1';
+      submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> نشر الآن';
+      isPublishing = false;
+      switchPage('home');
+    }, 1000);
+  }).catch(error => {
+    showToast('خطأ في النشر: ' + error.message);
     submitBtn.disabled = false;
     submitBtn.style.opacity = '1';
     submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> نشر الآن';
     isPublishing = false;
-    switchPage('home');
-  }, 1000);
+  });
 }
 
 function submitServer(){
@@ -1302,28 +1326,36 @@ function submitServer(){
   submitBtn.style.opacity = '0.5';
   submitBtn.innerHTML = '<i class="fa-solid fa-spinner" style="animation:spin 1s linear infinite"></i> جاري النشر...';
   const port=document.getElementById('pub-sport').value.trim()||'19132';
-  ITEMS.push({id:Date.now(),userId:currentUser.id,name,type:'server',tag:'SERVER',tagClass:'tag-server',img:img||'https://via.placeholder.com/640x360?text=Server',rating:0,ver:'Bedrock',date:'الآن',desc,ip,port,online:'0 لاعب',link:''});
-  saveItems();
-  lastPublishTime = Date.now();
-  buildHomeGrid();
-  buildSliderDots();
-  startSlider();
-  renderSearchAll();
-  renderMyMods();
-  document.getElementById('pub-sname').value='';
-  document.getElementById('pub-sip').value='';
-  document.getElementById('pub-sdesc').value='';
-  document.getElementById('pub-sport').value='';
-  document.getElementById('pub-simg').value='';
-  document.getElementById('pub-server-preview').style.display='none';
-  setTimeout(() => {
-    showToast('تم نشر السيرفر بنجاح ✓');
+  
+  db.collection('mods').add({
+    userId: currentUser.uid,
+    name, type: 'server', tag: 'SERVER', tagClass: 'tag-server',
+    img: img || 'https://via.placeholder.com/640x360?text=Server',
+    rating: 0, ver: 'Bedrock', date: 'الآن', desc, ip, port, online: '0 لاعب', link: '',
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  }).then(() => {
+    lastPublishTime = Date.now();
+    document.getElementById('pub-sname').value='';
+    document.getElementById('pub-sip').value='';
+    document.getElementById('pub-sdesc').value='';
+    document.getElementById('pub-sport').value='';
+    document.getElementById('pub-simg').value='';
+    document.getElementById('pub-server-preview').style.display='none';
+    setTimeout(() => {
+      showToast('تم نشر السيرفر بنجاح ✓');
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '1';
+      submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> نشر السيرفر';
+      isPublishing = false;
+      switchPage('home');
+    }, 1000);
+  }).catch(error => {
+    showToast('خطأ في النشر: ' + error.message);
     submitBtn.disabled = false;
     submitBtn.style.opacity = '1';
     submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> نشر السيرفر';
     isPublishing = false;
-    switchPage('home');
-  }, 1000);
+  });
 }
 
 // ============================================================
@@ -1352,4 +1384,3 @@ function showToast(msg){
 </script>
 </body>
 </html>
-
