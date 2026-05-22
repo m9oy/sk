@@ -36,25 +36,21 @@ input{font-family:'Tajawal',sans-serif}
 .ld-txt{font-size:.75rem;color:var(--muted);letter-spacing:.15em;animation:blink .9s infinite}
 
 /* ── APP ── */
-#app{opacity:0;transition:opacity .5s;min-height:100vh;display:flex;flex-direction:column}
-#app.show{opacity:1}
+#app{opacity:0;transition:opacity .5s;min-height:100vh;display:flex;flex-direction:column;display:none;}
+#app.show{opacity:1;display:flex;}
 
 /* ── AUTH PAGE ── */
 .auth-page{position:fixed;inset:0;z-index:500;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:20px}
 .auth-page.hidden{display:none}
 .auth-logo{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:.08em;color:#fff;margin-bottom:20px}
 .auth-logo span{color:var(--green)}
-.auth-form{width:100%;max-width:320px;background:rgba(20,20,20,.8);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:14px;animation:slideIn .5s ease-out}
+.auth-form{width:100%;max-width:320px;background:rgba(20,20,20,.8);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:14px;animation:slideIn .5s ease-out;text-align:center;}
 .auth-title{font-size:1.2rem;font-weight:700;margin-bottom:10px}
-.auth-input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:12px 14px;color:var(--text);font-size:.95rem;outline:none;transition:all .3s}
-.auth-input:focus{border-color:var(--green);box-shadow:0 0 10px rgba(26,255,110,.2)}
-.auth-btn{width:100%;padding:12px;border-radius:10px;border:none;background:var(--green-bright);color:#000;font-size:.95rem;font-weight:700;transition:all .3s;cursor:pointer}
+.auth-btn{width:100%;padding:12px;border-radius:10px;border:none;background:var(--green-bright);color:#000;font-size:.95rem;font-weight:700;transition:all .3s;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;}
 .auth-btn:hover{background:var(--green);transform:scale(1.02);box-shadow:0 0 20px rgba(26,255,110,.3)}
-.auth-btn.google{background:#fff;color:#000;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:10px}
+.auth-btn.google{background:#fff;color:#000;}
 .auth-btn.google i{color:#4285F4;font-size:1.2rem}
 .auth-err{color:#ff6b6b;font-size:.85rem;text-align:center;animation:slideIn .3s ease-out}
-.auth-divider{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:.8rem;margin:10px 0}
-.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border2)}
 
 /* ── NAV ── */
 nav{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;justify-content:space-between}
@@ -63,9 +59,9 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.95);backdrop-fil
 .nav-logo img{height:36px;border-radius:6px;object-fit:contain;transition:transform .3s}
 .nav-logo img:hover{transform:scale(1.05)}
 .nav-logo span{color:var(--green)}
-.nav-user{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--muted)}
+.nav-user{display:none;align-items:center;gap:8px;font-size:.85rem;color:var(--muted)}
 .nav-user i{color:var(--green)}
-.nav-sign{padding:7px 14px;border-radius:22px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:.82rem;font-weight:700;transition:all .3s;cursor:pointer}
+.nav-sign{padding:7px 14px;border-radius:22px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:.82rem;font-weight:700;transition:all .3s;cursor:pointer;display:none;}
 .nav-sign:hover{border-color:var(--green);color:var(--green);background:rgba(26,255,110,.1)}
 
 /* ── MAIN ── */
@@ -194,72 +190,144 @@ main{flex:1;padding-bottom:80px}
 
 /* ── SETTINGS ── */
 .settings-page{padding:14px;max-width:480px;margin:0 auto}
-.settings-title{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.06em;margin-bottom:4px;color:var(--green)}
+.set-sec{margin-bottom:24px}
+.set-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.06em;color:var(--green);margin-bottom:12px}
+.set-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.set-item{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--border2)}
+.set-item:last-child{border:none;padding:0}
+.set-info{display:flex;flex-direction:column;gap:2px}
+.set-name{font-size:.9rem;font-weight:700}
+.set-desc{font-size:.72rem;color:var(--muted)}
+.set-toggle{width:44px;height:22px;background:var(--bg4);border-radius:99px;position:relative;transition:all .3s;cursor:pointer}
+.set-toggle::after{content:'';position:absolute;top:3px;right:3px;width:16px;height:16px;background:var(--muted);border-radius:50%;transition:all .3s}
+.set-toggle.on{background:var(--green-dark)}
+.set-toggle.on::after{right:25px;background:var(--green)}
+.set-btn-red{width:100%;padding:12px;border-radius:10px;border:1px solid #ff4d4d;background:rgba(255,77,77,.1);color:#ff4d4d;font-size:.85rem;font-weight:700;transition:all .3s;cursor:pointer;margin-top:10px}
+.set-btn-red:hover{background:#ff4d4d;color:#fff}
+
+/* ── MY MODS ── */
+.my-mods-list{display:flex;flex-direction:column;gap:10px}
+.mod-item{background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:10px;display:flex;align-items:center;gap:12px}
+.mod-item-img{width:50px;height:50px;border-radius:8px;object-fit:cover}
+.mod-item-info{flex:1}
+.mod-item-name{font-size:.85rem;font-weight:700;margin-bottom:2px}
+.mod-item-type{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.mod-item-actions{display:flex;gap:6px}
+.mod-btn{width:32px;height:32px;border-radius:8px;border:none;background:var(--bg4);color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:all .3s;cursor:pointer}
+.mod-btn:hover{background:var(--green);color:#000}
+.mod-btn.delete:hover{background:#ff4d4d;color:#fff}
+
+/* ── MODALS ── */
+.modal-overlay{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal-content{width:100%;max-width:400px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;animation:slideIn .3s ease-out}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.06em;color:var(--green)}
+.modal-close{background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer}
+.modal-form-group{margin-bottom:16px}
+.modal-label{font-size:.8rem;font-weight:700;color:var(--muted);margin-bottom:8px;display:block}
+.modal-input,.modal-textarea{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:12px;color:var(--text);font-size:.9rem;outline:none;font-family:'Tajawal',sans-serif}
+.modal-input:focus,.modal-textarea:focus{border-color:var(--green)}
+.modal-textarea{height:80px;resize:none}
+.modal-img-preview{width:100%;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:var(--bg2);margin-top:10px;display:none}
+.modal-img-preview img{width:100%;height:100%;object-fit:cover}
+.modal-actions{display:flex;gap:10px;margin-top:20px}
+.modal-btn{flex:1;padding:12px;border-radius:10px;border:none;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .3s}
+.modal-btn-save{background:var(--green-bright);color:#000}
+.modal-btn-cancel{background:var(--bg4);color:var(--text)}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(10,10,10,.9);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:10px 16px;display:flex;justify-content:space-around;align-items:center}
+.bnav{background:none;border:none;color:var(--muted2);display:flex;flex-direction:column;align-items:center;gap:4px;transition:all .3s;padding:6px;min-width:60px}
+.bnav i{font-size:1.3rem}
+.bnav span{font-size:.65rem;font-weight:700}
+.bnav.active{color:var(--green)}
+.bnav.active i{transform:translateY(-2px)}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%) translateY(20px);z-index:2000;background:var(--green-bright);color:#000;padding:10px 20px;border-radius:12px;font-size:.85rem;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:all .3s}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media(min-width:768px){
+  .cards-grid,.search-results{grid-template-columns:repeat(3,1fr)}
+  .auth-form,.pub-wrap,.settings-page,.modal-content{max-width:440px}
+}
+@media(min-width:1024px){
+  .cards-grid,.search-results{grid-template-columns:repeat(4,1fr)}
+}
 </style>
 </head>
 <body>
 
+<!-- LOADER -->
 <div id="loader">
   <div class="ld-logo">DESV<span>.</span></div>
   <div class="ld-bar"><div class="ld-fill"></div></div>
   <div class="ld-txt">جاري التحميل...</div>
 </div>
 
-<div id="app">
-  <div class="auth-page" id="authPage">
-    <div class="auth-logo">DESV<span>.</span></div>
-    <div class="auth-form">
-      <div class="auth-title">تسجيل الدخول</div>
-      <input type="email" id="authEmail" class="auth-input" placeholder="البريد الإلكتروني"/>
-      <input type="password" id="authPassword" class="auth-input" placeholder="كلمة المرور"/>
-      <button class="auth-btn" onclick="handleLogin()">دخول</button>
-      
-      <div class="auth-divider">أو</div>
-      
-      <button class="auth-btn google" onclick="handleGoogleLogin()">
-        <i class="fa-brands fa-google"></i> الدخول بواسطة جوجل
-      </button>
-      
-      <div id="authErr" class="auth-err"></div>
-    </div>
+<!-- AUTH PAGE -->
+<div class="auth-page" id="authPage">
+  <div class="auth-logo">DESV<span>.</span></div>
+  <div class="auth-form">
+    <div class="auth-title">تسجيل الدخول</div>
+    <p style="color:var(--muted); font-size:0.85rem; margin-bottom:10px;">استخدم حساب جوجل للوصول إلى المودات والسيرفرات</p>
+    <button class="auth-btn google" onclick="handleGoogleLogin()">
+      <i class="fa-brands fa-google"></i> الدخول بواسطة جوجل
+    </button>
+    <div class="auth-err" id="authErr"></div>
   </div>
+</div>
 
+<!-- APP -->
+<div id="app">
   <nav>
     <div class="nav-left">
-      <div class="nav-logo" id="navLogo">DESV<span>.</span></div>
-      <div class="nav-user" id="navUser" style="display:none">
-        <i class="fa-solid fa-circle-user"></i>
-        <span id="navUserEmail"></span>
+      <div class="nav-logo" id="navLogo">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem">DESV<span>.</span></div>
       </div>
     </div>
-    <button class="nav-sign" id="navLogout" style="display:none" onclick="handleLogout()">خروج</button>
+    <div class="nav-user" id="navUser">
+      <i class="fa-solid fa-circle-user"></i>
+      <span id="navUserEmail">...</span>
+    </div>
+    <button class="nav-sign" id="navLogout" onclick="handleLogout()" style="display:none">
+      <i class="fa-solid fa-right-from-bracket"></i>
+    </button>
   </nav>
 
   <main>
     <!-- HOME PAGE -->
     <div class="page active" id="page-home">
+      <!-- HERO -->
       <div class="hero-slider" id="heroSlider">
-        <div id="homeSlides"></div>
+        <div id="homeSlides" style="width:100%;height:100%"></div>
         <div class="slider-dots" id="sliderDots"></div>
       </div>
 
       <div class="section">
-        <div class="sec-title">الأحدث <span id="itemsCount">0</span></div>
+        <div class="sec-title">الأحدث <span id="homeCount">0</span></div>
+        
         <div class="sort-controls">
-          <button class="sort-btn active" onclick="setSortOrder('newest')">أحدث</button>
-          <button class="sort-btn" onclick="setSortOrder('oldest')">أقدم</button>
-          <button class="sort-btn" onclick="setSortOrder('name')">أبجدي</button>
+          <button class="sort-btn active" onclick="setSortOrder('newest')"><i class="fa-solid fa-clock"></i> أحدث</button>
+          <button class="sort-btn" onclick="setSortOrder('oldest')"><i class="fa-solid fa-history"></i> أقدم</button>
+          <button class="sort-btn" onclick="setSortOrder('name')"><i class="fa-solid fa-font"></i> أبجدي</button>
         </div>
+
         <div class="filter-row">
-          <button class="fbtn active" onclick="filterItems('all')">الكل</button>
-          <button class="fbtn" onclick="filterItems('addon')">مودات</button>
-          <button class="fbtn" onclick="filterItems('map')">خرائط</button>
-          <button class="fbtn" onclick="filterItems('texture')">تكاسير</button>
-          <button class="fbtn" onclick="filterItems('skin')">سكنات</button>
-          <button class="fbtn" onclick="filterItems('server')">سيرفرات</button>
+          <button class="fbtn active" onclick="filterAndGo('all')">الكل</button>
+          <button class="fbtn" onclick="filterAndGo('addon')">مودات</button>
+          <button class="fbtn" onclick="filterAndGo('map')">خرائط</button>
+          <button class="fbtn" onclick="filterAndGo('texture')">تكاسير</button>
+          <button class="fbtn" onclick="filterAndGo('skin')">سكنات</button>
+          <button class="fbtn" onclick="filterAndGo('server')">سيرفرات</button>
         </div>
+
         <div class="cards-grid" id="homeGrid"></div>
-        <div id="noItems" style="display:none;text-align:center;padding:40px;color:var(--muted)">لا توجد مودات بعد</div>
+        <div id="homeEmpty" style="display:none;text-align:center;padding:40px;color:var(--muted)">
+          <i class="fa-solid fa-box-open" style="font-size:3rem;margin-bottom:15px;opacity:0.3"></i>
+          <p>لا توجد نتائج لعرضها</p>
+        </div>
       </div>
     </div>
 
@@ -268,15 +336,20 @@ main{flex:1;padding-bottom:80px}
       <div class="search-page">
         <div class="search-bar">
           <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" id="searchInput" placeholder="ابحث عن مود، خريطة، أو سيرفر..." oninput="handleSearch()"/>
+          <input type="text" id="searchInput" placeholder="ابحث عن مود، خريطة، سيرفر..." oninput="doSearch(this.value)"/>
         </div>
-        <div class="filter-row">
-          <button class="fbtn active" onclick="filterSearch('all')">الكل</button>
-          <button class="fbtn" onclick="filterSearch('addon')">مودات</button>
-          <button class="fbtn" onclick="filterSearch('map')">خرائط</button>
-          <button class="fbtn" onclick="filterSearch('server')">سيرفرات</button>
+        
+        <div class="filter-row" id="searchFilters" style="margin-bottom:18px">
+          <button class="fbtn active" onclick="setSearchFilter('all', this)">الكل</button>
+          <button class="fbtn" onclick="setSearchFilter('addon', this)">مودات</button>
+          <button class="fbtn" onclick="setSearchFilter('map', this)">خرائط</button>
+          <button class="fbtn" onclick="setSearchFilter('server', this)">سيرفرات</button>
         </div>
-        <div class="cards-grid" id="searchGrid"></div>
+
+        <div class="search-results" id="searchResults"></div>
+        <div id="noRes" style="display:none;text-align:center;padding:40px;color:var(--muted)">
+          <p>لم نجد ما تبحث عنه</p>
+        </div>
       </div>
     </div>
 
@@ -284,7 +357,7 @@ main{flex:1;padding-bottom:80px}
     <div class="page" id="page-publish">
       <div class="pub-wrap">
         <div class="pub-title">نشر محتوى</div>
-        <p class="pub-sub">شارك إبداعاتك مع مجتمع ماينكرافت</p>
+        <div class="pub-sub">شارك إبداعاتك مع مجتمع ماينكرافت</div>
         
         <div class="pub-tabs">
           <button class="pub-tab active" id="ptab-mod" onclick="switchPubTab('mod')">
@@ -295,14 +368,15 @@ main{flex:1;padding-bottom:80px}
           </button>
         </div>
 
+        <!-- Mod Form -->
         <div id="pub-mod-form">
           <div class="form-group">
             <label class="form-label">الاسم</label>
-            <input type="text" id="pub-name" class="form-input" placeholder="اسم المود أو الخريطة"/>
+            <input type="text" class="form-input" id="pub-name" placeholder="اسم المود أو الخريطة"/>
           </div>
           <div class="form-group">
             <label class="form-label">النوع</label>
-            <select id="pub-type" class="form-select">
+            <select class="form-select" id="pub-type">
               <option value="addon">مود (Add-on)</option>
               <option value="map">خريطة (Map)</option>
               <option value="texture">حزمة موارد (Texture)</option>
@@ -311,43 +385,48 @@ main{flex:1;padding-bottom:80px}
           </div>
           <div class="form-group">
             <label class="form-label">الوصف</label>
-            <textarea id="pub-desc" class="form-textarea" placeholder="اشرح محتوى المود..."></textarea>
+            <textarea class="form-textarea" id="pub-desc" placeholder="اشرح مميزات المحتوى..."></textarea>
           </div>
           <div class="form-group">
             <label class="form-label">رابط التحميل</label>
-            <input type="url" id="pub-link" class="form-input" placeholder="رابط مباشر أو ميديا فاير"/>
+            <input type="url" class="form-input" id="pub-link" placeholder="https://mediafire.com/..."/>
           </div>
           <div class="form-group">
             <label class="form-label">رابط الصورة (اختياري)</label>
-            <input type="url" id="pub-img" class="form-input" placeholder="رابط صورة للمعاينة" oninput="previewImage('pub-img','pub-preview')"/>
-            <div class="img-preview" id="pub-preview"></div>
+            <input type="url" class="form-input" id="pub-img" placeholder="رابط صورة المعاينة" onchange="previewImage('pub-img', 'pub-preview')"/>
+            <div class="img-preview" id="pub-preview">
+              <img id="pub-preview-img" src="" alt="معاينة" />
+            </div>
           </div>
           <button class="pub-submit" onclick="submitContent()">
             <i class="fa-solid fa-paper-plane"></i> نشر الآن
           </button>
         </div>
 
+        <!-- Server Form -->
         <div id="pub-server-form" style="display:none">
           <div class="form-group">
             <label class="form-label">اسم السيرفر</label>
-            <input type="text" id="pub-sname" class="form-input" placeholder="اسم السيرفر"/>
+            <input type="text" class="form-input" id="pub-sname" placeholder="مثال: سيرفر الأساطير"/>
           </div>
           <div class="form-group">
-            <label class="form-label">عنوان IP</label>
-            <input type="text" id="pub-sip" class="form-input" placeholder="مثال: play.server.com"/>
+            <label class="form-label">IP السيرفر</label>
+            <input type="text" class="form-input" id="pub-sip" placeholder="play.example.com"/>
           </div>
           <div class="form-group">
             <label class="form-label">البورت (Port)</label>
-            <input type="text" id="pub-sport" class="form-input" placeholder="الافتراضي: 19132"/>
+            <input type="text" class="form-input" id="pub-sport" placeholder="19132"/>
           </div>
           <div class="form-group">
             <label class="form-label">الوصف</label>
-            <textarea id="pub-sdesc" class="form-textarea" placeholder="مميزات السيرفر..."></textarea>
+            <textarea class="form-textarea" id="pub-sdesc" placeholder="وصف السيرفر وقوانينه..."></textarea>
           </div>
           <div class="form-group">
             <label class="form-label">رابط الصورة (اختياري)</label>
-            <input type="url" id="pub-simg" class="form-input" placeholder="رابط صورة للسيرفر" oninput="previewImage('pub-simg','pub-server-preview')"/>
-            <div class="img-preview" id="pub-server-preview"></div>
+            <input type="url" class="form-input" id="pub-simg" placeholder="رابط صورة للسيرفر" onchange="previewImage('pub-simg', 'pub-server-preview')"/>
+            <div class="img-preview" id="pub-server-preview">
+              <img id="pub-server-preview-img" src="" alt="معاينة" />
+            </div>
           </div>
           <button class="pub-submit" onclick="submitServer()">
             <i class="fa-solid fa-paper-plane"></i> نشر السيرفر
@@ -356,13 +435,13 @@ main{flex:1;padding-bottom:80px}
       </div>
     </div>
 
-    <!-- FAVS PAGE -->
+    <!-- FAVORITES PAGE -->
     <div class="page" id="page-favs">
       <div class="section">
         <div class="sec-title">المفضلة</div>
         <div class="cards-grid" id="favsGrid"></div>
-        <div id="noFavs" style="text-align:center;padding:30px 16px;color:var(--muted)">
-          <i class="fa-solid fa-heart" style="font-size:2.5rem;margin-bottom:10px;opacity:.5"></i>
+        <div id="noFavs" style="display:none;text-align:center;padding:40px;color:var(--muted)">
+          <i class="fa-solid fa-heart-crack" style="font-size:3rem;margin-bottom:15px;opacity:0.3"></i>
           <p>لا توجد مفضلات بعد</p>
         </div>
       </div>
@@ -371,70 +450,43 @@ main{flex:1;padding-bottom:80px}
     <!-- SETTINGS PAGE -->
     <div class="page" id="page-settings">
       <div class="settings-page">
-        <div class="settings-title">الإعدادات</div>
-
-        <!-- MY MODS SECTION -->
-        <div class="set-group">
-          <div class="set-item" style="cursor:default">
-            <div class="set-icon">
-              <i class="fa-solid fa-cube"></i>
-            </div>
-            <div class="set-text">
-              <div class="set-label">موداتي</div>
-              <div class="set-desc">إدارة وتعديل موداتك</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="my-mods-container">
+        <div class="set-sec">
+          <div class="set-title">موداتي</div>
+          <p class="pub-sub" style="margin-bottom:12px">إدارة وتعديل موداتك التي نشرتها</p>
           <div class="my-mods-list" id="myModsList"></div>
-          <div class="no-mods" id="noMyMods">لم تنشر أي مودات بعد</div>
-        </div>
-
-        <!-- ORIGINAL TOOLS -->
-        <div class="set-group">
-          <div class="set-item">
-            <div class="set-icon"><i class="fa-solid fa-bell"></i></div>
-            <div class="set-text">
-              <div class="set-label">إشعارات</div>
-              <div class="set-desc">تلقي إخطارات عن المحتوى الجديد</div>
-            </div>
-            <button class="set-toggle on" onclick="toggleSetting(this)"></button>
-          </div>
-          <div class="set-item">
-            <div class="set-icon"><i class="fa-solid fa-moon"></i></div>
-            <div class="set-text">
-              <div class="set-label">الوضع الليلي</div>
-              <div class="set-desc">مفعل دائماً</div>
-            </div>
-            <button class="set-toggle on" onclick="toggleSetting(this)" disabled></button>
-          </div>
-          <div class="set-item">
-            <div class="set-icon"><i class="fa-solid fa-lock"></i></div>
-            <div class="set-text">
-              <div class="set-label">الخصوصية</div>
-              <div class="set-desc">حساب خاص</div>
-            </div>
-            <button class="set-toggle on" onclick="toggleSetting(this)"></button>
+          <div id="noMyMods" style="display:none;text-align:center;padding:20px;color:var(--muted);background:var(--card);border-radius:14px">
+            لم تنشر أي مودات بعد
           </div>
         </div>
 
-        <!-- ACCOUNT SECTION -->
-        <div class="set-group">
-          <div class="set-item" style="cursor:default">
-            <div class="set-icon">
-              <i class="fa-solid fa-user"></i>
+        <div class="set-sec">
+          <div class="set-title">الإعدادات</div>
+          <div class="set-card">
+            <div class="set-item">
+              <div class="set-info">
+                <div class="set-name">إشعارات</div>
+                <div class="set-desc">تلقي إخطارات عن المحتوى الجديد</div>
+              </div>
+              <div class="set-toggle on" onclick="toggleSetting(this)"></div>
             </div>
-            <div class="set-text">
-              <div class="set-label">الحساب</div>
-              <div class="set-desc" id="accountEmail"></div>
+            <div class="set-item">
+              <div class="set-info">
+                <div class="set-name">الوضع الليلي</div>
+                <div class="set-desc">مفعل دائماً للراحة البصرية</div>
+              </div>
+              <div class="set-toggle on" style="opacity:0.5;cursor:default"></div>
             </div>
           </div>
         </div>
 
-        <button class="set-logout" onclick="handleLogout()">
-          <i class="fa-solid fa-sign-out-alt"></i> تسجيل الخروج
-        </button>
+        <div class="set-sec">
+          <div class="set-title">الحساب</div>
+          <div class="set-card">
+            <div style="font-size:0.9rem;margin-bottom:5px">مسجل كـ:</div>
+            <div id="accountEmail" style="color:var(--green);font-weight:700;margin-bottom:10px">...</div>
+            <button class="set-btn-red" onclick="handleLogout()">تسجيل الخروج</button>
+          </div>
+        </div>
       </div>
     </div>
   </main>
@@ -442,24 +494,21 @@ main{flex:1;padding-bottom:80px}
   <!-- DETAIL PAGE -->
   <div class="detail-page" id="detailPage">
     <div class="detail-hero">
-      <img id="dHeroImg" src="" alt="" />
-      <button class="detail-back" onclick="closeDetail()">
-        <i class="fa-solid fa-arrow-right"></i>
-      </button>
+      <img id="dHeroImg" src="" alt=""/>
+      <button class="detail-back" onclick="closeDetail()"><i class="fa-solid fa-xmark"></i></button>
       <div class="detail-hero-info">
         <div class="detail-hero-tag" id="dTag"></div>
-        <div class="detail-hero-name" id="dName"></div>
+        <div class="detail-hero-name" id="dName">...</div>
       </div>
     </div>
-
     <div class="detail-body">
       <div class="detail-actions">
-        <button class="btn-dl" id="dDlBtn" onclick="handleDownload()"></button>
-        <button class="btn-fav" id="dFavBtn" onclick="toggleFav()"></button>
-        <button class="share-btn" id="dShareBtn" onclick="shareItem()" title="مشاركة">
-          <i class="fa-solid fa-share-nodes"></i>
-        </button>
-        <button class="btn-fav" id="dDelBtn" onclick="deleteItem()" style="border-color:#ff6b6b;color:#ff6b6b" title="حذف">
+        <a id="dDownloadLink" href="#" target="_blank" style="flex:1;text-decoration:none">
+          <button class="btn-dl" id="dDlBtn"><i class="fa-solid fa-download"></i> تحميل</button>
+        </a>
+        <button class="btn-fav" id="dFavBtn" onclick="toggleFav()"><i class="fa-regular fa-heart"></i></button>
+        <button class="btn-fav" onclick="shareItem()"><i class="fa-solid fa-share-nodes"></i></button>
+        <button class="btn-fav" id="dDelBtn" onclick="deleteItem()" style="color:#ff4d4d;border-color:rgba(255,77,77,0.3);display:none">
           <i class="fa-solid fa-trash"></i>
         </button>
       </div>
@@ -479,24 +528,12 @@ main{flex:1;padding-bottom:80px}
         </div>
       </div>
 
-      <div class="detail-sec">
-        <div class="detail-sec-title">الوصف</div>
-        <div class="detail-desc" id="dDesc"></div>
-      </div>
-
-      <div class="detail-sec">
-        <div class="detail-sec-title">رابط التحميل</div>
-        <a id="dDownloadLink" href="" target="_blank" class="download-link">
-          <i class="fa-solid fa-download"></i> اضغط هنا للتحميل
-        </a>
-      </div>
-
-      <div class="detail-sec" id="dServerInfo" style="display:none">
+      <div id="dServerInfo" style="display:none;margin-bottom:20px">
         <div class="detail-sec-title">معلومات السيرفر</div>
         <div class="detail-meta-row">
           <div class="dmeta">
             <div class="dmeta-val" id="dIP">—</div>
-            <div class="dmeta-key">عنوان IP</div>
+            <div class="dmeta-key">IP السيرفر</div>
           </div>
           <div class="dmeta">
             <div class="dmeta-val" id="dPort">—</div>
@@ -507,6 +544,11 @@ main{flex:1;padding-bottom:80px}
             <div class="dmeta-key">أونلاين</div>
           </div>
         </div>
+      </div>
+
+      <div class="detail-sec">
+        <div class="detail-sec-title">الوصف</div>
+        <div class="detail-desc" id="dDesc">...</div>
       </div>
     </div>
   </div>
@@ -520,22 +562,18 @@ main{flex:1;padding-bottom:80px}
           <i class="fa-solid fa-times"></i>
         </button>
       </div>
-
       <div class="modal-form-group">
         <label class="modal-label">اسم المود</label>
         <input type="text" class="modal-input" id="editModName" />
       </div>
-
       <div class="modal-form-group">
         <label class="modal-label">الوصف</label>
         <textarea class="modal-textarea" id="editModDesc"></textarea>
       </div>
-
       <div class="modal-form-group">
         <label class="modal-label">رابط التحميل</label>
         <input type="url" class="modal-input" id="editModLink" />
       </div>
-
       <div class="modal-form-group">
         <label class="modal-label">رابط الصورة</label>
         <input type="url" class="modal-input" id="editModImg" onchange="previewImage('editModImg', 'modal-img-preview')" />
@@ -543,7 +581,6 @@ main{flex:1;padding-bottom:80px}
           <img id="modal-img-preview-img" src="" alt="معاينة" />
         </div>
       </div>
-
       <div class="modal-actions">
         <button class="modal-btn modal-btn-save" onclick="saveEditedMod()">
           <i class="fa-solid fa-save"></i> حفظ
@@ -624,25 +661,6 @@ const FIXED_LOGO_URL = 'https://cdn.discordapp.com/attachments/14527017016717517
 // ============================================================
 // AUTH
 // ============================================================
-function handleLogin(){
-  const email = document.getElementById('authEmail').value.trim();
-  const password = document.getElementById('authPassword').value.trim();
-  const errEl = document.getElementById('authErr');
-
-  if(!email || !password){
-    errEl.textContent = 'الرجاء ملء جميع الحقول';
-    return;
-  }
-
-  auth.signInWithEmailAndPassword(email, password)
-    .then(userCredential => {
-      onAuthSuccess(userCredential.user);
-    })
-    .catch(error => {
-      errEl.textContent = 'فشل تسجيل الدخول: ' + error.message;
-    });
-}
-
 function handleGoogleLogin(){
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithPopup(provider)
@@ -659,14 +677,18 @@ function onAuthSuccess(user){
   localStorage.setItem('desv_user', JSON.stringify({email: user.email, id: user.uid}));
   
   document.getElementById('authPage').classList.add('hidden');
-  document.getElementById('app').classList.add('show');
+  const app = document.getElementById('app');
+  app.style.display = 'flex';
+  setTimeout(() => app.classList.add('show'), 10);
+  
   document.getElementById('navUser').style.display = 'flex';
   document.getElementById('navLogout').style.display = 'block';
   document.getElementById('navUserEmail').textContent = user.email;
   document.getElementById('accountEmail').textContent = user.email;
 
-  showToast('مرحباً ' + user.email);
+  showToast('مرحباً ' + (user.displayName || user.email));
   loadItemsFromFirebase();
+  loadLogoSettings();
 }
 
 function handleLogout(){
@@ -678,31 +700,33 @@ function handleLogout(){
 }
 
 // ============================================================
-// LOADER
+// LOADER & INITIALIZATION
 // ============================================================
 window.addEventListener('load',()=>{
   auth.onAuthStateChanged(user => {
+    const loader = document.getElementById('loader');
+    const authPage = document.getElementById('authPage');
+    const app = document.getElementById('app');
+
     if(!user){
-      document.getElementById('loader').style.display = 'none';
-      document.getElementById('authPage').classList.remove('hidden');
+      loader.style.opacity = '0';
+      setTimeout(() => {
+        loader.style.display = 'none';
+        authPage.classList.remove('hidden');
+      }, 500);
       return;
     }
 
+    // User is logged in
+    currentUser = user;
+    onAuthSuccess(user);
+    
     setTimeout(()=>{
-      const l=document.getElementById('loader'),a=document.getElementById('app');
-      l.style.opacity='0';
+      loader.style.opacity='0';
       setTimeout(()=>{
-        l.style.display='none';
-        a.classList.add('show');
-        currentUser = user;
-        loadItemsFromFirebase();
-        document.getElementById('navUser').style.display = 'flex';
-        document.getElementById('navLogout').style.display = 'block';
-        document.getElementById('navUserEmail').textContent = user.email;
-        document.getElementById('accountEmail').textContent = user.email;
-        loadLogoSettings();
+        loader.style.display='none';
       },500);
-    },1800);
+    },1000);
   });
 });
 
@@ -737,9 +761,9 @@ function setSortOrder(order){
 function getSortedItems(items){
   const sorted = [...items];
   if(sortOrder === 'newest'){
-    sorted.sort((a,b) => b.createdAt - a.createdAt);
+    sorted.sort((a,b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
   } else if(sortOrder === 'oldest'){
-    sorted.sort((a,b) => a.createdAt - b.createdAt);
+    sorted.sort((a,b) => (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0));
   } else if(sortOrder === 'name'){
     sorted.sort((a,b) => a.name.localeCompare(b.name, 'ar'));
   }
@@ -765,6 +789,8 @@ function buildSliderDots(){
   }
 
   heroSlider.innerHTML = '';
+  heroSlider.appendChild(slidesEl);
+  heroSlider.appendChild(dotsEl);
   
   slides.forEach((it,i)=>{
     const slide=document.createElement('div');
@@ -777,181 +803,190 @@ function buildSliderDots(){
           <div class="slide-name">${it.name}</div>
           <div class="slide-tag">${it.tag}</div>
         </div>
-        <button class="slide-dl" onclick="openDetail('${it.id}')"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="slide-dl" onclick="openDetail('${it.id}')"><i class="fa-solid fa-arrow-left"></i></button>
       </div>
     `;
     slidesEl.appendChild(slide);
-    
-    const dot=document.createElement('div');
-    dot.className='sdot'+(i===0?' active':'');
-    dot.onclick=()=>setSlide(i);
-    dotsEl.appendChild(dot);
+    const d=document.createElement('div');
+    d.className='sdot'+(i===0?' active':'');
+    d.onclick=()=>goSlide(i);
+    dotsEl.appendChild(d);
   });
-  
-  heroSlider.appendChild(slidesEl);
-  heroSlider.appendChild(dotsEl);
 }
 
-function setSlide(idx){
-  const slides=document.querySelectorAll('.slide');
-  const dots=document.querySelectorAll('.sdot');
-  if(!slides.length) return;
-  slides.forEach(s=>s.classList.remove('active'));
-  dots.forEach(d=>d.classList.remove('active'));
-  slideIdx=idx;
-  slides[idx].classList.add('active');
-  dots[idx].classList.add('active');
+function goSlide(i){
+  const slides=document.querySelectorAll('.slide'),dots=document.querySelectorAll('.sdot');
+  if(slides.length === 0) return;
+  slides[slideIdx].classList.remove('active');
+  dots[slideIdx].classList.remove('active');
+  slideIdx=i;
+  slides[slideIdx].classList.add('active');
+  dots[slideIdx].classList.add('active');
 }
 
 function startSlider(){
   clearInterval(sliderTimer);
-  sliderTimer=setInterval(()=>{
-    const slides=document.querySelectorAll('.slide');
-    if(slides.length<2) return;
-    let next=(slideIdx+1)%slides.length;
-    setSlide(next);
-  },5000);
+  if(document.querySelectorAll('.slide').length > 1){
+    sliderTimer=setInterval(()=>goSlide((slideIdx+1)%document.querySelectorAll('.slide').length),4000);
+  }
 }
 
 // ============================================================
-// HOME GRID
+// BUILD HOME GRID
 // ============================================================
 function buildHomeGrid(){
   const grid=document.getElementById('homeGrid');
-  const noItems=document.getElementById('noItems');
-  const countEl=document.getElementById('itemsCount');
+  const empty=document.getElementById('homeEmpty');
   
-  let filtered = currentFilter==='all'?ITEMS:ITEMS.filter(x=>x.type===currentFilter);
-  filtered = getSortedItems(filtered);
+  let items=ITEMS.filter(x=>currentFilter==='all'||x.type===currentFilter);
+  items = getSortedItems(items);
   
-  grid.innerHTML=filtered.map(cardHTML).join('');
-  noItems.style.display=filtered.length===0?'block':'none';
-  countEl.textContent=filtered.length;
+  document.getElementById('homeCount').textContent = items.length;
+  
+  if(items.length === 0){
+    grid.innerHTML='';
+    empty.style.display='block';
+  } else {
+    grid.innerHTML=items.map(cardHTML).join('');
+    empty.style.display='none';
+  }
 }
 
 function cardHTML(it){
-  return `
-    <div class="mc-card" onclick="openDetail('${it.id}')">
-      <div class="card-img">
-        <img src="${it.img}" loading="lazy" />
-        <div class="card-img-label">${it.tag}</div>
-      </div>
-      <div class="card-body">
-        <div class="card-name">${it.name}</div>
-        <div class="card-footer">
-          <div class="card-tag ${it.tagClass}">${it.tag}</div>
-          <button class="card-dl"><i class="fa-solid fa-download"></i></button>
-        </div>
+  return`<div class="mc-card" onclick="openDetail('${it.id}')">
+    <div class="card-img" style="background:var(--bg3)">
+      <img src="${it.img}" alt="${it.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover"/>
+      <div class="card-img-label">${it.tag}</div>
+    </div>
+    <div class="card-body">
+      <div class="card-name">${it.name}</div>
+      <div class="card-footer">
+        <span class="card-tag ${it.tagClass}">${it.tag}</span>
+        <button class="card-dl" onclick="event.stopPropagation();showToast('جاري التحميل ⬇')"><i class="fa-solid fa-download"></i></button>
       </div>
     </div>
-  `;
+  </div>`;
 }
 
-function filterItems(f){
-  currentFilter=f;
+// ============================================================
+// FILTER & NAV
+// ============================================================
+function filterAndGo(type){
+  currentFilter=type;
   document.querySelectorAll('.filter-row .fbtn').forEach(b=>b.classList.remove('active'));
   event.target.classList.add('active');
   buildHomeGrid();
+  switchPage('home');
+}
+
+function setSearchFilter(f,btn){
+  searchFilter=f;
+  document.querySelectorAll('#searchFilters .fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  doSearch(document.getElementById('searchInput').value);
+}
+
+function switchPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.bnav').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  const bn=document.getElementById('bn-'+name);
+  if(bn)bn.classList.add('active');
+  if(name==='search')setTimeout(()=>document.getElementById('searchInput').focus(),100);
+  if(name==='favs')renderFavs();
+  if(name==='settings')renderMyMods();
+  window.scrollTo(0,0);
 }
 
 // ============================================================
 // SEARCH
 // ============================================================
-function handleSearch(){
-  renderSearchAll();
+function doSearch(q){
+  const val=q.trim().toLowerCase();
+  const res=document.getElementById('searchResults');
+  const noRes=document.getElementById('noRes');
+  let items=ITEMS;
+  if(searchFilter!=='all')items=items.filter(x=>x.type===searchFilter);
+  if(val)items=items.filter(x=>x.name.toLowerCase().includes(val)||x.desc.toLowerCase().includes(val));
+  res.innerHTML=items.map(cardHTML).join('');
+  noRes.style.display=items.length===0?'block':'none';
 }
 
-function filterSearch(f){
-  searchFilter=f;
-  document.querySelectorAll('#page-search .fbtn').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
-  renderSearchAll();
-}
+function renderSearchAll(){doSearch('');}
 
-function renderSearchAll(){
-  const q=document.getElementById('searchInput').value.toLowerCase().trim();
-  const grid=document.getElementById('searchGrid');
-  let res=ITEMS.filter(x=>x.name.toLowerCase().includes(q)||x.desc.toLowerCase().includes(q));
-  if(searchFilter!=='all') res=res.filter(x=>x.type===searchFilter);
-  grid.innerHTML=res.map(cardHTML).join('');
+// ============================================================
+// IMAGE PREVIEW
+// ============================================================
+function previewImage(inputId, previewId){
+  const url = document.getElementById(inputId).value.trim();
+  const preview = document.getElementById(previewId);
+  const img = document.getElementById(previewId + '-img');
+  
+  if(url){
+    img.src = url;
+    img.onload = () => {
+      preview.style.display = 'block';
+    };
+    img.onerror = () => {
+      preview.style.display = 'none';
+      showToast('فشل تحميل الصورة');
+    };
+  } else {
+    preview.style.display = 'none';
+  }
 }
 
 // ============================================================
-// DETAIL PAGE
+// DETAIL
 // ============================================================
 function openDetail(id){
-  currentItem=ITEMS.find(x=>x.id===id);
-  if(!currentItem) return;
+  const it=ITEMS.find(x=>x.id===id);
+  if(!it)return;
+  currentItem=it;
+  document.getElementById('dHeroImg').src=it.img;
+  document.getElementById('dTag').textContent=it.tag;
+  document.getElementById('dTag').className='detail-hero-tag card-tag '+it.tagClass;
+  document.getElementById('dName').textContent=it.name;
+  document.getElementById('dRating').textContent=it.rating||'0';
+  document.getElementById('dVer').textContent=it.ver||'1.20+';
+  document.getElementById('dDate').textContent=it.date||'الآن';
+  document.getElementById('dDesc').textContent=it.desc;
+  document.getElementById('dDownloadLink').href=it.link;
   
-  document.getElementById('dHeroImg').src=currentItem.img;
-  document.getElementById('dTag').textContent=currentItem.tag;
-  document.getElementById('dTag').className='detail-hero-tag '+(currentItem.tagClass||'tag-addon');
-  document.getElementById('dName').textContent=currentItem.name;
-  document.getElementById('dRating').textContent=currentItem.rating||'0';
-  document.getElementById('dVer').textContent=currentItem.ver||'1.20+';
-  document.getElementById('dDate').textContent=currentItem.date||'الآن';
-  document.getElementById('dDesc').textContent=currentItem.desc;
-  
-  const dlBtn=document.getElementById('dDlBtn');
-  const dlLink=document.getElementById('dDownloadLink');
-  
-  if(currentItem.type==='server'){
-    dlBtn.innerHTML='<i class="fa-solid fa-copy"></i> نسخ IP';
-    dlLink.parentElement.style.display='none';
-    document.getElementById('dServerInfo').style.display='block';
-    document.getElementById('dIP').textContent=currentItem.ip;
-    document.getElementById('dPort').textContent=currentItem.port||'19132';
-    document.getElementById('dOnline').textContent=currentItem.online||'0 لاعب';
-  } else {
-    dlBtn.innerHTML='<i class="fa-solid fa-download"></i> تحميل الآن';
-    dlLink.parentElement.style.display='block';
-    dlLink.href=currentItem.link;
-    document.getElementById('dServerInfo').style.display='none';
+  document.getElementById('dServerInfo').style.display=it.type==='server'?'block':'none';
+  document.getElementById('dDlBtn').innerHTML=it.type==='server'?'<i class="fa-solid fa-play"></i> انضم الآن':'<i class="fa-solid fa-download"></i> تحميل';
+  if(it.type==='server'){
+    document.getElementById('dIP').textContent=it.ip||'—';
+    document.getElementById('dPort').textContent=it.port||'19132';
+    document.getElementById('dOnline').textContent=it.online||'—';
   }
   
   const favBtn=document.getElementById('dFavBtn');
-  if(favorites.includes(id)){
-    favBtn.className='btn-fav faved';
-    favBtn.innerHTML='<i class="fa-solid fa-heart"></i>';
-  } else {
-    favBtn.className='btn-fav';
-    favBtn.innerHTML='<i class="fa-regular fa-heart"></i>';
-  }
+  favBtn.className='btn-fav'+(favorites.includes(id)?' faved':'');
+  favBtn.innerHTML=favorites.includes(id)?'<i class="fa-solid fa-heart"></i>':'<i class="fa-regular fa-heart"></i>';
   
-  // Show delete button only for owner
-  const delBtn = document.getElementById('dDelBtn');
-  if(currentUser && currentItem.userId === currentUser.uid){
-    delBtn.style.display = 'flex';
-  } else {
-    delBtn.style.display = 'none';
-  }
+  const delBtn=document.getElementById('dDelBtn');
+  delBtn.style.display=(currentUser && it.userId === currentUser.uid)?'flex':'none';
   
   document.getElementById('detailPage').classList.add('open');
+  document.getElementById('detailPage').scrollTop=0;
 }
 
-function closeDetail(){
-  document.getElementById('detailPage').classList.remove('open');
-}
+function closeDetail(){document.getElementById('detailPage').classList.remove('open');}
 
 function deleteItem(){
-  if(!currentItem || !currentUser || currentItem.userId !== currentUser.uid) return;
-  if(!confirm('هل أنت متأكد من حذف هذا المحتوى؟')) return;
+  if(!currentItem || !currentUser) return;
+  if(currentItem.userId !== currentUser.uid) return;
+  
+  const confirmed = confirm('هل تريد حذف هذا المحتوى؟');
+  if(!confirmed) return;
   
   db.collection('mods').doc(currentItem.id).delete().then(() => {
-    showToast('تم الحذف بنجاح ✓');
+    favorites = favorites.filter(x => x !== currentItem.id);
+    localStorage.setItem('desv_favs', JSON.stringify(favorites));
     closeDetail();
-  }).catch(err => showToast('خطأ في الحذف: ' + err.message));
-}
-
-// ============================================================
-// NAVIGATION
-// ============================================================
-function switchPage(p){
-  document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
-  document.getElementById('page-'+p).classList.add('active');
-  document.querySelectorAll('.bnav').forEach(bn=>bn.classList.remove('active'));
-  document.getElementById('bn-'+p).classList.add('active');
-  window.scrollTo(0,0);
+    showToast('تم الحذف بنجاح ✓');
+  }).catch(error => showToast('خطأ في الحذف: ' + error.message));
 }
 
 // ============================================================
@@ -1027,6 +1062,11 @@ function openEditModal(modId){
   document.getElementById('editModLink').value = mod.link || '';
   document.getElementById('editModImg').value = mod.img;
   
+  const preview = document.getElementById('modal-img-preview');
+  const img = document.getElementById('modal-img-preview-img');
+  img.src = mod.img;
+  preview.style.display = 'block';
+  
   document.getElementById('editModModal').classList.add('open');
 }
 
@@ -1037,6 +1077,7 @@ function closeEditModal(){
 
 function saveEditedMod(){
   if(!editingModId) return;
+  
   const name = document.getElementById('editModName').value.trim();
   const desc = document.getElementById('editModDesc').value.trim();
   const link = document.getElementById('editModLink').value.trim();
@@ -1051,23 +1092,21 @@ function saveEditedMod(){
     name, desc, link, img
   }).then(() => {
     closeEditModal();
-    showToast('تم تحديث المود ✓');
-  }).catch(error => {
-    showToast('خطأ في التحديث: ' + error.message);
-  });
+    showToast('تم التحديث بنجاح ✓');
+  }).catch(error => showToast('خطأ في التحديث: ' + error.message));
 }
 
 function deleteMyMod(modId){
   if(!confirm('هل تريد حذف هذا المود؟')) return;
   db.collection('mods').doc(modId).delete().then(() => {
-    showToast('تم حذف المود ✓');
-  }).catch(error => {
-    showToast('خطأ في الحذف: ' + error.message);
-  });
+    favorites = favorites.filter(x => x !== modId);
+    localStorage.setItem('desv_favs', JSON.stringify(favorites));
+    showToast('تم الحذف بنجاح ✓');
+  }).catch(error => showToast('خطأ في الحذف: ' + error.message));
 }
 
 // ============================================================
-// SHARE FUNCTION
+// SHARE & DOWNLOAD
 // ============================================================
 function shareItem(){
   if(!currentItem) return;
@@ -1075,19 +1114,7 @@ function shareItem(){
   if(navigator.share){
     navigator.share({title: 'Desv Add-ons', text: text, url: window.location.href}).catch(err => console.log('Share failed:', err));
   } else {
-    navigator.clipboard.writeText(text).then(() => {showToast('تم نسخ معلومات المود ✓');}).catch(() => {showToast('المود: ' + currentItem.name);});
-  }
-}
-
-// ============================================================
-// DOWNLOAD & SERVER
-// ============================================================
-function handleDownload(){
-  if(currentItem.type==='server'){
-    navigator.clipboard&&navigator.clipboard.writeText(currentItem.ip).then(()=>showToast('تم نسخ IP السيرفر ✓')).catch(()=>showToast('IP: '+currentItem.ip));
-  } else {
-    showToast('جاري التحميل ⬇');
-    window.open(currentItem.link, '_blank');
+    navigator.clipboard.writeText(text).then(() => showToast('تم نسخ المعلومات ✓')).catch(() => showToast('المود: ' + currentItem.name));
   }
 }
 
@@ -1101,26 +1128,24 @@ function switchPubTab(t){
   document.getElementById('ptab-server').classList.toggle('active',t==='server');
 }
 
-function previewImage(id,previewId){
-  const url=document.getElementById(id).value;
-  const p=document.getElementById(previewId);
-  if(url){
-    p.innerHTML=`<img src="${url}" />`;
-    p.style.display='block';
-  } else {
-    p.style.display='none';
-  }
-}
-
+let isPublishing = false;
 function submitContent(){
+  if(isPublishing || !currentUser) return;
+  const now = Date.now();
+  if(now - lastPublishTime < PUBLISH_COOLDOWN){
+    showToast(`يرجى الانتظار قليلاً قبل النشر مرة أخرى`);
+    return;
+  }
+  
   const name=document.getElementById('pub-name').value.trim();
   const desc=document.getElementById('pub-desc').value.trim();
   const link=document.getElementById('pub-link').value.trim();
   const img=document.getElementById('pub-img').value.trim();
-  const type=document.getElementById('pub-type').value;
   
   if(!name||!desc||!link){showToast('عبّي كل الحقول المطلوبة');return;}
   
+  isPublishing = true;
+  const type=document.getElementById('pub-type').value;
   const tagMap={addon:{tag:'ADD-ONS',cls:'tag-addon'},map:{tag:'MAPS',cls:'tag-map'},texture:{tag:'TEXTURES',cls:'tag-texture'},skin:{tag:'SKINS',cls:'tag-skin'}};
   const t=tagMap[type];
   
@@ -1131,12 +1156,23 @@ function submitContent(){
     rating: 0, ver: '1.20+', date: 'الآن', desc, link,
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   }).then(() => {
-    showToast('تم نشر المحتوى بنجاح ✓');
+    lastPublishTime = Date.now();
+    showToast('تم النشر بنجاح ✓');
+    isPublishing = false;
     switchPage('home');
-  }).catch(error => showToast('خطأ في النشر: ' + error.message));
+    // Reset form
+    document.getElementById('pub-name').value='';
+    document.getElementById('pub-desc').value='';
+    document.getElementById('pub-link').value='';
+    document.getElementById('pub-img').value='';
+  }).catch(error => {
+    showToast('خطأ في النشر: ' + error.message);
+    isPublishing = false;
+  });
 }
 
 function submitServer(){
+  if(isPublishing || !currentUser) return;
   const name=document.getElementById('pub-sname').value.trim();
   const ip=document.getElementById('pub-sip').value.trim();
   const desc=document.getElementById('pub-sdesc').value.trim();
@@ -1145,6 +1181,7 @@ function submitServer(){
   
   if(!name||!ip||!desc){showToast('عبّي كل الحقول المطلوبة');return;}
   
+  isPublishing = true;
   db.collection('mods').add({
     userId: currentUser.uid,
     name, type: 'server', tag: 'SERVER', tagClass: 'tag-server',
@@ -1153,8 +1190,12 @@ function submitServer(){
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   }).then(() => {
     showToast('تم نشر السيرفر بنجاح ✓');
+    isPublishing = false;
     switchPage('home');
-  }).catch(error => showToast('خطأ في النشر: ' + error.message));
+  }).catch(error => {
+    showToast('خطأ في النشر: ' + error.message);
+    isPublishing = false;
+  });
 }
 
 function toggleSetting(btn){
