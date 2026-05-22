@@ -50,7 +50,11 @@ input{font-family:'Tajawal',sans-serif}
 .auth-input:focus{border-color:var(--green);box-shadow:0 0 10px rgba(26,255,110,.2)}
 .auth-btn{width:100%;padding:12px;border-radius:10px;border:none;background:var(--green-bright);color:#000;font-size:.95rem;font-weight:700;transition:all .3s;cursor:pointer}
 .auth-btn:hover{background:var(--green);transform:scale(1.02);box-shadow:0 0 20px rgba(26,255,110,.3)}
+.auth-btn.google{background:#fff;color:#000;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:10px}
+.auth-btn.google i{color:#4285F4;font-size:1.2rem}
 .auth-err{color:#ff6b6b;font-size:.85rem;text-align:center;animation:slideIn .3s ease-out}
+.auth-divider{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:.8rem;margin:10px 0}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border2)}
 
 /* ── NAV ── */
 nav{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;justify-content:space-between}
@@ -190,172 +194,72 @@ main{flex:1;padding-bottom:80px}
 
 /* ── SETTINGS ── */
 .settings-page{padding:14px;max-width:480px;margin:0 auto}
-.settings-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.06em;margin-bottom:16px;color:var(--green)}
-.set-group{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:12px;transition:all .3s}
-.set-group:hover{border-color:var(--green);box-shadow:0 0 10px rgba(26,255,110,.1)}
-.set-item{display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid var(--border);cursor:pointer;transition:all .3s}
-.set-item:last-child{border-bottom:none}
-.set-item:hover{background:var(--bg3)}
-.set-icon{width:40px;height:40px;border-radius:10px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;color:var(--green);transition:all .3s}
-.set-item:hover .set-icon{transform:scale(1.1)}
-.set-text{flex:1}
-.set-label{font-size:.9rem;font-weight:700;margin-bottom:2px}
-.set-desc{font-size:.8rem;color:var(--muted)}
-.set-toggle{width:44px;height:26px;border-radius:99px;background:var(--border);border:none;position:relative;cursor:pointer;transition:all .3s}
-.set-toggle.on{background:var(--green);box-shadow:0 0 10px rgba(26,255,110,.3)}
-.set-toggle::after{content:'';position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;top:2px;left:2px;transition:left .3s}
-.set-toggle.on::after{left:20px}
-.set-logout{width:100%;padding:12px;border-radius:10px;border:none;background:rgba(255,107,107,.1);color:#ff6b6b;font-size:.95rem;font-weight:700;transition:all .3s;cursor:pointer;margin-top:10px}
-.set-logout:hover{background:rgba(255,107,107,.2);transform:scale(1.02)}
-
-/* ── MY MODS SECTION ── */
-.my-mods-container{margin-bottom:20px}
-.my-mods-list{display:flex;flex-direction:column;gap:10px}
-.mod-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;gap:12px;align-items:center;transition:all .3s;animation:slideIn .4s ease-out}
-.mod-item:hover{border-color:var(--green);box-shadow:0 0 10px rgba(26,255,110,.1);transform:translateX(-3px)}
-.mod-item-img{width:60px;height:60px;border-radius:8px;object-fit:cover;flex-shrink:0;transition:transform .3s}
-.mod-item:hover .mod-item-img{transform:scale(1.05)}
-.mod-item-info{flex:1;min-width:0}
-.mod-item-name{font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mod-item-type{font-size:.75rem;color:var(--muted);margin-bottom:4px}
-.mod-item-actions{display:flex;gap:6px}
-.mod-btn{width:32px;height:32px;border-radius:6px;border:none;background:var(--bg3);color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all .3s;cursor:pointer;flex-shrink:0}
-.mod-btn:hover{background:var(--green);color:#000;transform:scale(1.1)}
-.mod-btn.delete:hover{background:#ff6b6b}
-.no-mods{text-align:center;padding:20px;color:var(--muted);font-size:.9rem}
-
-/* ── EDIT MOD MODAL ── */
-.modal-overlay{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(5px);animation:fadeIn .3s ease-out}
-.modal-overlay.open{display:flex}
-.modal-content{background:var(--card);border:1px solid var(--border);border-radius:16px;width:100%;max-width:420px;max-height:90vh;overflow-y:auto;padding:20px;animation:slideIn .4s ease-out}
-.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.modal-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.04em;color:var(--green)}
-.modal-close{width:32px;height:32px;border-radius:50%;border:none;background:var(--bg3);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;flex-shrink:0}
-.modal-close:hover{background:var(--green);color:#000;transform:scale(1.1)}
-.modal-form-group{margin-bottom:12px}
-.modal-label{font-size:.78rem;font-weight:700;color:var(--muted);letter-spacing:.05em;margin-bottom:6px;display:block}
-.modal-input,.modal-textarea{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-size:.9rem;outline:none;transition:all .3s;font-family:'Tajawal',sans-serif}
-.modal-input:focus,.modal-textarea:focus{border-color:var(--green);box-shadow:0 0 10px rgba(26,255,110,.2)}
-.modal-textarea{resize:vertical;min-height:70px}
-.modal-img-preview{width:100%;aspect-ratio:16/9;border-radius:8px;overflow:hidden;margin-bottom:10px;display:none;animation:slideIn .3s ease-out}
-.modal-img-preview img{width:100%;height:100%;object-fit:cover}
-.modal-actions{display:flex;gap:10px;margin-top:16px}
-.modal-btn{flex:1;padding:10px;border-radius:8px;border:none;font-size:.9rem;font-weight:700;transition:all .3s;cursor:pointer}
-.modal-btn-save{background:var(--green-bright);color:#000}
-.modal-btn-save:hover{background:var(--green);transform:scale(1.02);box-shadow:0 0 15px rgba(26,255,110,.3)}
-.modal-btn-cancel{background:var(--bg3);color:var(--muted);border:1px solid var(--border2)}
-.modal-btn-cancel:hover{border-color:var(--green);color:var(--green);background:rgba(26,255,110,.05)}
-
-/* ── SHARE BUTTON ── */
-.share-btn{width:46px;height:46px;border-radius:12px;border:1px solid var(--border2);background:var(--card);color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all .3s;cursor:pointer}
-.share-btn:hover{border-color:var(--green);color:var(--green);background:rgba(26,255,110,.1)}
-
-/* ── BOTTOM NAV ── */
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(10,10,10,.95);backdrop-filter:blur(16px);border-top:1px solid var(--border);padding:8px 0 18px;display:flex;justify-content:space-around}
-.bnav{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);font-size:.7rem;font-weight:700;cursor:pointer;padding:4px 16px;border-radius:12px;transition:all .3s;border:none;background:none}
-.bnav i{font-size:1.2rem;transition:all .3s}
-.bnav.active{color:var(--green)}
-.bnav.active i{color:var(--green);text-shadow:0 0 10px rgba(26,255,110,.4)}
-
-/* ── TOAST ── */
-.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(20,20,20,.95);border:1px solid var(--border);border-radius:12px;padding:12px 16px;font-size:.9rem;font-weight:700;color:var(--text);opacity:0;transition:all .3s;pointer-events:none;z-index:1000;white-space:nowrap;backdrop-filter:blur(10px)}
-.toast.show{opacity:1;pointer-events:auto;animation:slideIn .3s ease-out}
+.settings-title{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.06em;margin-bottom:4px;color:var(--green)}
 </style>
 </head>
 <body>
 
-<!-- LOADER -->
 <div id="loader">
-  <div class="ld-logo">Desv<span>.</span></div>
+  <div class="ld-logo">DESV<span>.</span></div>
   <div class="ld-bar"><div class="ld-fill"></div></div>
   <div class="ld-txt">جاري التحميل...</div>
 </div>
 
-<!-- AUTH PAGE -->
-<div class="auth-page" id="authPage">
-  <div class="auth-logo">Desv<span>.</span></div>
-  <div class="auth-form">
-    <div class="auth-title">تسجيل الدخول</div>
-    <input type="email" class="auth-input" id="authEmail" placeholder="البريد الإلكتروني" />
-    <input type="password" class="auth-input" id="authPassword" placeholder="كلمة المرور" />
-    <button class="auth-btn" onclick="handleLogin()">دخول</button>
-    <div class="auth-err" id="authErr"></div>
-  </div>
-</div>
-
-<!-- APP -->
 <div id="app">
-  <!-- NAV -->
+  <div class="auth-page" id="authPage">
+    <div class="auth-logo">DESV<span>.</span></div>
+    <div class="auth-form">
+      <div class="auth-title">تسجيل الدخول</div>
+      <input type="email" id="authEmail" class="auth-input" placeholder="البريد الإلكتروني"/>
+      <input type="password" id="authPassword" class="auth-input" placeholder="كلمة المرور"/>
+      <button class="auth-btn" onclick="handleLogin()">دخول</button>
+      
+      <div class="auth-divider">أو</div>
+      
+      <button class="auth-btn google" onclick="handleGoogleLogin()">
+        <i class="fa-brands fa-google"></i> الدخول بواسطة جوجل
+      </button>
+      
+      <div id="authErr" class="auth-err"></div>
+    </div>
+  </div>
+
   <nav>
     <div class="nav-left">
-      <div class="nav-logo" id="navLogo">
-        <span>Desv</span>
+      <div class="nav-logo" id="navLogo">DESV<span>.</span></div>
+      <div class="nav-user" id="navUser" style="display:none">
+        <i class="fa-solid fa-circle-user"></i>
+        <span id="navUserEmail"></span>
       </div>
-    </div>
-    <div class="nav-user" id="navUser" style="display:none">
-      <i class="fa-solid fa-user-circle"></i>
-      <span id="navUserEmail"></span>
     </div>
     <button class="nav-sign" id="navLogout" style="display:none" onclick="handleLogout()">خروج</button>
   </nav>
 
-  <!-- MAIN -->
   <main>
     <!-- HOME PAGE -->
     <div class="page active" id="page-home">
       <div class="hero-slider" id="heroSlider">
-        <div class="hero-empty">
-          <i class="fa-solid fa-inbox"></i>
-          <p>لم تضف مودات حتى الآن</p>
-        </div>
+        <div id="homeSlides"></div>
+        <div class="slider-dots" id="sliderDots"></div>
       </div>
-      <div id="homeSlides"></div>
-      <div id="sliderDots" class="slider-dots"></div>
 
       <div class="section">
-        <div class="sec-title">
-          <i class="fa-solid fa-star"></i>
-          الأحدث
-          <span id="homeCount">0</span>
-        </div>
-        
+        <div class="sec-title">الأحدث <span id="itemsCount">0</span></div>
         <div class="sort-controls">
-          <button class="sort-btn active" onclick="setSortOrder('newest')" title="أحدث">
-            <i class="fa-solid fa-arrow-down-short-wide"></i> أحدث
-          </button>
-          <button class="sort-btn" onclick="setSortOrder('oldest')" title="أقدم">
-            <i class="fa-solid fa-arrow-up-short-wide"></i> أقدم
-          </button>
-          <button class="sort-btn" onclick="setSortOrder('name')" title="أبجدي">
-            <i class="fa-solid fa-arrow-down-a-z"></i> أبجدي
-          </button>
+          <button class="sort-btn active" onclick="setSortOrder('newest')">أحدث</button>
+          <button class="sort-btn" onclick="setSortOrder('oldest')">أقدم</button>
+          <button class="sort-btn" onclick="setSortOrder('name')">أبجدي</button>
         </div>
-
         <div class="filter-row">
-          <button class="fbtn active" onclick="filterAndGo('all')">
-            <i class="fa-solid fa-th"></i> الكل
-          </button>
-          <button class="fbtn" onclick="filterAndGo('addon')">
-            <i class="fa-solid fa-cube"></i> مودات
-          </button>
-          <button class="fbtn" onclick="filterAndGo('map')">
-            <i class="fa-solid fa-map"></i> خرائط
-          </button>
-          <button class="fbtn" onclick="filterAndGo('texture')">
-            <i class="fa-solid fa-image"></i> تكاسير
-          </button>
-          <button class="fbtn" onclick="filterAndGo('skin')">
-            <i class="fa-solid fa-user"></i> سكنات
-          </button>
-          <button class="fbtn" onclick="filterAndGo('server')">
-            <i class="fa-solid fa-server"></i> سيرفرات
-          </button>
+          <button class="fbtn active" onclick="filterItems('all')">الكل</button>
+          <button class="fbtn" onclick="filterItems('addon')">مودات</button>
+          <button class="fbtn" onclick="filterItems('map')">خرائط</button>
+          <button class="fbtn" onclick="filterItems('texture')">تكاسير</button>
+          <button class="fbtn" onclick="filterItems('skin')">سكنات</button>
+          <button class="fbtn" onclick="filterItems('server')">سيرفرات</button>
         </div>
         <div class="cards-grid" id="homeGrid"></div>
-        <div id="homeEmpty" style="text-align:center;padding:30px 16px;color:var(--muted)">
-          <i class="fa-solid fa-inbox" style="font-size:2.5rem;margin-bottom:10px;opacity:.5"></i>
-          <p>لا توجد مودات بعد</p>
-        </div>
+        <div id="noItems" style="display:none;text-align:center;padding:40px;color:var(--muted)">لا توجد مودات بعد</div>
       </div>
     </div>
 
@@ -364,37 +268,15 @@ main{flex:1;padding-bottom:80px}
       <div class="search-page">
         <div class="search-bar">
           <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" id="searchInput" placeholder="ابحث عن مود..." onkeyup="doSearch(this.value)" />
+          <input type="text" id="searchInput" placeholder="ابحث عن مود، خريطة، أو سيرفر..." oninput="handleSearch()"/>
         </div>
-
-        <div style="margin-bottom:14px">
-          <div class="filter-row" id="searchFilters">
-            <button class="fbtn active" onclick="setSearchFilter('all',this)">
-              <i class="fa-solid fa-th"></i> الكل
-            </button>
-            <button class="fbtn" onclick="setSearchFilter('addon',this)">
-              <i class="fa-solid fa-cube"></i> مودات
-            </button>
-            <button class="fbtn" onclick="setSearchFilter('map',this)">
-              <i class="fa-solid fa-map"></i> خرائط
-            </button>
-            <button class="fbtn" onclick="setSearchFilter('texture',this)">
-              <i class="fa-solid fa-image"></i> تكاسير
-            </button>
-            <button class="fbtn" onclick="setSearchFilter('skin',this)">
-              <i class="fa-solid fa-user"></i> سكنات
-            </button>
-            <button class="fbtn" onclick="setSearchFilter('server',this)">
-              <i class="fa-solid fa-server"></i> سيرفرات
-            </button>
-          </div>
+        <div class="filter-row">
+          <button class="fbtn active" onclick="filterSearch('all')">الكل</button>
+          <button class="fbtn" onclick="filterSearch('addon')">مودات</button>
+          <button class="fbtn" onclick="filterSearch('map')">خرائط</button>
+          <button class="fbtn" onclick="filterSearch('server')">سيرفرات</button>
         </div>
-
-        <div class="cards-grid" id="searchResults"></div>
-        <div id="noRes" style="text-align:center;padding:30px 16px;color:var(--muted)">
-          <i class="fa-solid fa-search" style="font-size:2.5rem;margin-bottom:10px;opacity:.5"></i>
-          <p>لم نجد نتائج</p>
-        </div>
+        <div class="cards-grid" id="searchGrid"></div>
       </div>
     </div>
 
@@ -402,87 +284,71 @@ main{flex:1;padding-bottom:80px}
     <div class="page" id="page-publish">
       <div class="pub-wrap">
         <div class="pub-title">نشر محتوى</div>
-        <div class="pub-sub">شارك مودك أو سيرفرك مع المجتمع</div>
-
+        <p class="pub-sub">شارك إبداعاتك مع مجتمع ماينكرافت</p>
+        
         <div class="pub-tabs">
           <button class="pub-tab active" id="ptab-mod" onclick="switchPubTab('mod')">
-            <i class="fa-solid fa-cube"></i> مود
+            <i class="fa-solid fa-cube"></i> مود / خريطة
           </button>
           <button class="pub-tab" id="ptab-server" onclick="switchPubTab('server')">
             <i class="fa-solid fa-server"></i> سيرفر
           </button>
         </div>
 
-        <!-- MOD FORM -->
         <div id="pub-mod-form">
           <div class="form-group">
-            <label class="form-label">اسم المود *</label>
-            <input type="text" class="form-input" id="pub-name" placeholder="مثال: Super Mod" />
+            <label class="form-label">الاسم</label>
+            <input type="text" id="pub-name" class="form-input" placeholder="اسم المود أو الخريطة"/>
           </div>
-
           <div class="form-group">
-            <label class="form-label">نوع المود *</label>
-            <select class="form-select" id="pub-type">
-              <option value="addon">Add-on</option>
-              <option value="map">خريطة</option>
-              <option value="texture">تكسير</option>
-              <option value="skin">سكن</option>
+            <label class="form-label">النوع</label>
+            <select id="pub-type" class="form-select">
+              <option value="addon">مود (Add-on)</option>
+              <option value="map">خريطة (Map)</option>
+              <option value="texture">حزمة موارد (Texture)</option>
+              <option value="skin">سكن (Skin)</option>
             </select>
           </div>
-
           <div class="form-group">
-            <label class="form-label">الوصف *</label>
-            <textarea class="form-textarea" id="pub-desc" placeholder="اكتب وصفاً للمود..."></textarea>
+            <label class="form-label">الوصف</label>
+            <textarea id="pub-desc" class="form-textarea" placeholder="اشرح محتوى المود..."></textarea>
           </div>
-
           <div class="form-group">
-            <label class="form-label">رابط التحميل *</label>
-            <input type="url" class="form-input" id="pub-link" placeholder="https://..." />
+            <label class="form-label">رابط التحميل</label>
+            <input type="url" id="pub-link" class="form-input" placeholder="رابط مباشر أو ميديا فاير"/>
           </div>
-
           <div class="form-group">
-            <label class="form-label">رابط الصورة</label>
-            <input type="url" class="form-input" id="pub-img" placeholder="https://..." onchange="previewImage('pub-img', 'pub-preview')" />
-            <div class="img-preview" id="pub-preview">
-              <img id="pub-preview-img" src="" alt="معاينة" />
-            </div>
+            <label class="form-label">رابط الصورة (اختياري)</label>
+            <input type="url" id="pub-img" class="form-input" placeholder="رابط صورة للمعاينة" oninput="previewImage('pub-img','pub-preview')"/>
+            <div class="img-preview" id="pub-preview"></div>
           </div>
-
           <button class="pub-submit" onclick="submitContent()">
             <i class="fa-solid fa-paper-plane"></i> نشر الآن
           </button>
         </div>
 
-        <!-- SERVER FORM -->
         <div id="pub-server-form" style="display:none">
           <div class="form-group">
-            <label class="form-label">اسم السيرفر *</label>
-            <input type="text" class="form-input" id="pub-sname" placeholder="مثال: Pro Server" />
+            <label class="form-label">اسم السيرفر</label>
+            <input type="text" id="pub-sname" class="form-input" placeholder="اسم السيرفر"/>
           </div>
-
           <div class="form-group">
-            <label class="form-label">عنوان IP *</label>
-            <input type="text" class="form-input" id="pub-sip" placeholder="192.168.1.1" />
+            <label class="form-label">عنوان IP</label>
+            <input type="text" id="pub-sip" class="form-input" placeholder="مثال: play.server.com"/>
           </div>
-
           <div class="form-group">
-            <label class="form-label">البورت</label>
-            <input type="text" class="form-input" id="pub-sport" placeholder="19132" />
+            <label class="form-label">البورت (Port)</label>
+            <input type="text" id="pub-sport" class="form-input" placeholder="الافتراضي: 19132"/>
           </div>
-
           <div class="form-group">
-            <label class="form-label">الوصف *</label>
-            <textarea class="form-textarea" id="pub-sdesc" placeholder="اكتب وصفاً للسيرفر..."></textarea>
+            <label class="form-label">الوصف</label>
+            <textarea id="pub-sdesc" class="form-textarea" placeholder="مميزات السيرفر..."></textarea>
           </div>
-
           <div class="form-group">
-            <label class="form-label">رابط الصورة</label>
-            <input type="url" class="form-input" id="pub-simg" placeholder="https://..." onchange="previewImage('pub-simg', 'pub-server-preview')" />
-            <div class="img-preview" id="pub-server-preview">
-              <img id="pub-server-preview-img" src="" alt="معاينة" />
-            </div>
+            <label class="form-label">رابط الصورة (اختياري)</label>
+            <input type="url" id="pub-simg" class="form-input" placeholder="رابط صورة للسيرفر" oninput="previewImage('pub-simg','pub-server-preview')"/>
+            <div class="img-preview" id="pub-server-preview"></div>
           </div>
-
           <button class="pub-submit" onclick="submitServer()">
             <i class="fa-solid fa-paper-plane"></i> نشر السيرفر
           </button>
@@ -490,13 +356,10 @@ main{flex:1;padding-bottom:80px}
       </div>
     </div>
 
-    <!-- FAVORITES PAGE -->
+    <!-- FAVS PAGE -->
     <div class="page" id="page-favs">
       <div class="section">
-        <div class="sec-title">
-          <i class="fa-solid fa-heart"></i>
-          المفضلة
-        </div>
+        <div class="sec-title">المفضلة</div>
         <div class="cards-grid" id="favsGrid"></div>
         <div id="noFavs" style="text-align:center;padding:30px 16px;color:var(--muted)">
           <i class="fa-solid fa-heart" style="font-size:2.5rem;margin-bottom:10px;opacity:.5"></i>
@@ -771,34 +634,39 @@ function handleLogin(){
     return;
   }
 
-  if(!email.includes('@')){
-    errEl.textContent = 'بريد إلكتروني غير صحيح';
-    return;
-  }
-
-  if(password.length < 6){
-    errEl.textContent = 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
-    return;
-  }
-
   auth.signInWithEmailAndPassword(email, password)
     .then(userCredential => {
-      currentUser = userCredential.user;
-      localStorage.setItem('desv_user', JSON.stringify({email: currentUser.email, id: currentUser.uid}));
-      
-      document.getElementById('authPage').classList.add('hidden');
-      document.getElementById('app').classList.add('show');
-      document.getElementById('navUser').style.display = 'flex';
-      document.getElementById('navLogout').style.display = 'block';
-      document.getElementById('navUserEmail').textContent = email;
-      document.getElementById('accountEmail').textContent = email;
-
-      showToast('مرحباً ' + email);
-      loadItemsFromFirebase();
+      onAuthSuccess(userCredential.user);
     })
     .catch(error => {
       errEl.textContent = 'فشل تسجيل الدخول: ' + error.message;
     });
+}
+
+function handleGoogleLogin(){
+  const provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider)
+    .then(result => {
+      onAuthSuccess(result.user);
+    })
+    .catch(error => {
+      document.getElementById('authErr').textContent = 'فشل تسجيل الدخول بجوجل: ' + error.message;
+    });
+}
+
+function onAuthSuccess(user){
+  currentUser = user;
+  localStorage.setItem('desv_user', JSON.stringify({email: user.email, id: user.uid}));
+  
+  document.getElementById('authPage').classList.add('hidden');
+  document.getElementById('app').classList.add('show');
+  document.getElementById('navUser').style.display = 'flex';
+  document.getElementById('navLogout').style.display = 'block';
+  document.getElementById('navUserEmail').textContent = user.email;
+  document.getElementById('accountEmail').textContent = user.email;
+
+  showToast('مرحباً ' + user.email);
+  loadItemsFromFirebase();
 }
 
 function handleLogout(){
@@ -909,194 +777,188 @@ function buildSliderDots(){
           <div class="slide-name">${it.name}</div>
           <div class="slide-tag">${it.tag}</div>
         </div>
-        <button class="slide-dl" onclick="openDetail('${it.id}')"><i class="fa-solid fa-arrow-left"></i></button>
+        <button class="slide-dl" onclick="openDetail('${it.id}')"><i class="fa-solid fa-chevron-left"></i></button>
       </div>
     `;
     slidesEl.appendChild(slide);
-    const d=document.createElement('div');
-    d.className='sdot'+(i===0?' active':'');
-    d.onclick=()=>goSlide(i);
-    dotsEl.appendChild(d);
+    
+    const dot=document.createElement('div');
+    dot.className='sdot'+(i===0?' active':'');
+    dot.onclick=()=>setSlide(i);
+    dotsEl.appendChild(dot);
   });
   
   heroSlider.appendChild(slidesEl);
   heroSlider.appendChild(dotsEl);
 }
 
-function goSlide(i){
-  const slides=document.querySelectorAll('.slide'),dots=document.querySelectorAll('.sdot');
-  if(slides.length === 0) return;
-  slides[slideIdx].classList.remove('active');dots[slideIdx].classList.remove('active');
-  slideIdx=i;slides[slideIdx].classList.add('active');dots[slideIdx].classList.add('active');
+function setSlide(idx){
+  const slides=document.querySelectorAll('.slide');
+  const dots=document.querySelectorAll('.sdot');
+  if(!slides.length) return;
+  slides.forEach(s=>s.classList.remove('active'));
+  dots.forEach(d=>d.classList.remove('active'));
+  slideIdx=idx;
+  slides[idx].classList.add('active');
+  dots[idx].classList.add('active');
 }
 
 function startSlider(){
-  if(document.querySelectorAll('.slide').length > 0){
-    sliderTimer=setInterval(()=>goSlide((slideIdx+1)%document.querySelectorAll('.slide').length),4000);
-  }
+  clearInterval(sliderTimer);
+  sliderTimer=setInterval(()=>{
+    const slides=document.querySelectorAll('.slide');
+    if(slides.length<2) return;
+    let next=(slideIdx+1)%slides.length;
+    setSlide(next);
+  },5000);
 }
 
 // ============================================================
-// BUILD HOME GRID
+// HOME GRID
 // ============================================================
 function buildHomeGrid(){
   const grid=document.getElementById('homeGrid');
-  const empty=document.getElementById('homeEmpty');
+  const noItems=document.getElementById('noItems');
+  const countEl=document.getElementById('itemsCount');
   
-  let items=ITEMS.filter(x=>currentFilter==='all'||x.type===currentFilter);
-  items = getSortedItems(items);
+  let filtered = currentFilter==='all'?ITEMS:ITEMS.filter(x=>x.type===currentFilter);
+  filtered = getSortedItems(filtered);
   
-  document.getElementById('homeCount').textContent = items.length;
-  
-  if(items.length === 0){
-    grid.innerHTML='';
-    empty.style.display='block';
-  } else {
-    grid.innerHTML=items.map(cardHTML).join('');
-    empty.style.display='none';
-  }
+  grid.innerHTML=filtered.map(cardHTML).join('');
+  noItems.style.display=filtered.length===0?'block':'none';
+  countEl.textContent=filtered.length;
 }
 
 function cardHTML(it){
-  return`<div class="mc-card" onclick="openDetail('${it.id}')">
-    <div class="card-img" style="background:var(--bg3)">
-      <img src="${it.img}" alt="${it.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover"/>
-      <div class="card-img-label">${it.tag}</div>
-    </div>
-    <div class="card-body">
-      <div class="card-name">${it.name}</div>
-      <div class="card-footer">
-        <span class="card-tag ${it.tagClass}">${it.tag}</span>
-        <button class="card-dl" onclick="event.stopPropagation();showToast('جاري التحميل ⬇')"><i class="fa-solid fa-download"></i></button>
+  return `
+    <div class="mc-card" onclick="openDetail('${it.id}')">
+      <div class="card-img">
+        <img src="${it.img}" loading="lazy" />
+        <div class="card-img-label">${it.tag}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">${it.name}</div>
+        <div class="card-footer">
+          <div class="card-tag ${it.tagClass}">${it.tag}</div>
+          <button class="card-dl"><i class="fa-solid fa-download"></i></button>
+        </div>
       </div>
     </div>
-  </div>`;
+  `;
 }
 
-// ============================================================
-// FILTER & NAV
-// ============================================================
-function filterAndGo(type){currentFilter=type;buildHomeGrid();switchPage('home');}
-
-function setSearchFilter(f,btn){
-  searchFilter=f;
-  document.querySelectorAll('#searchFilters .fbtn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  doSearch(document.getElementById('searchInput').value);
-}
-
-function switchPage(name){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.bnav').forEach(b=>b.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  const bn=document.getElementById('bn-'+name);
-  if(bn)bn.classList.add('active');
-  if(name==='search')setTimeout(()=>document.getElementById('searchInput').focus(),100);
-  if(name==='favs')renderFavs();
-  if(name==='settings')renderMyMods();
+function filterItems(f){
+  currentFilter=f;
+  document.querySelectorAll('.filter-row .fbtn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  buildHomeGrid();
 }
 
 // ============================================================
 // SEARCH
 // ============================================================
-function doSearch(q){
-  const val=q.trim().toLowerCase();
-  const res=document.getElementById('searchResults');
-  const noRes=document.getElementById('noRes');
-  let items=ITEMS;
-  if(searchFilter!=='all')items=items.filter(x=>x.type===searchFilter);
-  if(val)items=items.filter(x=>x.name.toLowerCase().includes(val)||x.desc.toLowerCase().includes(val));
-  res.innerHTML=items.map(cardHTML).join('');
-  noRes.style.display=items.length===0?'block':'none';
+function handleSearch(){
+  renderSearchAll();
 }
 
-function renderSearchAll(){doSearch('');}
+function filterSearch(f){
+  searchFilter=f;
+  document.querySelectorAll('#page-search .fbtn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderSearchAll();
+}
 
-// ============================================================
-// IMAGE PREVIEW
-// ============================================================
-function previewImage(inputId, previewId){
-  const url = document.getElementById(inputId).value.trim();
-  const preview = document.getElementById(previewId);
-  const img = document.getElementById(previewId + '-img');
-  
-  if(url){
-    img.src = url;
-    img.onload = () => {
-      preview.style.display = 'block';
-    };
-    img.onerror = () => {
-      preview.style.display = 'none';
-      showToast('فشل تحميل الصورة');
-    };
-  } else {
-    preview.style.display = 'none';
-  }
+function renderSearchAll(){
+  const q=document.getElementById('searchInput').value.toLowerCase().trim();
+  const grid=document.getElementById('searchGrid');
+  let res=ITEMS.filter(x=>x.name.toLowerCase().includes(q)||x.desc.toLowerCase().includes(q));
+  if(searchFilter!=='all') res=res.filter(x=>x.type===searchFilter);
+  grid.innerHTML=res.map(cardHTML).join('');
 }
 
 // ============================================================
-// DETAIL
+// DETAIL PAGE
 // ============================================================
 function openDetail(id){
-  const it=ITEMS.find(x=>x.id===id);
-  if(!it)return;
-  currentItem=it;
-  document.getElementById('dHeroImg').src=it.img;
-  document.getElementById('dTag').textContent=it.tag;
-  document.getElementById('dTag').className='detail-hero-tag card-tag '+it.tagClass;
-  document.getElementById('dName').textContent=it.name;
-  document.getElementById('dRating').textContent=it.rating||'0';
-  document.getElementById('dVer').textContent=it.ver||'1.20+';
-  document.getElementById('dDate').textContent=it.date||'الآن';
-  document.getElementById('dDesc').textContent=it.desc;
-  document.getElementById('dDownloadLink').href=it.link;
+  currentItem=ITEMS.find(x=>x.id===id);
+  if(!currentItem) return;
   
-  document.getElementById('dServerInfo').style.display=it.type==='server'?'block':'none';
-  document.getElementById('dDlBtn').innerHTML=it.type==='server'?'<i class="fa-solid fa-play"></i> انضم الآن':'<i class="fa-solid fa-download"></i> تحميل';
-  if(it.type==='server'){
-    document.getElementById('dIP').textContent=it.ip||'—';
-    document.getElementById('dPort').textContent=it.port||'19132';
-    document.getElementById('dOnline').textContent=it.online||'—';
+  document.getElementById('dHeroImg').src=currentItem.img;
+  document.getElementById('dTag').textContent=currentItem.tag;
+  document.getElementById('dTag').className='detail-hero-tag '+(currentItem.tagClass||'tag-addon');
+  document.getElementById('dName').textContent=currentItem.name;
+  document.getElementById('dRating').textContent=currentItem.rating||'0';
+  document.getElementById('dVer').textContent=currentItem.ver||'1.20+';
+  document.getElementById('dDate').textContent=currentItem.date||'الآن';
+  document.getElementById('dDesc').textContent=currentItem.desc;
+  
+  const dlBtn=document.getElementById('dDlBtn');
+  const dlLink=document.getElementById('dDownloadLink');
+  
+  if(currentItem.type==='server'){
+    dlBtn.innerHTML='<i class="fa-solid fa-copy"></i> نسخ IP';
+    dlLink.parentElement.style.display='none';
+    document.getElementById('dServerInfo').style.display='block';
+    document.getElementById('dIP').textContent=currentItem.ip;
+    document.getElementById('dPort').textContent=currentItem.port||'19132';
+    document.getElementById('dOnline').textContent=currentItem.online||'0 لاعب';
+  } else {
+    dlBtn.innerHTML='<i class="fa-solid fa-download"></i> تحميل الآن';
+    dlLink.parentElement.style.display='block';
+    dlLink.href=currentItem.link;
+    document.getElementById('dServerInfo').style.display='none';
   }
   
   const favBtn=document.getElementById('dFavBtn');
-  favBtn.className='btn-fav'+(favorites.includes(id)?' faved':'');
-  favBtn.innerHTML=favorites.includes(id)?'<i class="fa-solid fa-heart"></i>':'<i class="fa-regular fa-heart"></i>';
-  
-  const delBtn=document.getElementById('dDelBtn');
-  delBtn.style.display=it.userId===currentUser.uid?'flex':'none';
-  
-  document.getElementById('detailPage').classList.add('open');
-  document.getElementById('detailPage').scrollTop=0;
-}
-
-function closeDetail(){document.getElementById('detailPage').classList.remove('open');}
-
-function deleteItem(){
-  if(!currentItem) return;
-  
-  if(currentItem.userId !== currentUser.uid){
-    showToast('لا يمكنك حذف مود شخص آخر');
-    return;
+  if(favorites.includes(id)){
+    favBtn.className='btn-fav faved';
+    favBtn.innerHTML='<i class="fa-solid fa-heart"></i>';
+  } else {
+    favBtn.className='btn-fav';
+    favBtn.innerHTML='<i class="fa-regular fa-heart"></i>';
   }
   
-  const confirmed = confirm('هل تريد حذف هذا المود/السيرفر؟ هذا الإجراء لا يمكن التراجع عنه.');
-  if(!confirmed) return;
+  // Show delete button only for owner
+  const delBtn = document.getElementById('dDelBtn');
+  if(currentUser && currentItem.userId === currentUser.uid){
+    delBtn.style.display = 'flex';
+  } else {
+    delBtn.style.display = 'none';
+  }
+  
+  document.getElementById('detailPage').classList.add('open');
+}
+
+function closeDetail(){
+  document.getElementById('detailPage').classList.remove('open');
+}
+
+function deleteItem(){
+  if(!currentItem || !currentUser || currentItem.userId !== currentUser.uid) return;
+  if(!confirm('هل أنت متأكد من حذف هذا المحتوى؟')) return;
   
   db.collection('mods').doc(currentItem.id).delete().then(() => {
-    favorites = favorites.filter(x => x !== currentItem.id);
-    localStorage.setItem('desv_favs', JSON.stringify(favorites));
+    showToast('تم الحذف بنجاح ✓');
     closeDetail();
-    showToast('تم حذف المود بنجاح ✓');
-  }).catch(error => {
-    showToast('خطأ في الحذف: ' + error.message);
-  });
+  }).catch(err => showToast('خطأ في الحذف: ' + err.message));
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function switchPage(p){
+  document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  document.querySelectorAll('.bnav').forEach(bn=>bn.classList.remove('active'));
+  document.getElementById('bn-'+p).classList.add('active');
+  window.scrollTo(0,0);
 }
 
 // ============================================================
 // FAVORITES
 // ============================================================
 function toggleFav(){
+  if(!currentItem) return;
   const id=currentItem.id;
   const btn=document.getElementById('dFavBtn');
   if(favorites.includes(id)){
@@ -1127,6 +989,7 @@ function renderFavs(){
 function renderMyMods(){
   const list = document.getElementById('myModsList');
   const noMods = document.getElementById('noMyMods');
+  if(!currentUser) return;
   const myMods = ITEMS.filter(x => x.userId === currentUser.uid);
   
   if(myMods.length === 0){
@@ -1164,11 +1027,6 @@ function openEditModal(modId){
   document.getElementById('editModLink').value = mod.link || '';
   document.getElementById('editModImg').value = mod.img;
   
-  const preview = document.getElementById('modal-img-preview');
-  const img = document.getElementById('modal-img-preview-img');
-  img.src = mod.img;
-  preview.style.display = 'block';
-  
   document.getElementById('editModModal').classList.add('open');
 }
 
@@ -1179,10 +1037,6 @@ function closeEditModal(){
 
 function saveEditedMod(){
   if(!editingModId) return;
-  
-  const mod = ITEMS.find(x => x.id === editingModId);
-  if(!mod || mod.userId !== currentUser.uid) return;
-  
   const name = document.getElementById('editModName').value.trim();
   const desc = document.getElementById('editModDesc').value.trim();
   const link = document.getElementById('editModLink').value.trim();
@@ -1194,7 +1048,7 @@ function saveEditedMod(){
   }
   
   db.collection('mods').doc(editingModId).update({
-    name, desc, link: link || mod.link, img: img || mod.img
+    name, desc, link, img
   }).then(() => {
     closeEditModal();
     showToast('تم تحديث المود ✓');
@@ -1204,15 +1058,8 @@ function saveEditedMod(){
 }
 
 function deleteMyMod(modId){
-  const mod = ITEMS.find(x => x.id === modId);
-  if(!mod || mod.userId !== currentUser.uid) return;
-  
-  const confirmed = confirm('هل تريد حذف هذا المود؟');
-  if(!confirmed) return;
-  
+  if(!confirm('هل تريد حذف هذا المود؟')) return;
   db.collection('mods').doc(modId).delete().then(() => {
-    favorites = favorites.filter(x => x !== modId);
-    localStorage.setItem('desv_favs', JSON.stringify(favorites));
     showToast('تم حذف المود ✓');
   }).catch(error => {
     showToast('خطأ في الحذف: ' + error.message);
@@ -1240,6 +1087,7 @@ function handleDownload(){
     navigator.clipboard&&navigator.clipboard.writeText(currentItem.ip).then(()=>showToast('تم نسخ IP السيرفر ✓')).catch(()=>showToast('IP: '+currentItem.ip));
   } else {
     showToast('جاري التحميل ⬇');
+    window.open(currentItem.link, '_blank');
   }
 }
 
@@ -1253,27 +1101,26 @@ function switchPubTab(t){
   document.getElementById('ptab-server').classList.toggle('active',t==='server');
 }
 
-let isPublishing = false;
+function previewImage(id,previewId){
+  const url=document.getElementById(id).value;
+  const p=document.getElementById(previewId);
+  if(url){
+    p.innerHTML=`<img src="${url}" />`;
+    p.style.display='block';
+  } else {
+    p.style.display='none';
+  }
+}
 
 function submitContent(){
-  if(isPublishing) return;
-  const now = Date.now();
-  if(now - lastPublishTime < PUBLISH_COOLDOWN){
-    const remaining = Math.ceil((PUBLISH_COOLDOWN - (now - lastPublishTime)) / 1000);
-    showToast(`يرجى الانتظار ${remaining} ثواني قبل النشر مرة أخرى`);
-    return;
-  }
   const name=document.getElementById('pub-name').value.trim();
   const desc=document.getElementById('pub-desc').value.trim();
   const link=document.getElementById('pub-link').value.trim();
   const img=document.getElementById('pub-img').value.trim();
-  if(!name||!desc||!link){showToast('عبّي كل الحقول المطلوبة');return;}
-  isPublishing = true;
-  const submitBtn = event.target;
-  submitBtn.disabled = true;
-  submitBtn.style.opacity = '0.5';
-  submitBtn.innerHTML = '<i class="fa-solid fa-spinner" style="animation:spin 1s linear infinite"></i> جاري النشر...';
   const type=document.getElementById('pub-type').value;
+  
+  if(!name||!desc||!link){showToast('عبّي كل الحقول المطلوبة');return;}
+  
   const tagMap={addon:{tag:'ADD-ONS',cls:'tag-addon'},map:{tag:'MAPS',cls:'tag-map'},texture:{tag:'TEXTURES',cls:'tag-texture'},skin:{tag:'SKINS',cls:'tag-skin'}};
   const t=tagMap[type];
   
@@ -1284,48 +1131,19 @@ function submitContent(){
     rating: 0, ver: '1.20+', date: 'الآن', desc, link,
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   }).then(() => {
-    lastPublishTime = Date.now();
-    document.getElementById('pub-name').value='';
-    document.getElementById('pub-desc').value='';
-    document.getElementById('pub-link').value='';
-    document.getElementById('pub-img').value='';
-    document.getElementById('pub-preview').style.display='none';
-    setTimeout(() => {
-      showToast('تم نشر المحتوى بنجاح ✓');
-      submitBtn.disabled = false;
-      submitBtn.style.opacity = '1';
-      submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> نشر الآن';
-      isPublishing = false;
-      switchPage('home');
-    }, 1000);
-  }).catch(error => {
-    showToast('خطأ في النشر: ' + error.message);
-    submitBtn.disabled = false;
-    submitBtn.style.opacity = '1';
-    submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> نشر الآن';
-    isPublishing = false;
-  });
+    showToast('تم نشر المحتوى بنجاح ✓');
+    switchPage('home');
+  }).catch(error => showToast('خطأ في النشر: ' + error.message));
 }
 
 function submitServer(){
-  if(isPublishing) return;
-  const now = Date.now();
-  if(now - lastPublishTime < PUBLISH_COOLDOWN){
-    const remaining = Math.ceil((PUBLISH_COOLDOWN - (now - lastPublishTime)) / 1000);
-    showToast(`يرجى الانتظار ${remaining} ثواني قبل النشر مرة أخرى`);
-    return;
-  }
   const name=document.getElementById('pub-sname').value.trim();
   const ip=document.getElementById('pub-sip').value.trim();
   const desc=document.getElementById('pub-sdesc').value.trim();
   const img=document.getElementById('pub-simg').value.trim();
-  if(!name||!ip||!desc){showToast('عبّي كل الحقول المطلوبة');return;}
-  isPublishing = true;
-  const submitBtn = event.target;
-  submitBtn.disabled = true;
-  submitBtn.style.opacity = '0.5';
-  submitBtn.innerHTML = '<i class="fa-solid fa-spinner" style="animation:spin 1s linear infinite"></i> جاري النشر...';
   const port=document.getElementById('pub-sport').value.trim()||'19132';
+  
+  if(!name||!ip||!desc){showToast('عبّي كل الحقول المطلوبة');return;}
   
   db.collection('mods').add({
     userId: currentUser.uid,
@@ -1334,35 +1152,12 @@ function submitServer(){
     rating: 0, ver: 'Bedrock', date: 'الآن', desc, ip, port, online: '0 لاعب', link: '',
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   }).then(() => {
-    lastPublishTime = Date.now();
-    document.getElementById('pub-sname').value='';
-    document.getElementById('pub-sip').value='';
-    document.getElementById('pub-sdesc').value='';
-    document.getElementById('pub-sport').value='';
-    document.getElementById('pub-simg').value='';
-    document.getElementById('pub-server-preview').style.display='none';
-    setTimeout(() => {
-      showToast('تم نشر السيرفر بنجاح ✓');
-      submitBtn.disabled = false;
-      submitBtn.style.opacity = '1';
-      submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> نشر السيرفر';
-      isPublishing = false;
-      switchPage('home');
-    }, 1000);
-  }).catch(error => {
-    showToast('خطأ في النشر: ' + error.message);
-    submitBtn.disabled = false;
-    submitBtn.style.opacity = '1';
-    submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> نشر السيرفر';
-    isPublishing = false;
-  });
+    showToast('تم نشر السيرفر بنجاح ✓');
+    switchPage('home');
+  }).catch(error => showToast('خطأ في النشر: ' + error.message));
 }
 
-// ============================================================
-// SETTINGS TOOLS
-// ============================================================
 function toggleSetting(btn){
-  if(btn.disabled) return;
   btn.classList.toggle('on');
   showToast('تم حفظ الإعدادات');
 }
@@ -1372,9 +1167,6 @@ function loadLogoSettings(){
   navLogo.innerHTML = `<img src="${FIXED_LOGO_URL}" style="height:36px;border-radius:6px;object-fit:contain" />`;
 }
 
-// ============================================================
-// TOAST
-// ============================================================
 function showToast(msg){
   const t=document.getElementById('toast');
   t.textContent=msg;
