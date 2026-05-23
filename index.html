@@ -57,6 +57,57 @@ input{font-family:'Tajawal',sans-serif}
 @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
+/* ── THEME SYSTEM + ANIMATED DECORATIVE BACKGROUND ── */
+:root{
+  --nav-bg:rgba(10,10,10,.9);
+  --soft-glow:rgba(26,255,110,.12);
+  --shadow:rgba(0,0,0,.45);
+  --input-bg:var(--bg3);
+}
+body.light-theme{
+  --bg:#f4f8f3;--bg2:#eaf2e9;--bg3:#ffffff;--bg4:#dfeade;
+  --text:#101812;--muted:#4d6252;--muted2:#7c8b80;
+  --border:#c9d9cb;--border2:#b6c8ba;
+  --card:#ffffff;--card2:#f6fbf6;
+  --green-dark:#c8f4d5;--green-bright:#12b852;
+  --nav-bg:rgba(255,255,255,.88);
+  --soft-glow:rgba(18,184,82,.18);
+  --shadow:rgba(40,70,45,.16);
+  --input-bg:#ffffff;
+}
+body.dark-theme{color-scheme:dark}
+body.light-theme{color-scheme:light}
+body{transition:background .35s ease,color .35s ease;position:relative}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:-3;background:
+  radial-gradient(circle at 15% 15%,var(--soft-glow),transparent 28%),
+  radial-gradient(circle at 85% 20%,rgba(0,204,68,.10),transparent 30%),
+  radial-gradient(circle at 50% 100%,rgba(26,255,110,.08),transparent 38%),var(--bg)}
+.animated-bg{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none;background:
+  linear-gradient(120deg,transparent 0 24%,rgba(26,255,110,.035) 25%,transparent 26% 49%,rgba(26,255,110,.03) 50%,transparent 51% 100%);background-size:90px 90px;animation:bgGridMove 18s linear infinite}
+.animated-bg span{position:absolute;display:block;width:var(--s);height:var(--s);left:var(--x);top:110%;opacity:.32;border:1px solid rgba(26,255,110,.38);border-radius:18%;box-shadow:0 0 22px rgba(26,255,110,.22);animation:floatDecor var(--d) linear infinite;animation-delay:var(--delay)}
+.animated-bg span:nth-child(3n){border-radius:50%;background:rgba(26,255,110,.08)}
+.animated-bg span:nth-child(4n){transform:rotate(45deg);border-color:rgba(255,255,255,.22)}
+@keyframes bgGridMove{from{background-position:0 0}to{background-position:180px -180px}}
+@keyframes floatDecor{0%{transform:translateY(0) rotate(0deg);opacity:0}12%{opacity:.34}100%{transform:translateY(-125vh) rotate(360deg);opacity:0}}
+body.light-theme .animated-bg{opacity:.55}
+body.light-theme nav,body.light-theme .bottom-nav{box-shadow:0 8px 28px var(--shadow)}
+body.light-theme .nav-logo,body.light-theme .auth-logo,body.light-theme .ld-logo,body.light-theme .card-name,body.light-theme .slide-name,body.light-theme .detail-hero-name{color:var(--text)!important}
+body.light-theme .detail-page,body.light-theme .auth-page{background:var(--bg)}
+body.light-theme .auth-form,body.light-theme .mc-card,body.light-theme .set-card,body.light-theme .modal-content,body.light-theme .dmeta{box-shadow:0 10px 30px var(--shadow)}
+body.light-theme .modal-input,body.light-theme .modal-textarea{background:var(--input-bg);color:var(--text)}
+body.light-theme .hero-slider{background:var(--bg2)}
+body.light-theme .bottom-nav,body.light-theme nav{background:var(--nav-bg)}
+.theme-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.theme-btn,.lang-btn{border:1px solid var(--border2);background:var(--bg3);color:var(--text);border-radius:999px;padding:8px 12px;font-size:.78rem;font-weight:800;display:inline-flex;align-items:center;gap:6px;transition:all .25s;cursor:pointer}
+.theme-btn.active,.lang-btn:hover,.theme-btn:hover{border-color:var(--green);color:var(--green);box-shadow:0 0 14px rgba(26,255,110,.15);transform:translateY(-1px)}
+[dir="ltr"] body,[dir="ltr"] button,[dir="ltr"] input,[dir="ltr"] textarea{font-family:'Tajawal',sans-serif}
+[dir="ltr"] .set-toggle::after{right:auto;left:3px}
+[dir="ltr"] .set-toggle.on::after{right:auto;left:25px}
+[dir="ltr"] .card-img-label{left:auto;right:6px}
+[dir="ltr"] .detail-back{left:auto;right:14px}
+@media (prefers-reduced-motion:reduce){.animated-bg,.animated-bg span,.mc-card,.section{animation:none!important;transition:none!important}}
+
+
 /* ── LOADER ── */
 #loader{position:fixed;inset:0;z-index:9999;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;transition:opacity .5s}
 .ld-logo{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:#fff;letter-spacing:.1em}
@@ -84,7 +135,7 @@ input{font-family:'Tajawal',sans-serif}
 .auth-err{color:#ff6b6b;font-size:.85rem;text-align:center;animation:slideIn .3s ease-out}
 
 /* ── NAV ── */
-nav{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;justify-content:space-between}
+nav{position:sticky;top:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;justify-content:space-between}
 .nav-left{display:flex;align-items:center;gap:10px;flex:1}
 .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.06em;color:#fff;display:flex;align-items:center;gap:8px;flex-shrink:0}
 .nav-logo img{height:36px;border-radius:6px;object-fit:contain;transition:transform .3s}
@@ -268,7 +319,7 @@ main{flex:1;padding-bottom:80px}
 .modal-btn-cancel{background:var(--bg4);color:var(--text)}
 
 /* ── BOTTOM NAV ── */
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(10,10,10,.9);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:10px 16px;display:flex;justify-content:space-around;align-items:center}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:10px 16px;display:flex;justify-content:space-around;align-items:center}
 .bnav{background:none;border:none;color:var(--muted2);display:flex;flex-direction:column;align-items:center;gap:4px;transition:all .3s;padding:6px;min-width:60px}
 .bnav i{font-size:1.3rem}
 .bnav span{font-size:.65rem;font-weight:700}
@@ -289,6 +340,17 @@ main{flex:1;padding-bottom:80px}
 </style>
 </head>
 <body>
+<div class="animated-bg" aria-hidden="true">
+  <span style="--x:6%;--s:18px;--d:16s;--delay:-1s"></span>
+  <span style="--x:18%;--s:28px;--d:22s;--delay:-6s"></span>
+  <span style="--x:30%;--s:14px;--d:18s;--delay:-10s"></span>
+  <span style="--x:43%;--s:34px;--d:25s;--delay:-4s"></span>
+  <span style="--x:57%;--s:20px;--d:19s;--delay:-12s"></span>
+  <span style="--x:70%;--s:42px;--d:27s;--delay:-8s"></span>
+  <span style="--x:84%;--s:16px;--d:17s;--delay:-3s"></span>
+  <span style="--x:94%;--s:30px;--d:24s;--delay:-14s"></span>
+</div>
+
 
 <!-- LOADER -->
 <div id="loader">
@@ -502,10 +564,20 @@ main{flex:1;padding-bottom:80px}
             </div>
             <div class="set-item">
               <div class="set-info">
-                <div class="set-name">الوضع الليلي</div>
-                <div class="set-desc">مفعل دائماً للراحة البصرية</div>
+                <div class="set-name" id="themeTitle">مظهر الموقع</div>
+                <div class="set-desc" id="themeDesc">اختر بين الوضع الفاتح أو الوضع الغامق</div>
               </div>
-              <div class="set-toggle on" style="opacity:0.5;cursor:default"></div>
+              <div class="theme-controls" role="group" aria-label="Theme controls">
+                <button class="theme-btn" id="lightThemeBtn" type="button" onclick="setTheme('light')"><i class="fa-solid fa-sun"></i> <span id="lightThemeText">فاتح</span></button>
+                <button class="theme-btn" id="darkThemeBtn" type="button" onclick="setTheme('dark')"><i class="fa-solid fa-moon"></i> <span id="darkThemeText">غامق</span></button>
+              </div>
+            </div>
+            <div class="set-item">
+              <div class="set-info">
+                <div class="set-name" id="languageTitle">لغة الموقع</div>
+                <div class="set-desc" id="languageDesc">بدّل بين العربية والإنجليزية</div>
+              </div>
+              <button class="lang-btn" id="languageBtn" type="button" onclick="toggleLanguage()"><i class="fa-solid fa-language"></i> English</button>
             </div>
           </div>
         </div>
@@ -744,6 +816,7 @@ window.addEventListener('load',()=>{
       setTimeout(() => {
         loader.style.display = 'none';
         authPage.classList.remove('hidden');
+        initPreferences();
       }, 500);
       return;
     }
@@ -815,7 +888,7 @@ function buildSliderDots(){
   dotsEl.innerHTML='';
   
   if(slides.length === 0){
-    heroSlider.innerHTML = '<div class="hero-empty"><i class="fa-solid fa-inbox"></i><p>لم تضف مودات حتى الآن</p></div>';
+    heroSlider.innerHTML = `<div class="hero-empty"><i class="fa-solid fa-inbox"></i><p>${tt('noMods')}</p></div>`;
     return;
   }
 
@@ -872,7 +945,7 @@ function buildHomeGrid(){
   let items=ITEMS.filter(x=>currentFilter==='all'||x.type===currentFilter);
   items = getSortedItems(items);
   
-  document.getElementById('homeCount').textContent = items.length;
+  document.getElementById('homeCount').textContent = items.length + ' ' + tt('countSuffix');
   
   if(items.length === 0){
     grid.innerHTML='';
@@ -980,12 +1053,12 @@ function openDetail(id){
   document.getElementById('dName').textContent=it.name;
   document.getElementById('dRating').textContent=it.rating||'0';
   document.getElementById('dVer').textContent=it.ver||'1.20+';
-  document.getElementById('dDate').textContent=it.date||'الآن';
+  document.getElementById('dDate').textContent=it.date|| (currentLang==='ar' ? 'الآن' : 'Now');
   document.getElementById('dDesc').textContent=it.desc;
   document.getElementById('dDownloadLink').href=it.link;
   
   document.getElementById('dServerInfo').style.display=it.type==='server'?'block':'none';
-  document.getElementById('dDlBtn').innerHTML=it.type==='server'?'<i class="fa-solid fa-play"></i> انضم الآن':'<i class="fa-solid fa-download"></i> تحميل';
+  document.getElementById('dDlBtn').innerHTML=it.type==='server'?'<i class="fa-solid fa-play"></i> '+tt('join'):'<i class="fa-solid fa-download"></i> '+tt('download');
   if(it.type==='server'){
     document.getElementById('dIP').textContent=it.ip||'—';
     document.getElementById('dPort').textContent=it.port||'19132';
@@ -1229,9 +1302,87 @@ function submitServer(){
   });
 }
 
+
+// ============================================================
+// THEME & LANGUAGE SYSTEM
+// ============================================================
+let currentLang = localStorage.getItem('desv_lang') || 'ar';
+let currentTheme = localStorage.getItem('desv_theme') || 'dark';
+
+const UI_TEXT = {
+  ar: {
+    loading:'جاري التحميل...', loginTitle:'تسجيل الدخول', loginDesc:'استخدم حساب جوجل للوصول إلى المودات والسيرفرات', googleLogin:'الدخول بواسطة جوجل',
+    navHome:'الرئيسية', navSearch:'بحث', navPublish:'نشر', navFavs:'المفضلة', navSettings:'الإعدادات',
+    myMods:'موداتي', myModsDesc:'إدارة وتعديل موداتك التي نشرتها', settings:'الإعدادات', notifications:'إشعارات', notificationsDesc:'تلقي إخطارات عن المحتوى الجديد',
+    themeTitle:'مظهر الموقع', themeDesc:'اختر بين الوضع الفاتح أو الوضع الغامق', light:'فاتح', dark:'غامق', languageTitle:'لغة الموقع', languageDesc:'بدّل بين العربية والإنجليزية', languageButton:'English',
+    account:'الحساب', loggedAs:'مسجل كـ:', logout:'تسجيل الخروج', countSuffix:'عنصر', noMods:'لم تضف مودات حتى الآن', noFavs:'لا توجد عناصر في المفضلة', noResults:'لا توجد نتائج',
+    download:'تحميل', join:'انضم الآن', rating:'التقييم', version:'الإصدار', date:'التاريخ', serverInfo:'معلومات السيرفر', serverIp:'IP السيرفر', port:'البورت', online:'أونلاين', description:'الوصف',
+    themeSaved:'تم تفعيل المظهر', langSaved:'تم تغيير اللغة بنجاح', settingsSaved:'تم حفظ الإعدادات'
+  },
+  en: {
+    loading:'Loading...', loginTitle:'Sign in', loginDesc:'Use your Google account to access add-ons and servers', googleLogin:'Continue with Google',
+    navHome:'Home', navSearch:'Search', navPublish:'Publish', navFavs:'Favorites', navSettings:'Settings',
+    myMods:'My Mods', myModsDesc:'Manage and edit the mods you published', settings:'Settings', notifications:'Notifications', notificationsDesc:'Receive alerts about new content',
+    themeTitle:'Site appearance', themeDesc:'Choose between light mode and dark mode', light:'Light', dark:'Dark', languageTitle:'Site language', languageDesc:'Switch between Arabic and English', languageButton:'العربية',
+    account:'Account', loggedAs:'Signed in as:', logout:'Log out', countSuffix:'item', noMods:'No mods have been added yet', noFavs:'No favorite items yet', noResults:'No results found',
+    download:'Download', join:'Join now', rating:'Rating', version:'Version', date:'Date', serverInfo:'Server information', serverIp:'Server IP', port:'Port', online:'Online', description:'Description',
+    themeSaved:'Theme enabled', langSaved:'Language changed successfully', settingsSaved:'Settings saved'
+  }
+};
+function tt(key){return (UI_TEXT[currentLang] && UI_TEXT[currentLang][key]) || UI_TEXT.ar[key] || key;}
+function setText(selector, value){const el=document.querySelector(selector); if(el) el.textContent=value;}
+function setTheme(theme, silent=false){
+  currentTheme = theme === 'light' ? 'light' : 'dark';
+  localStorage.setItem('desv_theme', currentTheme);
+  document.body.classList.toggle('light-theme', currentTheme === 'light');
+  document.body.classList.toggle('dark-theme', currentTheme !== 'light');
+  const lightBtn=document.getElementById('lightThemeBtn');
+  const darkBtn=document.getElementById('darkThemeBtn');
+  if(lightBtn) lightBtn.classList.toggle('active', currentTheme === 'light');
+  if(darkBtn) darkBtn.classList.toggle('active', currentTheme !== 'light');
+  if(!silent) showToast(tt('themeSaved') + ': ' + (currentTheme === 'light' ? tt('light') : tt('dark')));
+}
+function toggleLanguage(){setLanguage(currentLang === 'ar' ? 'en' : 'ar');}
+function setLanguage(lang, silent=false){
+  currentLang = lang === 'en' ? 'en' : 'ar';
+  localStorage.setItem('desv_lang', currentLang);
+  document.documentElement.lang = currentLang;
+  document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+  document.body.dir = document.documentElement.dir;
+  applyStaticTranslations();
+  buildHomeGrid();
+  buildSliderDots();
+  renderFavs();
+  renderSearchAll();
+  renderMyMods();
+  if(currentItem && document.getElementById('detailPage')?.classList.contains('open')) openDetail(currentItem.id);
+  if(!silent) showToast(tt('langSaved'));
+}
+function applyStaticTranslations(){
+  setText('.ld-txt', tt('loading'));
+  setText('.auth-title', tt('loginTitle'));
+  const authDesc=document.querySelector('.auth-form p'); if(authDesc) authDesc.textContent=tt('loginDesc');
+  const googleBtn=document.querySelector('.auth-btn.google'); if(googleBtn) googleBtn.innerHTML='<i class="fa-brands fa-google"></i> '+tt('googleLogin');
+  setText('#bn-home span', tt('navHome')); setText('#bn-search span', tt('navSearch')); setText('#bn-publish span', tt('navPublish')); setText('#bn-favs span', tt('navFavs')); setText('#bn-settings span', tt('navSettings'));
+  setText('#themeTitle', tt('themeTitle')); setText('#themeDesc', tt('themeDesc')); setText('#lightThemeText', tt('light')); setText('#darkThemeText', tt('dark'));
+  setText('#languageTitle', tt('languageTitle')); setText('#languageDesc', tt('languageDesc')); setText('#languageBtn', tt('languageButton'));
+  const setTitles=document.querySelectorAll('.settings-page .set-title');
+  if(setTitles[0]) setTitles[0].textContent=tt('myMods'); if(setTitles[1]) setTitles[1].textContent=tt('settings'); if(setTitles[2]) setTitles[2].textContent=tt('account');
+  const pubSub=document.querySelector('.settings-page .pub-sub'); if(pubSub) pubSub.textContent=tt('myModsDesc');
+  const setNames=document.querySelectorAll('.settings-page .set-name'); if(setNames[0]) setNames[0].textContent=tt('notifications');
+  const setDescs=document.querySelectorAll('.settings-page .set-desc'); if(setDescs[0]) setDescs[0].textContent=tt('notificationsDesc');
+  const accountLabel=document.querySelector('.set-card div[style*="font-size:0.9rem"]'); if(accountLabel) accountLabel.textContent=tt('loggedAs');
+  const logoutBtn=document.querySelector('.set-btn-red'); if(logoutBtn) logoutBtn.textContent=tt('logout');
+  const dKeys=document.querySelectorAll('.dmeta-key');
+  if(dKeys[0]) dKeys[0].textContent=tt('rating'); if(dKeys[1]) dKeys[1].textContent=tt('version'); if(dKeys[2]) dKeys[2].textContent=tt('date');
+  if(dKeys[3]) dKeys[3].textContent=tt('serverIp'); if(dKeys[4]) dKeys[4].textContent=tt('port'); if(dKeys[5]) dKeys[5].textContent=tt('online');
+  const secTitles=document.querySelectorAll('.detail-sec-title'); if(secTitles[0]) secTitles[0].textContent=tt('serverInfo'); if(secTitles[1]) secTitles[1].textContent=tt('description');
+}
+function initPreferences(){setTheme(currentTheme, true); setLanguage(currentLang, true);}
+
 function toggleSetting(btn){
   btn.classList.toggle('on');
-  showToast('تم حفظ الإعدادات');
+  showToast(tt('settingsSaved'));
 }
 
 function loadLogoSettings(){
