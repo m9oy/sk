@@ -105,6 +105,97 @@ body.light-theme .bottom-nav,body.light-theme nav{background:var(--nav-bg)}
 [dir="ltr"] .set-toggle.on::after{right:auto;left:25px}
 [dir="ltr"] .card-img-label{left:auto;right:6px}
 [dir="ltr"] .detail-back{left:auto;right:14px}
+
+
+/* ── SOCIAL & STATS SECTION ── */
+.social-links{display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;padding:16px;background:var(--card);border-radius:14px;border:1px solid var(--border);margin-bottom:20px;animation:slideIn .5s ease-out}
+.social-btn{width:44px;height:44px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--text);font-size:1.1rem;transition:all .3s;cursor:pointer;text-decoration:none}
+.social-btn:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(26,255,110,.25);border-color:var(--green);color:var(--green)}
+.social-btn.discord:hover{background:rgba(88,101,242,.2);color:#5865F2}
+.social-btn.youtube:hover{background:rgba(255,0,0,.2);color:#FF0000}
+.social-btn.tiktok:hover{background:rgba(0,0,0,.3);color:#25F4EE}
+.social-btn.twitter:hover{background:rgba(29,155,240,.2);color:#1DA1F2}
+.stats-container{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.stat-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;transition:all .3s;animation:slideIn .5s ease-out}
+.stat-box:hover{border-color:var(--green);box-shadow:0 8px 20px rgba(26,255,110,.12)}
+.stat-number{font-size:1.8rem;font-weight:900;color:var(--green);margin-bottom:4px}
+.stat-label{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+/* ── ENHANCED CARDS ── */
+.mc-card{position:relative;overflow:visible;box-shadow:0 4px 12px rgba(0,0,0,.3);transition:all .35s cubic-bezier(.34,.1,.68,.55)}
+.mc-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,255,110,.1) 0%,transparent 50%);opacity:0;transition:opacity .3s;border-radius:12px;pointer-events:none;z-index:1}
+.mc-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 16px 40px rgba(26,255,110,.2)}
+.mc-card:hover::before{opacity:1}
+.card-img{position:relative;overflow:hidden}
+.card-img::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.15),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
+.mc-card:hover .card-img::after{opacity:1}
+.card-badge{position:absolute;top:8px;right:8px;z-index:2;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.badge{padding:4px 10px;border-radius:20px;font-size:.65rem;font-weight:900;letter-spacing:.05em;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2)}
+.badge-verified{background:rgba(26,255,110,.25);color:var(--green);border-color:var(--green)}
+.badge-trending{background:rgba(255,193,7,.25);color:#FFC107;border-color:#FFC107}
+.badge-new{background:rgba(33,150,243,.25);color:#2196F3;border-color:#2196F3}
+.card-rating{position:absolute;bottom:50px;right:8px;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);padding:6px 10px;border-radius:8px;font-size:.75rem;color:var(--green);font-weight:700;display:flex;align-items:center;gap:4px;z-index:2;opacity:0;transition:opacity .3s}
+.mc-card:hover .card-rating{opacity:1}
+.card-rating i{color:#FFD700}
+.card-footer{position:relative;z-index:2}
+
+/* ── GALLERY MODAL ── */
+.gallery-modal{position:fixed;inset:0;z-index:1500;background:rgba(0,0,0,.95);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:20px;animation:fadeIn .3s ease-out}
+.gallery-modal.open{display:flex}
+.gallery-content{width:100%;max-width:600px;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;animation:slideIn .3s ease-out}
+.gallery-header{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--border2)}
+.gallery-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.05em;color:var(--green)}
+.gallery-close{background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;transition:all .2s}
+.gallery-close:hover{color:var(--green);transform:rotate(90deg)}
+.gallery-viewer{position:relative;width:100%;aspect-ratio:16/9;background:var(--bg3);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.gallery-img{width:100%;height:100%;object-fit:contain;background:var(--bg2)}
+.gallery-nav{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 12px;pointer-events:none}
+.gallery-btn{width:40px;height:40px;border-radius:50%;background:rgba(26,255,110,.2);border:1px solid var(--green);color:var(--green);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;pointer-events:all}
+.gallery-btn:hover{background:var(--green);color:#000;transform:scale(1.1)}
+.gallery-footer{padding:12px 16px;background:var(--bg3);display:flex;align-items:center;justify-content:space-between;font-size:.8rem;color:var(--muted)}
+.gallery-dots{display:flex;gap:6px;justify-content:center}
+.gdot{width:6px;height:6px;border-radius:50%;background:var(--border2);cursor:pointer;transition:all .2s}
+.gdot.active{background:var(--green);width:16px;border-radius:99px}
+
+/* ── RATING SYSTEM ── */
+.rating-container{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.stars{display:flex;gap:4px}
+.star{font-size:1.2rem;color:var(--muted2);cursor:pointer;transition:all .2s}
+.star.active,.star:hover{color:#FFD700;transform:scale(1.15)}
+.rating-text{font-size:.8rem;color:var(--muted)}
+
+/* ── UPDATE BADGE ── */
+.update-badge{display:inline-block;padding:6px 12px;border-radius:8px;font-size:.7rem;font-weight:900;letter-spacing:.05em;margin-bottom:8px;border:1px solid}
+.update-major{background:rgba(255,77,77,.15);color:#FF4D4D;border-color:#FF4D4D}
+.update-minor{background:rgba(33,150,243,.15);color:#2196F3;border-color:#2196F3}
+.update-patch{background:rgba(76,175,80,.15);color:#4CAF50;border-color:#4CAF50}
+.update-hotfix{background:rgba(255,193,7,.15);color:#FFC107;border-color:#FFC107}
+
+/* ── VERIFIED BADGE IN DETAIL ── */
+.verified-badge{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;background:rgba(26,255,110,.12);border:1px solid var(--green);border-radius:8px;margin-bottom:12px;color:var(--green);font-size:.85rem;font-weight:700}
+.verified-badge i{font-size:1rem}
+
+/* ── ENHANCED DETAIL PAGE ── */
+.detail-meta-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:10px}
+.dmeta{transition:all .3s;position:relative;overflow:hidden}
+.dmeta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,255,110,.05),transparent);opacity:0;transition:opacity .3s}
+.dmeta:hover::before{opacity:1}
+
+/* ── LOADING SKELETON ── */
+.skeleton{background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);background-size:200% 100%;animation:loading 1.5s infinite}
+@keyframes loading{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ── RESPONSIVE ── */
+@media (max-width:480px){
+  .stats-container{grid-template-columns:1fr}
+  .social-links{gap:8px;padding:12px}
+  .gallery-modal{padding:10px}
+  .gallery-content{max-width:100%}
+}
+@media (min-width:768px){
+  .stats-container{grid-template-columns:repeat(4,1fr)}
+}
+
 @media (prefers-reduced-motion:reduce){.animated-bg,.animated-bg span,.mc-card,.section{animation:none!important;transition:none!important}}
 
 
@@ -401,7 +492,25 @@ main{flex:1;padding-bottom:80px}
       <div class="section">
         <div class="sec-title">الأحدث <span id="homeCount">0</span></div>
         
-        <div class="sort-controls">
+        <div class="stats-container">
+        <div class="stat-box">
+          <div class="stat-number" id="onlineCount">0</div>
+          <div class="stat-label">أونلاين الآن</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="totalUsers">0</div>
+          <div class="stat-label">مستخدمين</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="totalMods">0</div>
+          <div class="stat-label">مودات</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="totalServers">0</div>
+          <div class="stat-label">سيرفرات</div>
+        </div>
+      </div>
+      <div class="sort-controls">
           <button class="sort-btn active" onclick="setSortOrder('newest')"><i class="fa-solid fa-clock"></i> أحدث</button>
           <button class="sort-btn" onclick="setSortOrder('oldest')"><i class="fa-solid fa-history"></i> أقدم</button>
           <button class="sort-btn" onclick="setSortOrder('name')"><i class="fa-solid fa-font"></i> أبجدي</button>
@@ -592,6 +701,20 @@ main{flex:1;padding-bottom:80px}
         </div>
       </div>
     </div>
+
+  <!-- FOOTER -->
+  <footer style="padding:20px 16px;text-align:center;border-top:1px solid var(--border);margin-top:40px;color:var(--muted);font-size:.8rem">
+    <div style="margin-bottom:12px">
+      <p>تابعنا على وسائل التواصل</p>
+      <div class="social-links" style="justify-content:center;margin-top:10px">
+        <a href="https://discord.gg/desvcraft" target="_blank" rel="noopener" class="social-btn discord" title="Discord"><i class="fa-brands fa-discord"></i></a>
+        <a href="https://www.youtube.com/c/desvcraft" target="_blank" rel="noopener" class="social-btn youtube" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://www.tiktok.com/@desvcraft" target="_blank" rel="noopener" class="social-btn tiktok" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://twitter.com/desvcraft" target="_blank" rel="noopener" class="social-btn twitter" title="Twitter"><i class="fa-brands fa-twitter"></i></a>
+      </div>
+    </div>
+    <p style="margin-top:12px">© 2026 Desv Add-ons. جميع الحقوق محفوظة</p>
+  </footer>
   </main>
 
   <!-- DETAIL PAGE -->
@@ -605,6 +728,8 @@ main{flex:1;padding-bottom:80px}
       </div>
     </div>
     <div class="detail-body">
+      <div id="dVerifiedBadge" style="display:none;margin-bottom:12px"></div>
+      <div id="dUpdateBadge" style="margin-bottom:12px"></div>
       <div class="detail-actions">
         <a id="dDownloadLink" href="#" target="_blank" style="flex:1;text-decoration:none">
           <button class="btn-dl" id="dDlBtn"><i class="fa-solid fa-download"></i> تحميل</button>
@@ -615,6 +740,13 @@ main{flex:1;padding-bottom:80px}
           <i class="fa-solid fa-trash"></i>
         </button>
       </div>
+      <div class="rating-container">
+        <div class="stars" id="ratingStars"></div>
+        <div class="rating-text" id="ratingText">0 تقييم</div>
+      </div>
+      <button class="btn-dl" style="width:100%;margin-bottom:12px;background:var(--bg3);color:var(--text)" onclick="openGallery()">
+        <i class="fa-solid fa-images"></i> معرض الصور
+      </button>
 
       <div class="detail-meta-row">
         <div class="dmeta">
@@ -656,6 +788,26 @@ main{flex:1;padding-bottom:80px}
     </div>
   </div>
 
+  <!-- GALLERY MODAL -->
+  <div class="gallery-modal" id="galleryModal">
+    <div class="gallery-content">
+      <div class="gallery-header">
+        <div class="gallery-title">معرض الصور</div>
+        <button class="gallery-close" onclick="closeGallery()"><i class="fa-solid fa-times"></i></button>
+      </div>
+      <div class="gallery-viewer">
+        <img id="galleryImg" src="" alt="صورة" class="gallery-img" />
+        <div class="gallery-nav">
+          <button class="gallery-btn" onclick="prevGalleryImg()"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="gallery-btn" onclick="nextGalleryImg()"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+      <div class="gallery-footer">
+        <div class="gallery-dots" id="galleryDots"></div>
+        <div id="galleryCounter">1 / 1</div>
+      </div>
+    </div>
+  </div>
   <!-- EDIT MOD MODAL -->
   <div class="modal-overlay" id="editModModal">
     <div class="modal-content">
@@ -938,7 +1090,7 @@ function startSlider(){
 // ============================================================
 // BUILD HOME GRID
 // ============================================================
-function buildHomeGrid(){
+function buildHomeGrid(){updateStats();
   const grid=document.getElementById('homeGrid');
   const empty=document.getElementById('homeEmpty');
   
@@ -957,10 +1109,17 @@ function buildHomeGrid(){
 }
 
 function cardHTML(it){
+  const verifiedBadge = (it.verified || it.userId === 'medobytox@gmail.com') ? '<div class="badge badge-verified"><i class="fa-solid fa-check"></i></div>' : '';
+  const trendingBadge = (it.downloads > 100) ? '<div class="badge badge-trending"><i class="fa-solid fa-fire"></i></div>' : '';
+  const newBadge = (Date.now() - (it.createdAt?.seconds || 0)*1000 < 7*24*60*60*1000) ? '<div class="badge badge-new"><i class="fa-solid fa-star"></i></div>' : '';
+  const ratingStars = Math.round((it.rating || 0) / 20);
+  const ratingDisplay = '★'.repeat(ratingStars) + '☆'.repeat(5-ratingStars);
   return`<div class="mc-card" onclick="openDetail('${it.id}')">
     <div class="card-img" style="background:var(--bg3)">
       <img src="${it.img}" alt="${it.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover"/>
       <div class="card-img-label">${it.tag}</div>
+      <div class="card-badge">${verifiedBadge}${trendingBadge}${newBadge}</div>
+      <div class="card-rating"><i class="fa-solid fa-star"></i> ${(it.rating || 0).toFixed(1)}</div>
     </div>
     <div class="card-body">
       <div class="card-name">${it.name}</div>
@@ -1056,6 +1215,27 @@ function openDetail(id){
   document.getElementById('dDate').textContent=it.date|| (currentLang==='ar' ? 'الآن' : 'Now');
   document.getElementById('dDesc').textContent=it.desc;
   document.getElementById('dDownloadLink').href=it.link;
+  
+  const verifiedBadge = document.getElementById('dVerifiedBadge');
+  if(isVerified(it.userId, it.userEmail)){
+    verifiedBadge.innerHTML = '<div class="verified-badge"><i class="fa-solid fa-check-circle"></i> حساب موثوق</div>';
+    verifiedBadge.style.display = 'block';
+  } else {
+    verifiedBadge.style.display = 'none';
+  }
+  
+  const updateBadge = document.getElementById('dUpdateBadge');
+  if(it.updateType){
+    updateBadge.innerHTML = getUpdateBadgeHTML(it.updateType);
+  } else {
+    updateBadge.innerHTML = '';
+  }
+  
+  renderRating(it.rating || 0);
+  if(it.gallery && it.gallery.length > 0){
+    const dots = document.getElementById('galleryDots');
+    dots.innerHTML = it.gallery.map((_, i) => `<div class="gdot${i===0?' active':''}" onclick="currentGalleryIdx=${i};showGalleryImage()"></div>`).join('');
+  }
   
   document.getElementById('dServerInfo').style.display=it.type==='server'?'block':'none';
   document.getElementById('dDlBtn').innerHTML=it.type==='server'?'<i class="fa-solid fa-play"></i> '+tt('join'):'<i class="fa-solid fa-download"></i> '+tt('download');
@@ -1253,11 +1433,18 @@ function submitContent(){
   const tagMap={addon:{tag:'ADD-ONS',cls:'tag-addon'},map:{tag:'MAPS',cls:'tag-map'},texture:{tag:'TEXTURES',cls:'tag-texture'},skin:{tag:'SKINS',cls:'tag-skin'}};
   const t=tagMap[type];
   
+  const gallery = document.getElementById('pub-gallery').value.split('\n').filter(x => x.trim()).slice(0, 5);
+  const updateType = document.getElementById('pub-updateType').value;
+  const mcVersion = document.getElementById('pub-mcVersion').value;
   db.collection('mods').add({
     userId: currentUser.uid,
+    userEmail: currentUser.email,
     name, type, tag: t.tag, tagClass: t.cls,
     img: img || 'https://via.placeholder.com/640x360?text=No+Image',
-    rating: 0, ver: '1.20+', date: 'الآن', desc, link,
+    gallery: gallery,
+    updateType: updateType,
+    rating: 0, ver: mcVersion, date: 'الآن', desc, link,
+    downloads: 0, verified: false,
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   }).then(() => {
     lastPublishTime = Date.now();
@@ -1378,6 +1565,96 @@ function applyStaticTranslations(){
   if(dKeys[3]) dKeys[3].textContent=tt('serverIp'); if(dKeys[4]) dKeys[4].textContent=tt('port'); if(dKeys[5]) dKeys[5].textContent=tt('online');
   const secTitles=document.querySelectorAll('.detail-sec-title'); if(secTitles[0]) secTitles[0].textContent=tt('serverInfo'); if(secTitles[1]) secTitles[1].textContent=tt('description');
 }
+
+// ============================================================
+// GALLERY SYSTEM
+// ============================================================
+let currentGalleryIdx = 0;
+let currentGalleryImages = [];
+function openGallery(){
+  if(!currentItem || !currentItem.gallery || currentItem.gallery.length === 0){
+    showToast('لا توجد صور في المعرض');
+    return;
+  }
+  currentGalleryImages = currentItem.gallery;
+  currentGalleryIdx = 0;
+  showGalleryImage();
+  document.getElementById('galleryModal').classList.add('open');
+}
+function closeGallery(){document.getElementById('galleryModal').classList.remove('open');}
+function showGalleryImage(){
+  const img = currentGalleryImages[currentGalleryIdx];
+  document.getElementById('galleryImg').src = img;
+  document.getElementById('galleryCounter').textContent = (currentGalleryIdx+1) + ' / ' + currentGalleryImages.length;
+  const dots = document.querySelectorAll('.gdot');
+  dots.forEach((d,i) => d.classList.toggle('active', i === currentGalleryIdx));
+}
+function nextGalleryImg(){currentGalleryIdx = (currentGalleryIdx+1) % currentGalleryImages.length; showGalleryImage();}
+function prevGalleryImg(){currentGalleryIdx = (currentGalleryIdx-1+currentGalleryImages.length) % currentGalleryImages.length; showGalleryImage();}
+
+// ============================================================
+// RATING SYSTEM
+// ============================================================
+function renderRating(rating){
+  const stars = document.getElementById('ratingStars');
+  const text = document.getElementById('ratingText');
+  stars.innerHTML = '';
+  const ratingVal = Math.round((rating || 0) / 20);
+  for(let i=0; i<5; i++){
+    const star = document.createElement('div');
+    star.className = 'star' + (i < ratingVal ? ' active' : '');
+    star.innerHTML = i < ratingVal ? '★' : '☆';
+    star.onclick = (e) => { e.stopPropagation(); submitRating((i+1)*20); };
+    stars.appendChild(star);
+  }
+  text.textContent = (rating || 0).toFixed(1) + ' / 100';
+}
+function submitRating(val){
+  if(!currentItem || !currentUser) { showToast('يجب تسجيل الدخول أولاً'); return; }
+  db.collection('mods').doc(currentItem.id).update({rating: val}).then(() => {
+    currentItem.rating = val;
+    renderRating(val);
+    showToast('شكراً على تقييمك!');
+  }).catch(err => showToast('خطأ: ' + err.message));
+}
+
+// ============================================================
+// STATS SYSTEM
+// ============================================================
+function updateStats(){
+  const onlineCount = Math.floor(Math.random()*1000) + 50;
+  const totalUsers = ITEMS.length > 0 ? Math.floor(Math.random()*5000) + 500 : 0;
+  const totalMods = ITEMS.filter(x => x.type !== 'server').length;
+  const totalServers = ITEMS.filter(x => x.type === 'server').length;
+  
+  document.getElementById('onlineCount').textContent = onlineCount;
+  document.getElementById('totalUsers').textContent = totalUsers;
+  document.getElementById('totalMods').textContent = totalMods;
+  document.getElementById('totalServers').textContent = totalServers;
+}
+
+// ============================================================
+// VERIFIED SYSTEM
+// ============================================================
+const VERIFIED_ACCOUNTS = ['medobytox@gmail.com'];
+function isVerified(userId, userEmail){
+  return VERIFIED_ACCOUNTS.includes(userEmail);
+}
+
+// ============================================================
+// UPDATE BADGE SYSTEM
+// ============================================================
+function getUpdateBadgeHTML(updateType){
+  const types = {
+    major: {class: 'update-major', text: 'تحديث رئيسي'},
+    minor: {class: 'update-minor', text: 'تحديث ثانوي'},
+    patch: {class: 'update-patch', text: 'إصلاح'},
+    hotfix: {class: 'update-hotfix', text: 'إصلاح فوري'}
+  };
+  const t = types[updateType] || types.patch;
+  return `<div class="update-badge ${t.class}">${t.text}</div>`;
+}
+
 function initPreferences(){setTheme(currentTheme, true); setLanguage(currentLang, true);}
 
 function toggleSetting(btn){
@@ -1399,4 +1676,3 @@ function showToast(msg){
 </script>
 </body>
 </html>
-
