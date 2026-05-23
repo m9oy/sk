@@ -115,11 +115,11 @@ body.light-theme .bottom-nav,body.light-theme nav{background:var(--nav-bg)}
 .social-btn.youtube:hover{background:rgba(255,0,0,.2);color:#FF0000}
 .social-btn.tiktok:hover{background:rgba(0,0,0,.3);color:#25F4EE}
 .social-btn.twitter:hover{background:rgba(29,155,240,.2);color:#1DA1F2}
-.stats-container{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
-.stat-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;transition:all .3s;animation:slideIn .5s ease-out}
+.stats-container{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:0;padding:12px 0}
+.stat-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;transition:all .3s;animation:slideIn .5s ease-out}
 .stat-box:hover{border-color:var(--green);box-shadow:0 8px 20px rgba(26,255,110,.12)}
-.stat-number{font-size:1.8rem;font-weight:900;color:var(--green);margin-bottom:4px}
-.stat-label{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.stat-number{font-size:1.2rem;font-weight:900;color:var(--green);margin-bottom:2px}
+.stat-label{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
 
 /* ── ENHANCED CARDS ── */
 .mc-card{position:relative;overflow:visible;box-shadow:0 4px 12px rgba(0,0,0,.3);transition:all .35s cubic-bezier(.34,.1,.68,.55)}
@@ -171,6 +171,26 @@ body.light-theme .bottom-nav,body.light-theme nav{background:var(--nav-bg)}
 .update-patch{background:rgba(76,175,80,.15);color:#4CAF50;border-color:#4CAF50}
 .update-hotfix{background:rgba(255,193,7,.15);color:#FFC107;border-color:#FFC107}
 
+
+/* ── PUBLISHER INFO ── */
+.publisher-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:12px;display:flex;align-items:center;gap:10px;animation:slideIn .3s ease-out}
+.publisher-avatar{width:40px;height:40px;border-radius:50%;background:var(--green-dark);display:flex;align-items:center;justify-content:center;color:var(--green);font-weight:700;flex-shrink:0}
+.publisher-info{flex:1;min-width:0}
+.publisher-name{font-size:.9rem;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.publisher-email{font-size:.75rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.publisher-verified{display:flex;align-items:center;gap:4px;font-size:.7rem;color:var(--green);font-weight:700}
+.download-counter{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:var(--bg3);border-radius:20px;font-size:.8rem;color:var(--muted);border:1px solid var(--border2)}
+.download-counter i{color:var(--green);font-size:.9rem}
+.copy-ip-btn{width:100%;padding:10px;background:var(--green-bright);color:#000;border:none;border-radius:10px;font-weight:700;cursor:pointer;transition:all .3s;margin-top:10px}
+.copy-ip-btn:hover{transform:scale(1.02);box-shadow:0 0 15px rgba(26,255,110,.3)}
+.top-publishers-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:20px}
+.publisher-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;transition:all .3s;cursor:pointer}
+.publisher-item:hover{border-color:var(--green);box-shadow:0 8px 20px rgba(26,255,110,.15)}
+.publisher-rank{font-size:1.2rem;font-weight:900;color:var(--green);margin-bottom:6px}
+.publisher-item-name{font-size:.8rem;font-weight:700;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.publisher-item-mods{font-size:.7rem;color:var(--muted)}
+.publisher-badge-gold{display:inline-block;padding:2px 8px;background:rgba(255,193,7,.2);color:#FFC107;border:1px solid #FFC107;border-radius:4px;font-size:.65rem;font-weight:700;margin-top:6px}
+
 /* ── VERIFIED BADGE IN DETAIL ── */
 .verified-badge{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;background:rgba(26,255,110,.12);border:1px solid var(--green);border-radius:8px;margin-bottom:12px;color:var(--green);font-size:.85rem;font-weight:700}
 .verified-badge i{font-size:1rem}
@@ -195,6 +215,17 @@ body.light-theme .bottom-nav,body.light-theme nav{background:var(--nav-bg)}
 @media (min-width:768px){
   .stats-container{grid-template-columns:repeat(4,1fr)}
 }
+
+
+/* ── GLASSMORPHISM EFFECT ── */
+.glass{background:rgba(255,255,255,.08);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.15);box-shadow:0 8px 32px rgba(0,0,0,.1)}
+body.light-theme .glass{background:rgba(255,255,255,.6);border-color:rgba(0,0,0,.1)}
+.mc-card{background:rgba(20,20,20,.7);backdrop-filter:blur(8px);border:1px solid rgba(26,255,110,.15)}
+body.light-theme .mc-card{background:rgba(255,255,255,.8)}
+.set-card{background:rgba(20,20,20,.7);backdrop-filter:blur(8px)}
+body.light-theme .set-card{background:rgba(255,255,255,.85)}
+.modal-content{background:rgba(20,20,20,.85);backdrop-filter:blur(12px)}
+body.light-theme .modal-content{background:rgba(255,255,255,.9)}
 
 @media (prefers-reduced-motion:reduce){.animated-bg,.animated-bg span,.mc-card,.section{animation:none!important;transition:none!important}}
 
@@ -492,23 +523,9 @@ main{flex:1;padding-bottom:80px}
       <div class="section">
         <div class="sec-title">الأحدث <span id="homeCount">0</span></div>
         
-        <div class="stats-container">
-        <div class="stat-box">
-          <div class="stat-number" id="onlineCount">0</div>
-          <div class="stat-label">أونلاين الآن</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-number" id="totalUsers">0</div>
-          <div class="stat-label">مستخدمين</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-number" id="totalMods">0</div>
-          <div class="stat-label">مودات</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-number" id="totalServers">0</div>
-          <div class="stat-label">سيرفرات</div>
-        </div>
+        <div class="section">
+        <div class="sec-title"><i class="fa-solid fa-crown"></i> <span id="topPubTitle">أفضل الناشرين</span></div>
+        <div class="top-publishers-list" id="topPublishersList"></div>
       </div>
       <div class="sort-controls">
           <button class="sort-btn active" onclick="setSortOrder('newest')"><i class="fa-solid fa-clock"></i> أحدث</button>
@@ -713,6 +730,24 @@ main{flex:1;padding-bottom:80px}
         <a href="https://twitter.com/desvcraft" target="_blank" rel="noopener" class="social-btn twitter" title="Twitter"><i class="fa-brands fa-twitter"></i></a>
       </div>
     </div>
+    <div class="stats-container" style="border-top:1px solid var(--border);padding-top:16px;margin-top:16px">
+      <div class="stat-box">
+        <div class="stat-number" id="onlineCount">0</div>
+        <div class="stat-label" id="onlineLabel">أونلاين الآن</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number" id="totalUsers">0</div>
+        <div class="stat-label" id="usersLabel">مستخدمين</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number" id="totalMods">0</div>
+        <div class="stat-label" id="modsLabel">مودات</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number" id="totalServers">0</div>
+        <div class="stat-label" id="serversLabel">سيرفرات</div>
+      </div>
+    </div>
     <p style="margin-top:12px">© 2026 Desv Add-ons. جميع الحقوق محفوظة</p>
   </footer>
   </main>
@@ -728,8 +763,10 @@ main{flex:1;padding-bottom:80px}
       </div>
     </div>
     <div class="detail-body">
+      <div id="dPublisherCard" style="display:none;margin-bottom:12px"></div>
       <div id="dVerifiedBadge" style="display:none;margin-bottom:12px"></div>
       <div id="dUpdateBadge" style="margin-bottom:12px"></div>
+      <div id="dCopyIpBtn" style="display:none;margin-bottom:12px"></div>
       <div class="detail-actions">
         <a id="dDownloadLink" href="#" target="_blank" style="flex:1;text-decoration:none">
           <button class="btn-dl" id="dDlBtn"><i class="fa-solid fa-download"></i> تحميل</button>
@@ -1090,7 +1127,7 @@ function startSlider(){
 // ============================================================
 // BUILD HOME GRID
 // ============================================================
-function buildHomeGrid(){updateStats();
+function buildHomeGrid(){updateStats();renderTopPublishers();
   const grid=document.getElementById('homeGrid');
   const empty=document.getElementById('homeEmpty');
   
@@ -1123,6 +1160,9 @@ function cardHTML(it){
     </div>
     <div class="card-body">
       <div class="card-name">${it.name}</div>
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;font-size:.75rem">
+        <div class="download-counter"><i class="fa-solid fa-download"></i> <span>${it.downloads || 0}</span></div>
+      </div>
       <div class="card-footer">
         <span class="card-tag ${it.tagClass}">${it.tag}</span>
         <button class="card-dl" onclick="event.stopPropagation();showToast('جاري التحميل ⬇')"><i class="fa-solid fa-download"></i></button>
@@ -1216,13 +1256,16 @@ function openDetail(id){
   document.getElementById('dDesc').textContent=it.desc;
   document.getElementById('dDownloadLink').href=it.link;
   
+  const pubCard = document.getElementById('dPublisherCard');
+  pubCard.innerHTML = renderPublisherCard(it);
+  pubCard.style.display = 'block';
+  
+  const copyIpBtn = document.getElementById('dCopyIpBtn');
+  copyIpBtn.innerHTML = renderCopyIpBtn(it);
+  copyIpBtn.style.display = it.type === 'server' ? 'block' : 'none';
+  
   const verifiedBadge = document.getElementById('dVerifiedBadge');
-  if(isVerified(it.userId, it.userEmail)){
-    verifiedBadge.innerHTML = '<div class="verified-badge"><i class="fa-solid fa-check-circle"></i> حساب موثوق</div>';
-    verifiedBadge.style.display = 'block';
-  } else {
-    verifiedBadge.style.display = 'none';
-  }
+  verifiedBadge.style.display = 'none';
   
   const updateBadge = document.getElementById('dUpdateBadge');
   if(it.updateType){
@@ -1496,6 +1539,8 @@ function submitServer(){
 let currentLang = localStorage.getItem('desv_lang') || 'ar';
 let currentTheme = localStorage.getItem('desv_theme') || 'dark';
 
+
+// Enhanced UI_TEXT with complete translations
 const UI_TEXT = {
   ar: {
     loading:'جاري التحميل...', loginTitle:'تسجيل الدخول', loginDesc:'استخدم حساب جوجل للوصول إلى المودات والسيرفرات', googleLogin:'الدخول بواسطة جوجل',
@@ -1504,7 +1549,18 @@ const UI_TEXT = {
     themeTitle:'مظهر الموقع', themeDesc:'اختر بين الوضع الفاتح أو الوضع الغامق', light:'فاتح', dark:'غامق', languageTitle:'لغة الموقع', languageDesc:'بدّل بين العربية والإنجليزية', languageButton:'English',
     account:'الحساب', loggedAs:'مسجل كـ:', logout:'تسجيل الخروج', countSuffix:'عنصر', noMods:'لم تضف مودات حتى الآن', noFavs:'لا توجد عناصر في المفضلة', noResults:'لا توجد نتائج',
     download:'تحميل', join:'انضم الآن', rating:'التقييم', version:'الإصدار', date:'التاريخ', serverInfo:'معلومات السيرفر', serverIp:'IP السيرفر', port:'البورت', online:'أونلاين', description:'الوصف',
-    themeSaved:'تم تفعيل المظهر', langSaved:'تم تغيير اللغة بنجاح', settingsSaved:'تم حفظ الإعدادات'
+    themeSaved:'تم تفعيل المظهر', langSaved:'تم تغيير اللغة بنجاح', settingsSaved:'تم حفظ الإعدادات',
+    publishedBy:'نشر بواسطة', downloads:'تحميلات', topPublishers:'أفضل الناشرين', copyIp:'نسخ IP', ipCopied:'تم نسخ IP والبورت',
+    publisherInfo:'معلومات الناشر', verified:'موثوق', unverified:'غير موثوق', mostDownloaded:'الأكثر تحميلاً',
+    name:'الاسم', type:'النوع', description:'الوصف', downloadLink:'رابط التحميل', image:'رابط الصورة', galleryImages:'روابط صور المعرض',
+    updateType:'نوع التحديث', mcVersion:'إصدار ماينكرافت', publish:'نشر', cancel:'إلغاء', edit:'تعديل', delete:'حذف',
+    addOnType:'مود (Add-on)', mapType:'خريطة', textureType:'حزمة نسيج', skinType:'سكن', serverType:'سيرفر',
+    major:'تحديث رئيسي', minor:'تحديث ثانوي', patch:'إصلاح', hotfix:'إصلاح فوري',
+    searchPlaceholder:'ابحث عن مود...',
+    filterAll:'الكل', filterAddons:'المودات', filterMaps:'الخرائط', filterTextures:'النسيج', filterSkins:'الأسكنات', filterServers:'السيرفرات',
+    sortNewest:'الأحدث', sortOldest:'الأقدم', sortName:'الاسم',
+    gallery:'معرض الصور', noGallery:'لا توجد صور في المعرض', imageOf:'من',
+    stats:'الإحصائيات', onlineNow:'أونلاين الآن', totalUsers:'مستخدمين', totalMods:'مودات', totalServers:'سيرفرات'
   },
   en: {
     loading:'Loading...', loginTitle:'Sign in', loginDesc:'Use your Google account to access add-ons and servers', googleLogin:'Continue with Google',
@@ -1513,9 +1569,21 @@ const UI_TEXT = {
     themeTitle:'Site appearance', themeDesc:'Choose between light mode and dark mode', light:'Light', dark:'Dark', languageTitle:'Site language', languageDesc:'Switch between Arabic and English', languageButton:'العربية',
     account:'Account', loggedAs:'Signed in as:', logout:'Log out', countSuffix:'item', noMods:'No mods have been added yet', noFavs:'No favorite items yet', noResults:'No results found',
     download:'Download', join:'Join now', rating:'Rating', version:'Version', date:'Date', serverInfo:'Server information', serverIp:'Server IP', port:'Port', online:'Online', description:'Description',
-    themeSaved:'Theme enabled', langSaved:'Language changed successfully', settingsSaved:'Settings saved'
+    themeSaved:'Theme enabled', langSaved:'Language changed successfully', settingsSaved:'Settings saved',
+    publishedBy:'Published by', downloads:'Downloads', topPublishers:'Top Publishers', copyIp:'Copy IP', ipCopied:'IP and port copied',
+    publisherInfo:'Publisher Info', verified:'Verified', unverified:'Unverified', mostDownloaded:'Most Downloaded',
+    name:'Name', type:'Type', description:'Description', downloadLink:'Download Link', image:'Image URL', galleryImages:'Gallery Image Links',
+    updateType:'Update Type', mcVersion:'Minecraft Version', publish:'Publish', cancel:'Cancel', edit:'Edit', delete:'Delete',
+    addOnType:'Add-on', mapType:'Map', textureType:'Texture Pack', skinType:'Skin', serverType:'Server',
+    major:'Major Update', minor:'Minor Update', patch:'Patch', hotfix:'Hotfix',
+    searchPlaceholder:'Search for a mod...',
+    filterAll:'All', filterAddons:'Add-ons', filterMaps:'Maps', filterTextures:'Textures', filterSkins:'Skins', filterServers:'Servers',
+    sortNewest:'Newest', sortOldest:'Oldest', sortName:'Name',
+    gallery:'Gallery', noGallery:'No images in gallery', imageOf:'of',
+    stats:'Statistics', onlineNow:'Online Now', totalUsers:'Users', totalMods:'Mods', totalServers:'Servers'
   }
 };
+
 function tt(key){return (UI_TEXT[currentLang] && UI_TEXT[currentLang][key]) || UI_TEXT.ar[key] || key;}
 function setText(selector, value){const el=document.querySelector(selector); if(el) el.textContent=value;}
 function setTheme(theme, silent=false){
@@ -1553,6 +1621,8 @@ function applyStaticTranslations(){
   setText('#bn-home span', tt('navHome')); setText('#bn-search span', tt('navSearch')); setText('#bn-publish span', tt('navPublish')); setText('#bn-favs span', tt('navFavs')); setText('#bn-settings span', tt('navSettings'));
   setText('#themeTitle', tt('themeTitle')); setText('#themeDesc', tt('themeDesc')); setText('#lightThemeText', tt('light')); setText('#darkThemeText', tt('dark'));
   setText('#languageTitle', tt('languageTitle')); setText('#languageDesc', tt('languageDesc')); setText('#languageBtn', tt('languageButton'));
+  setText('#topPubTitle', tt('topPublishers'));
+  setText('#onlineLabel', tt('onlineNow')); setText('#usersLabel', tt('totalUsers')); setText('#modsLabel', tt('totalMods')); setText('#serversLabel', tt('totalServers'));
   const setTitles=document.querySelectorAll('.settings-page .set-title');
   if(setTitles[0]) setTitles[0].textContent=tt('myMods'); if(setTitles[1]) setTitles[1].textContent=tt('settings'); if(setTitles[2]) setTitles[2].textContent=tt('account');
   const pubSub=document.querySelector('.settings-page .pub-sub'); if(pubSub) pubSub.textContent=tt('myModsDesc');
@@ -1564,6 +1634,7 @@ function applyStaticTranslations(){
   if(dKeys[0]) dKeys[0].textContent=tt('rating'); if(dKeys[1]) dKeys[1].textContent=tt('version'); if(dKeys[2]) dKeys[2].textContent=tt('date');
   if(dKeys[3]) dKeys[3].textContent=tt('serverIp'); if(dKeys[4]) dKeys[4].textContent=tt('port'); if(dKeys[5]) dKeys[5].textContent=tt('online');
   const secTitles=document.querySelectorAll('.detail-sec-title'); if(secTitles[0]) secTitles[0].textContent=tt('serverInfo'); if(secTitles[1]) secTitles[1].textContent=tt('description');
+  renderTopPublishers();
 }
 
 // ============================================================
@@ -1644,6 +1715,76 @@ function isVerified(userId, userEmail){
 // ============================================================
 // UPDATE BADGE SYSTEM
 // ============================================================
+
+// ============================================================
+// PUBLISHER & DOWNLOADS SYSTEM
+// ============================================================
+function getPublisherInitial(email){
+  return email ? email.charAt(0).toUpperCase() : '?';
+}
+function renderPublisherCard(item){
+  if(!item.userEmail) return '';
+  const isVerified = isVerified(item.userId, item.userEmail);
+  const verifiedBadge = isVerified ? '<div class="publisher-verified"><i class="fa-solid fa-check-circle"></i> '+tt('verified')+'</div>' : '<div class="publisher-verified" style="color:var(--muted)"><i class="fa-solid fa-circle-xmark"></i> '+tt('unverified')+'</div>';
+  return `<div class="publisher-card">
+    <div class="publisher-avatar">${getPublisherInitial(item.userEmail)}</div>
+    <div class="publisher-info">
+      <div class="publisher-name">${item.userEmail}</div>
+      <div class="publisher-email">${tt('publishedBy')} ${new Date(item.createdAt?.seconds*1000 || Date.now()).toLocaleDateString(currentLang==='ar'?'ar-SA':'en-US')}</div>
+    </div>
+    ${verifiedBadge}
+  </div>`;
+}
+function renderCopyIpBtn(item){
+  if(item.type !== 'server') return '';
+  return `<button class="copy-ip-btn" onclick="copyServerIP('${item.ip}', '${item.port||19132}')">
+    <i class="fa-solid fa-copy"></i> ${tt('copyIp')}
+  </button>`;
+}
+function copyServerIP(ip, port){
+  const text = ip + ':' + port;
+  navigator.clipboard.writeText(text).then(() => {
+    showToast(tt('ipCopied'));
+  }).catch(() => showToast(ip + ':' + port));
+}
+
+// ============================================================
+// TOP PUBLISHERS SYSTEM
+// ============================================================
+function renderTopPublishers(){
+  const list = document.getElementById('topPublishersList');
+  if(!list) return;
+  const publishers = {};
+  ITEMS.forEach(item => {
+    if(!item.userEmail) return;
+    if(!publishers[item.userEmail]){
+      publishers[item.userEmail] = {email: item.userEmail, userId: item.userId, count: 0, verified: isVerified(item.userId, item.userEmail)};
+    }
+    publishers[item.userEmail].count++;
+  });
+  const sorted = Object.values(publishers).sort((a,b) => b.count - a.count).slice(0, 5);
+  list.innerHTML = sorted.map((pub, idx) => `
+    <div class="publisher-item">
+      <div class="publisher-rank">#${idx+1}</div>
+      <div class="publisher-avatar" style="width:50px;height:50px;margin:0 auto 8px">${getPublisherInitial(pub.email)}</div>
+      <div class="publisher-item-name">${pub.email}</div>
+      <div class="publisher-item-mods">${pub.count} ${tt('countSuffix')}</div>
+      ${pub.verified ? '<div class="publisher-badge-gold"><i class="fa-solid fa-crown"></i> '+tt('verified')+'</div>' : ''}
+    </div>
+  `).join('');
+}
+
+// ============================================================
+// MOST DOWNLOADED SECTION
+// ============================================================
+function renderMostDownloaded(){
+  const sorted = [...ITEMS].sort((a,b) => (b.downloads||0) - (a.downloads||0)).slice(0, 6);
+  const grid = document.createElement('div');
+  grid.className = 'cards-grid';
+  grid.innerHTML = sorted.map(cardHTML).join('');
+  return grid;
+}
+
 function getUpdateBadgeHTML(updateType){
   const types = {
     major: {class: 'update-major', text: 'تحديث رئيسي'},
@@ -1676,3 +1817,4 @@ function showToast(msg){
 </script>
 </body>
 </html>
+
