@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minecraft: Pocket Edition — desv.online</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --bg: #060608;
+      --panel: #0a0a0c;
+      --line: rgba(255,255,255,.07);
+      --text: #f0f0f2;
+      --muted: rgba(255,255,255,.52);
+      --green: #234834;
+      --silver: #c0c0c0;
+      --black-pure: #000000;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 20px 14px 60px;
+      background-image: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(74, 222, 128, 0.1) 0%, transparent 70%);
+    }
+
+    .page {
+      width: min(100%, 560px);
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px 12px;
+      background: rgba(255,255,255,.025);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 22px 22px 0 0;
+      backdrop-filter: blur(16px);
+    }
+    .brand { font-size: 13px; font-weight: 600; color: var(--silver); }
+
+    .hero {
+      position: relative;
+      padding: 30px 24px;
+      background: linear-gradient(180deg, #0c0c10 0%, #07070a 100%);
+      border-left: 1px solid rgba(255,255,255,.06);
+      border-right: 1px solid rgba(255,255,255,.06);
+    }
+    
+    .hero-content {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    
+    .app-icon {
+      width: 90px;
+      height: 90px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2px solid var(--green);
+      flex-shrink: 0;
+      box-shadow: 0 0 15px rgba(74, 222, 128, 0.2);
+    }
+    .app-icon img { width: 100%; height: 100%; object-fit: cover; }
+
+    .hero-text h1 {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+
+    .shine-text {
+      background: linear-gradient(90deg, var(--green) 0%, var(--silver) 30%, #fff 55%, var(--silver) 72%, var(--green) 100%);
+      background-size: 220% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shine 3.2s linear infinite;
+    }
+
+    @keyframes shine {
+      0% { background-position: 220% center; }
+      100% { background-position: 0% center; }
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .dev-name { color: var(--green); font-weight: 600; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 0 18px;
+      gap: 12px;
+      margin-bottom: 24px;
+      margin-top: 10px;
+    }
+    
+    .stat-box {
+      position: relative;
+      background: var(--black-pure);
+      padding: 16px 10px;
+      text-align: center;
+      border-radius: 16px;
+      border: 1px solid rgba(74, 222, 128, 0.2);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .stat-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 0%, rgba(74, 222, 128, 0.05) 50%, transparent 100%);
+      background-size: 200% 200%;
+      animation: move-bg 4s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes move-bg {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 200% 200%; }
+    }
+
+    .stat-box i {
+      width: 18px;
+      height: 18px;
+      color: var(--green);
+      margin-bottom: 2px;
+    }
+
+    .stat-val { font-size: 14px; font-weight: 700; color: #fff; display: block; }
+    .stat-lbl { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+    .content-area {
+      background: var(--bg);
+      border: 1px solid rgba(255,255,255,.06);
+      border-top: 0;
+      border-radius: 0 0 22px 22px;
+      padding: 18px 0;
+    }
+
+    .screenshots-container {
+      padding: 0 18px;
+      margin-bottom: 24px;
+    }
+    .screenshots-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--silver);
+      opacity: 0.5;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .screenshots-wrapper {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      scrollbar-width: none;
+    }
+    .screenshots-wrapper::-webkit-scrollbar { display: none; }
+    .screenshot-item {
+      flex: 0 0 240px;
+      height: 135px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--green);
+    }
+    .screenshot-item img { width: 100%; height: 100%; object-fit: cover; }
+
+    .action-area {
+      padding: 0 18px;
+      margin-bottom: 24px;
+    }
+    .download-card {
+      background: linear-gradient(135deg, rgba(74,222,128,0.1) 0%, rgba(192, 192, 192, 0.05) 100%);
+      border: 1px solid var(--green);
+      border-radius: 18px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* PURE HTML LINK BUTTON - NO JAVASCRIPT NEEDED FOR REDIRECT */
+    .download-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(90deg, var(--black-pure) 0%, #333 30%, var(--green) 55%, #333 72%, var(--black-pure) 100%);
+      background-size: 220% 100%;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 15px;
+      animation: shine-btn 3.2s linear infinite;
+      border: 1px solid var(--green);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    @keyframes shine-btn {
+      0% { background-position: 220% center; }
+      100% { background-position: 0% center; }
+    }
+    .download-btn:hover { transform: scale(0.98); }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+    }
+    .square-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 48px;
+      background: var(--black-pure);
+      border: 1px solid var(--silver);
+      color: var(--silver);
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .square-btn:hover { border-color: var(--green); color: var(--green); }
+
+    .info-section {
+      padding: 0 18px;
+      margin-bottom: 24px;
+    }
+    .sec-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--green);
+    }
+    .desc-text {
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--silver);
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--green);
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      display: none;
+      z-index: 1000;
+      box-shadow: 0 0 20px rgba(74, 222, 128, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+  <div class="topbar">
+    <div class="brand">desv.online</div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-content">
+      <div class="app-icon">
+        <img src="https://zxko.cloud/minecraft-images/1774373330695-Minecraft_2024_cover_art.png.webp" alt="Minecraft Icon">
+      </div>
+      <div class="hero-text">
+        <h1><span class="shine-text">Minecraft</span></h1>
+        <div class="hero-meta">
+          <span class="dev-name">Desv.online</span>
+          <span>Contains Ads · In-app purchases</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-box">
+      <i data-lucide="star"></i>
+      <span class="stat-val">4.6</span>
+      <span class="stat-lbl">12M Reviews</span>
+    </div>
+    <div class="stat-box">
+      <i data-lucide="hard-drive"></i>
+      <span class="stat-val">827 MB</span>
+      <span class="stat-lbl">Size</span>
+    </div>
+    <div class="stat-box">
+      <i data-lucide="download-cloud"></i>
+      <span class="stat-val">100M+</span>
+      <span class="stat-lbl">Downloads</span>
+    </div>
+  </div>
+
+  <div class="content-area">
+    <div class="screenshots-container">
+      <span class="screenshots-label"></span>
+      <div class="screenshots-wrapper">
+        <div class="screenshot-item"><img src="https://zxko.cloud/minecraft-secondary/1774373417362-unnamed__1_.webp" alt="Screen 1"></div>
+        <div class="screenshot-item"><img src="https://zxko.cloud/minecraft-secondary/1774373497767-unnamed__2_.webp" alt="Screen 2"></div>
+        <div class="screenshot-item"><img src="https://zxko.cloud/minecraft-secondary/1774407629483-unnamed__3_.webp" alt="Screen 3"></div>
+        <div class="screenshot-item"><img src="https://zxko.cloud/minecraft-secondary/1774422250302-unnamed__4_.webp" alt="Screen 4"></div>
+        <div class="screenshot-item"><img src="https://zxko.cloud/minecraft-secondary/1774438876581-unnamed__5_.webp" alt="Screen 5"></div>
+      </div>
+    </div>
+
+    <div class="action-area">
+      <div class="download-card">
+        <!-- REPLACE THE URL BELOW WITH YOUR DOWNLOAD LINK -->
+        <a href="https://download2390.mediafire.com/uspb0pqtn0hgdgjsvwYElclinogupwrXulkwCQEROnAyloLsjHcXBX_WoibIiU-rT5BNfV21-64Y8Mn2sOl0HCfzFF619LD-5pH-lC6j4dGn77CYKF_9xqRC7K2VujJq0-Dacr_BvyBnIRgvqkDlcg-TYNnGWyLGd5A09Ylzsd-r/ak3lgbfildn6d6z/minecraft-26-21.apk" class="download-btn">
+          <i data-lucide="download"></i>
+          Download (827 MB)
+        </a>
+        <div class="btn-row">
+          <button class="square-btn" onclick="copyLink()">
+            <i data-lucide="copy"></i>
+          </button>
+          <button class="square-btn" onclick="handleWishlist()">
+            <i data-lucide="plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <h2 class="sec-title">About this game</h2>
+      <p class="desc-text">Download Minecraft Bedrock Latest Version – Build, Craft and Survive in an Open World
+
+Minecraft Bedrock Edition is an open-world sandbox game that allows players to build, craft, and survive in an infinite, randomly generated world. Gather resources, explore unique biomes, and create anything you can imagine, block by block.
+
+Play in Creative mode with unlimited resources or challenge yourself in Survival mode where you must craft tools, fight enemies, and survive the night. Minecraft Bedrock also supports seamless cross-platform multiplayer, allowing you to play with friends on different devices anytime.
+
+Explore a vast world filled with diverse environments, creatures, and hidden challenges. Build cities, start farms, mine deep underground, or experiment freely with endless possibilities.
+
+Minecraft Marketplace offers a wide range of add-ons, custom worlds, and skins created by the community. You can also customize your gameplay using add-ons and commands to control game mechanics such as weather, time, and spawning entities.
+
+Join massive multiplayer servers with thousands of players, compete in mini-games, or create your own private server using Realms and Realms Plus, where you can play with up to 10 friends.
+
+Minecraft Bedrock is designed for performance and accessibility across multiple platforms, making it one of the most flexible and widely played versions of Minecraft.
+
+Minimum system requirements vary depending on the device. For optimal performance, ensure your device meets the recommended specifications.</p>
+    </div>
+  </div>
+</div>
+
+<div id="toast">Link copied to clipboard!</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-analytics-compat.js"></script>
+
+<script>
+  lucide.createIcons();
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBL6Ryu1c-iUhlNAiBzufWOepsj1oWjMJs",
+    authDomain: "desvcraft.firebaseapp.com",
+    projectId: "desvcraft",
+    storageBucket: "desvcraft.firebasestorage.app",
+    messagingSenderId: "488609817409",
+    appId: "1:488609817409:web:b9eda3668eb3f2ba3077c0",
+    measurementId: "G-1HGP7MN78M"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const analytics = firebase.analytics();
+
+  function copyLink() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+      showToast("Link copied to clipboard!");
+      analytics.logEvent('share_link_copied');
+    });
+  }
+
+  function handleWishlist() {
+    showToast("Added to wishlist!");
+    analytics.logEvent('wishlist_added');
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.innerText = msg;
+    toast.style.display = 'block';
+    setTimeout(() => { toast.style.display = 'none'; }, 2000);
+  }
+</script>
+</body>
+</html>
