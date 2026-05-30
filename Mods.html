@@ -1,0 +1,1962 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desv.online - Minecraft Mods</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
+  <style>
+    :root {
+      --bg: #000000;
+      --panel: #000000;
+      --line: rgba(255,255,255,.1);
+      --text: #ffffff;
+      --muted: rgba(255,255,255,.6);
+      --red: #ff0000;
+      --red-dim: rgba(255,0,0,.15);
+      /* Glass variables */
+      --glass-bg: rgba(255,255,255,.06);
+      --glass-bg-hover: rgba(255,255,255,.11);
+      --glass-border: rgba(255,255,255,.14);
+      --glass-border-hover: rgba(255,0,0,.45);
+      --glass-blur: blur(22px);
+      --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+      --glass-shadow-hover: 0 14px 44px rgba(255,0,0,.22);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #000000;
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 20px 14px 80px;
+      background-image: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(255,0,0,.1) 0%, transparent 70%);
+    }
+
+    .page {
+      width: min(100%, 560px);
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 14px 18px 12px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 22px 22px 0 0;
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+    }
+    .brand { font-size: 13px; font-weight: 700; letter-spacing: -.3px; color: #ffffff; }
+    .nav {
+      display: flex; gap: 2px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px; padding: 3px;
+    }
+    .tab {
+      border: 0; background: transparent; color: rgba(255,255,255,.6);
+      font-size: 10px; font-family: inherit; padding: 6px 10px;
+      border-radius: 7px; cursor: pointer; transition: .18s ease; white-space: nowrap;
+      font-weight: 500;
+    }
+    .tab:hover, .tab.active { background: #ff0000; color: #ffffff; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; overflow: hidden;
+      min-height: 180px; padding: 50px 28px 30px;
+      background-image: url('https://cdn.discordapp.com/attachments/1452754320322990092/1510334200820007054/file_000000009908720a8ee18dd03a9d187b.png?ex=6a1c6fd6&is=6a1b1e56&hm=e9139885a6d8f6dd10cbb144ec32eeb943b03cfedb2c05a1926e0279da86afe6&');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-left: 1px solid rgba(255,255,255,.1);
+      border-right: 1px solid rgba(255,255,255,.1);
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 18% 22%, rgba(255,255,255,.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 72% 15%, rgba(255,255,255,.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 44% 34%, rgba(255,255,255,.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 61% 28%, rgba(255,255,255,.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 35%, rgba(255,255,255,.3) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 52% 18%, rgba(255,255,255,.6) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .badge {
+      width: fit-content; margin: 0 auto 14px;
+      padding: 4px 12px; border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      color: #ffffff; font-size: 9px; letter-spacing: .3px;
+      position: relative; z-index: 2;
+      font-weight: 500;
+    }
+    h1 {
+      text-align: center; font-size: clamp(24px, 5vw, 30px);
+      font-weight: 700; letter-spacing: -1px; line-height: .96;
+      color: #ffffff; margin-bottom: 10px;
+      position: relative; z-index: 2;
+    }
+    .shine {
+      background: linear-gradient(90deg, #ffffff 0%, #ff0000 30%, #ffffff 55%, #000000 72%, #ffffff 100%);
+      background-size: 220% 100%;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; animation: shine 3.2s linear infinite;
+    }
+    @keyframes shine {
+      0%   { background-position: 220% center; }
+      100% { background-position: 0% center; }
+    }
+    .hero-desc {
+      text-align: center; max-width: 300px; margin: 0 auto;
+      font-size: 10.5px; line-height: 1.75; color: var(--muted);
+      position: relative; z-index: 2;
+      font-weight: 400;
+    }
+
+    /* ── SEARCH ── */
+    .search-wrap {
+      padding: 16px 18px;
+      background: #000000;
+      border-left: 1px solid rgba(255,255,255,.1);
+      border-right: 1px solid rgba(255,255,255,.1);
+    }
+    .search-box {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px; padding: 9px 14px;
+      margin-bottom: 10px;
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+    }
+    .search-box svg { width: 16px; height: 16px; color: rgba(255,255,255,.5); flex-shrink: 0; stroke-width: 2; }
+    .search-box input {
+      background: transparent; border: 0; outline: 0;
+      color: #ffffff; font-family: inherit; font-size: 11px;
+      width: 100%;
+      font-weight: 400;
+    }
+    .search-box input::placeholder { color: rgba(255,255,255,.4); }
+    .filter-row {
+      display: flex; gap: 6px; flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 6px 12px; border-radius: 8px;
+      font-size: 9px; font-family: inherit; cursor: pointer;
+      border: 1px solid rgba(255,255,255,.1);
+      background: var(--glass-bg); color: rgba(255,255,255,.6);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      transition: .18s ease;
+      font-weight: 500;
+    }
+    .filter-btn:hover, .filter-btn.active { background: #ff0000; color: #ffffff; border-color: #ff0000; }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 9px;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.4);
+      margin-bottom: 16px;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+    .section-icon {
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255, 0, 0, 0.15);
+      border: 1px solid rgba(255, 0, 0, 0.3);
+      border-radius: 8px; color: #ff0000; flex-shrink: 0;
+    }
+    .section-icon svg { width: 16px; height: 16px; stroke-width: 2; }
+
+    /* ── TABS ROW ── */
+    .tabs-row {
+      display: flex; gap: 6px; padding: 12px 18px 0;
+      background: #000000;
+      border-left: 1px solid rgba(255,255,255,.1);
+      border-right: 1px solid rgba(255,255,255,.1);
+      flex-wrap: wrap;
+    }
+    .dtab {
+      padding: 6px 14px; border-radius: 8px;
+      font-size: 10px; font-family: inherit; cursor: pointer;
+      border: 1px solid rgba(255,255,255,.1);
+      background: var(--glass-bg); color: rgba(255,255,255,.6);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      transition: .18s ease;
+      display: flex; align-items: center; gap: 6px;
+      font-weight: 500;
+    }
+    .dtab.active, .dtab:hover { background: #ff0000; color: #ffffff; border-color: #ff0000; }
+    .dtab svg { width: 14px; height: 14px; stroke-width: 2; }
+
+    /* ── CONTENT AREA ── */
+    .content-area {
+      background: #000000;
+      border: 1px solid rgba(255,255,255,.1);
+      border-top: 0;
+      border-radius: 0 0 22px 22px;
+      padding: 18px 18px 28px;
+    }
+
+    /* ── VIEW LAYERS ── */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ── AUTH MODAL ── */
+    .auth-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,.8);
+      backdrop-filter: blur(5px);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .auth-modal.active { display: flex; }
+    .auth-modal-content {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      padding: 30px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: var(--glass-shadow);
+    }
+    .auth-modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #ffffff;
+    }
+    .auth-form-group {
+      margin-bottom: 16px;
+    }
+    .auth-form-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,.8);
+      margin-bottom: 8px;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: .3px;
+    }
+    .auth-form-input {
+      width: 100%;
+      padding: 11px 14px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 11px;
+      transition: .2s;
+    }
+    .auth-form-input:focus {
+      outline: none;
+      border-color: #ff0000;
+      background: rgba(255,255,255,.08);
+    }
+    .auth-form-input::placeholder { color: rgba(255,255,255,.4); }
+    .auth-btn {
+      width: 100%;
+      padding: 12px;
+      background: #ff0000;
+      border: 0;
+      border-radius: 10px;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .2s;
+      margin-bottom: 12px;
+    }
+    .auth-btn:hover { background: #cc0000; }
+    .auth-btn.secondary {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      color: #ffffff;
+    }
+    .auth-btn.secondary:hover {
+      background: rgba(255,255,255,.1);
+      border-color: #ff0000;
+    }
+    .auth-divider {
+      text-align: center;
+      margin: 16px 0;
+      font-size: 10px;
+      color: rgba(255,255,255,.4);
+    }
+    .auth-divider::before {
+      content: '';
+      display: inline-block;
+      width: 40%;
+      height: 1px;
+      background: rgba(255,255,255,.1);
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    .auth-divider::after {
+      content: '';
+      display: inline-block;
+      width: 40%;
+      height: 1px;
+      background: rgba(255,255,255,.1);
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .auth-toggle {
+      text-align: center;
+      font-size: 10px;
+      color: rgba(255,255,255,.6);
+      margin-top: 16px;
+    }
+    .auth-toggle a {
+      color: #ff0000;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .auth-toggle a:hover { text-decoration: underline; }
+    .auth-error {
+      background: rgba(255,0,0,.15);
+      border: 1px solid rgba(255,0,0,.3);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 10px;
+      color: #ff6666;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .auth-error.show { display: block; }
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 6px 12px;
+      background: rgba(255,0,0,.15);
+      border: 1px solid rgba(255,0,0,.3);
+      border-radius: 8px;
+      color: #ff0000;
+      font-size: 10px;
+      font-weight: 600;
+      transition: .2s;
+    }
+    .user-menu:hover {
+      background: rgba(255,0,0,.25);
+      border-color: #ff0000;
+    }
+    .user-menu-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      min-width: 150px;
+      display: none;
+      z-index: 1000;
+      margin-top: 8px;
+    }
+    .user-menu-dropdown.show { display: block; }
+    .user-menu-item {
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+      cursor: pointer;
+      font-size: 10px;
+      color: rgba(255,255,255,.8);
+      transition: .2s;
+    }
+    .user-menu-item:last-child { border-bottom: none; }
+    .user-menu-item:hover {
+      background: rgba(255,0,0,.15);
+      color: #ff0000;
+    }
+
+    /* ══════════════════════════════════════════
+       MOD CARDS GRID  –  2 columns (2×1)
+    ══════════════════════════════════════════ */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    /* ══════════════════════════════════════════
+       MOD CARD  –  Full Glassmorphism
+    ══════════════════════════════════════════ */
+    .mod-card {
+      border-radius: 16px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color .22s, transform .18s, background .22s, box-shadow .22s;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      box-shadow: var(--glass-shadow);
+    }
+    .mod-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(255,255,255,.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .mod-card:hover {
+      border-color: var(--glass-border-hover);
+      background: var(--glass-bg-hover);
+      transform: translateY(-4px);
+      box-shadow: var(--glass-shadow-hover);
+    }
+    .mod-card:active { transform: translateY(0); }
+
+    .card-banner {
+      width: 100%; height: 140px;
+      background-size: cover; background-position: center; background-repeat: no-repeat;
+      position: relative; overflow: hidden;
+    }
+    .card-banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.55) 100%);
+      pointer-events: none;
+    }
+
+    .card-badge {
+      position: absolute; top: 8px; left: 8px;
+      font-size: 8px; font-weight: 600;
+      padding: 3px 8px; border-radius: 6px;
+      letter-spacing: .3px; z-index: 2;
+    }
+    .badge-gameplay   { background: rgba(255,0,0,.2);   color: #ff6666; border: 1px solid rgba(255,0,0,.3); }
+    .badge-visual     { background: rgba(0,200,200,.15); color: #66dddd; border: 1px solid rgba(0,200,200,.25); }
+    .badge-utility    { background: rgba(100,100,255,.15); color: #aaaaff; border: 1px solid rgba(100,100,255,.25); }
+    .badge-performance{ background: rgba(0,255,100,.12); color: #66ff99; border: 1px solid rgba(0,255,100,.2); }
+
+    .card-body {
+      padding: 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(180deg, rgba(255,255,255,.03) 0%, rgba(0,0,0,.1) 100%);
+    }
+    .card-icon {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,0,0,.18);
+      border: 1px solid rgba(255,0,0,.28);
+      border-radius: 8px; color: #ff0000;
+      margin-bottom: 8px; flex-shrink: 0;
+    }
+    .card-icon svg { width: 18px; height: 18px; stroke-width: 2; }
+    .card-name {
+      font-size: 11.5px; font-weight: 700; color: #ffffff;
+      margin-bottom: 4px; line-height: 1.3;
+    }
+    .card-desc {
+      font-size: 9.5px; color: rgba(255,255,255,.5);
+      line-height: 1.5; margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+      font-weight: 400;
+    }
+    .card-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: auto;
+    }
+    .card-rating {
+      display: flex; align-items: center; gap: 4px;
+      font-size: 10px; color: #ff0000; font-weight: 600;
+    }
+    .card-rating svg { width: 10px; height: 10px; fill: #ff0000; }
+    .card-downloads { font-size: 9.5px; color: rgba(255,255,255,.4); font-weight: 400; }
+
+    /* ══════════════════════════════════════════
+       PUBLISHERS GRID  –  3 columns (3×1)
+    ══════════════════════════════════════════ */
+    .publishers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .publisher-card {
+      border-radius: 16px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      padding: 16px;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative; overflow: hidden;
+      box-shadow: var(--glass-shadow);
+    }
+    .publisher-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(255,0,0,.08) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .publisher-card:hover {
+      border-color: var(--glass-border-hover);
+      background: var(--glass-bg-hover);
+      transform: translateY(-4px);
+      box-shadow: var(--glass-shadow-hover);
+    }
+    .publisher-avatar {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      background-size: cover; background-position: center;
+      border: 2px solid rgba(255,0,0,.3);
+      margin-bottom: 10px;
+      position: relative; z-index: 1;
+    }
+    .publisher-name {
+      font-size: 11px; font-weight: 700; color: #ffffff;
+      margin-bottom: 4px; position: relative; z-index: 1;
+    }
+    .publisher-role {
+      font-size: 8px; color: rgba(255,255,255,.5);
+      text-transform: uppercase; letter-spacing: 0.5px;
+      position: relative; z-index: 1; font-weight: 500;
+    }
+    .publisher-badge {
+      display: inline-block; margin-top: 8px;
+      padding: 3px 8px; border-radius: 6px;
+      background: rgba(255,0,0,.2); color: #ff6666;
+      border: 1px solid rgba(255,0,0,.3);
+      font-size: 8px; font-weight: 600;
+      position: relative; z-index: 1;
+    }
+
+    /* ── MOD DETAIL MODAL ── */
+    .mod-detail-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,.9);
+      backdrop-filter: blur(5px);
+      z-index: 997;
+      overflow-y: auto;
+      padding: 20px 14px 80px;
+    }
+    .mod-detail-modal.active { display: block; }
+    .mod-detail-content {
+      width: min(100%, 560px);
+      margin: 0 auto;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      overflow: hidden;
+      box-shadow: var(--glass-shadow);
+    }
+    .mod-detail-close {
+      position: absolute;
+      top: 20px; right: 20px;
+      width: 32px; height: 32px;
+      background: rgba(255,0,0,.15);
+      border: 1px solid rgba(255,0,0,.3);
+      border-radius: 8px;
+      color: #ff0000;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: .2s;
+      z-index: 998;
+    }
+    .mod-detail-close:hover {
+      background: rgba(255,0,0,.25);
+      border-color: #ff0000;
+    }
+    .mod-detail-close svg { width: 16px; height: 16px; stroke-width: 2; }
+
+    .mod-detail-banner {
+      width: 100%; height: 200px;
+      background-size: cover; background-position: center; background-repeat: no-repeat;
+      position: relative;
+    }
+    .mod-detail-banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.7) 100%);
+    }
+
+    .mod-detail-header {
+      padding: 24px;
+      display: flex; gap: 16px;
+      position: relative;
+    }
+    .mod-detail-logo {
+      width: 80px; height: 80px;
+      border-radius: 14px;
+      background-size: cover; background-position: center;
+      border: 2px solid rgba(255,0,0,.3);
+      flex-shrink: 0;
+    }
+    .mod-detail-info { flex: 1; }
+    .mod-detail-title {
+      font-size: 20px; font-weight: 700; color: #ffffff;
+      margin-bottom: 6px;
+    }
+    .mod-detail-category {
+      display: inline-block;
+      padding: 4px 10px; border-radius: 6px;
+      background: rgba(255,0,0,.2); color: #ff6666;
+      border: 1px solid rgba(255,0,0,.3);
+      font-size: 9px; font-weight: 600;
+    }
+
+    .mod-detail-desc {
+      padding: 0 24px 20px;
+      font-size: 11px; color: rgba(255,255,255,.7);
+      line-height: 1.6; font-weight: 400;
+    }
+
+    .mod-detail-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 12px; padding: 0 24px 20px;
+    }
+    .mod-detail-stat {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px; padding: 12px;
+      text-align: center;
+    }
+    .mod-detail-stat-value {
+      font-size: 14px; font-weight: 700; color: #ff0000; margin-bottom: 4px;
+    }
+    .mod-detail-stat-label {
+      font-size: 9px; color: rgba(255,255,255,.5); text-transform: uppercase;
+      letter-spacing: .3px; font-weight: 500;
+    }
+
+    /* ── GALLERY ── */
+    .mod-detail-gallery {
+      padding: 0 24px 20px;
+    }
+    .gallery-label {
+      font-size: 11px; font-weight: 700;
+      color: rgba(255,255,255,.8);
+      text-transform: uppercase; letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .gallery-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .gallery-item {
+      aspect-ratio: 1;
+      border-radius: 10px;
+      background-size: cover; background-position: center;
+      cursor: pointer; transition: .2s;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .gallery-item:hover { transform: scale(1.05); border-color: #ff0000; }
+
+    /* ── HASHTAGS ── */
+    .mod-detail-hashtags {
+      padding: 0 24px 20px;
+      border-top: 1px solid rgba(255,255,255,.1);
+      padding-top: 20px;
+    }
+    .hashtags-label {
+      font-size: 11px; font-weight: 700;
+      color: rgba(255,255,255,.8);
+      text-transform: uppercase; letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .hashtags-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .hashtag {
+      padding: 6px 12px;
+      background: rgba(255,0,0,.1); border: 1px solid rgba(255,0,0,.2);
+      border-radius: 20px; font-size: 10px; color: #ff6666; font-weight: 500;
+    }
+
+    /* ── ACTION BUTTONS ── */
+    .mod-detail-actions {
+      padding: 20px 24px;
+      display: flex; gap: 12px;
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+    .action-btn {
+      flex: 1; padding: 12px; border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: var(--glass-bg); color: #ffffff;
+      font-weight: 600; font-size: 11px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: all 0.2s; font-family: inherit;
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+    }
+    .action-btn:hover { background: rgba(255,0,0,.15); border-color: #ff0000; color: #ff0000; }
+    .action-btn.primary { background: #ff0000; border-color: #ff0000; color: #ffffff; }
+    .action-btn.primary:hover { background: #cc0000; }
+    .action-btn svg { width: 16px; height: 16px; stroke-width: 2; }
+
+    /* ── FORM STYLES – GLASSMORPHIC ── */
+    .form-group { margin-bottom: 16px; }
+    .form-group-card {
+      border-radius: 14px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      padding: 16px; transition: all 0.2s;
+    }
+    .form-group-card:focus-within {
+      border-color: rgba(255,0,0,.35);
+      background: var(--glass-bg-hover);
+    }
+    .form-label {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 10px; font-weight: 700; color: rgba(255,255,255,.8);
+      margin-bottom: 10px; text-transform: uppercase; letter-spacing: .3px;
+    }
+    .form-icon {
+      width: 20px; height: 20px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,0,0,.2); border: 1px solid rgba(255,0,0,.3);
+      border-radius: 6px; color: #ff0000; flex-shrink: 0;
+    }
+    .form-icon svg { width: 12px; height: 12px; stroke-width: 2; }
+    .form-input, .form-textarea, .form-select {
+      width: 100%; padding: 10px 12px;
+      background: transparent; border: 0; outline: 0;
+      color: #ffffff; font-family: inherit; font-size: 11px; font-weight: 400;
+    }
+    .form-textarea { resize: vertical; min-height: 80px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+
+    .gallery-preview {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px; margin-bottom: 0;
+    }
+    .gallery-item-input {
+      aspect-ratio: 1;
+      border: 1px dashed rgba(255,255,255,.2);
+      border-radius: 10px;
+      background: rgba(255,255,255,.02);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 20px; color: rgba(255,255,255,.4);
+      transition: .2s; background-size: cover; background-position: center;
+    }
+    .gallery-item-input:hover { border-color: #ff0000; background-color: rgba(255,0,0,.05); }
+    .gallery-item-input.filled { border: 1px solid rgba(255,255,255,.2); }
+
+    .submit-btn {
+      width: 100%; padding: 13px;
+      background: #ff0000; border: 0; border-radius: 12px;
+      color: #ffffff; font-family: inherit; font-size: 11px; font-weight: 700;
+      cursor: pointer; transition: .18s ease; letter-spacing: -.2px;
+    }
+    .submit-btn:hover { background: #cc0000; }
+
+    .empty-state {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 40px 20px; text-align: center;
+    }
+    .empty-state svg { width: 60px; height: 60px; color: rgba(255,255,255,.2); margin-bottom: 16px; }
+    .empty-state p { font-size: 12px; color: rgba(255,255,255,.5); font-weight: 400; }
+
+    /* ── SETTINGS ── */
+    .settings-group { margin-bottom: 24px; }
+    .settings-title {
+      font-size: 11px; font-weight: 700; color: #ffffff;
+      text-transform: uppercase; letter-spacing: .3px;
+      margin-bottom: 12px; padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .settings-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px; margin-bottom: 8px;
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+    }
+    .settings-item-label { font-size: 10px; color: rgba(255,255,255,.8); font-weight: 500; }
+    .toggle-switch {
+      width: 40px; height: 24px;
+      background: rgba(255,255,255,.1);
+      border-radius: 12px; cursor: pointer;
+      position: relative; transition: background .2s;
+    }
+    .toggle-switch.active { background: #ff0000; }
+    .toggle-switch::after {
+      content: ''; position: absolute;
+      width: 20px; height: 20px;
+      background: #ffffff; border-radius: 10px;
+      top: 2px; right: 2px; transition: right .2s;
+    }
+    .toggle-switch.active::after { right: 18px; }
+    .settings-button {
+      width: 100%; padding: 10px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px; color: #ffffff; font-family: inherit;
+      font-size: 10px; cursor: pointer; transition: .18s ease;
+      margin-bottom: 8px; font-weight: 500;
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+    }
+    .settings-button:hover { background: rgba(255,0,0,.1); border-color: #ff0000; }
+    .settings-button.danger { color: #ff6666; border-color: rgba(255,0,0,.3); }
+    .settings-button.danger:hover { background: rgba(255,0,0,.15); border-color: #ff0000; }
+
+    /* ── BOTTOM NAVIGATION ── */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      height: 70px;
+      background: rgba(0,0,0,.85);
+      border-top: 1px solid rgba(255,255,255,.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: flex; justify-content: center;
+      z-index: 998;
+    }
+    .nav-container {
+      width: min(100%, 560px);
+      display: flex; justify-content: space-around; align-items: center;
+    }
+    .nav-item {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 4px; flex: 1; height: 100%;
+      background: transparent; border: 0;
+      color: rgba(255,255,255,.6); cursor: pointer;
+      transition: all 0.18s ease; font-size: 10px;
+      font-family: inherit; padding: 8px 0; font-weight: 500;
+    }
+    .nav-item:hover, .nav-item.active { color: #ff0000; background: rgba(255,0,0,.08); }
+    .nav-item svg { width: 24px; height: 24px; stroke-width: 2; }
+    .nav-label { font-size: 9px; font-weight: 600; letter-spacing: 0.3px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      body { padding: 20px 10px 80px; }
+      .page { width: 100%; }
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
+      .publishers-grid { grid-template-columns: repeat(3, 1fr); }
+      .form-row { grid-template-columns: 1fr; }
+      .gallery-preview { grid-template-columns: repeat(5, 1fr); }
+      .gallery-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 15px 8px 80px; }
+      .topbar { border-radius: 16px; padding: 12px 14px; }
+      .hero { min-height: 140px; padding: 30px 20px 20px; }
+      h1 { font-size: clamp(18px, 4vw, 24px); }
+      .hero-desc { font-size: 9.5px; }
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
+      .publishers-grid { grid-template-columns: repeat(2, 1fr); }
+      .content-area { border-radius: 0 0 16px 16px; padding: 14px 12px 20px; }
+      .search-wrap { padding: 12px 14px; }
+      .tabs-row { padding: 10px 14px 0; }
+      .gallery-preview { grid-template-columns: repeat(4, 1fr); }
+      .gallery-grid { grid-template-columns: repeat(4, 1fr); }
+      .nav-item { padding: 6px 0; }
+      .nav-label { font-size: 8px; }
+      .nav-item svg { width: 20px; height: 20px; }
+      .mod-detail-modal { padding: 20px 8px 80px; }
+      .mod-detail-content { border-radius: 16px; }
+      .mod-detail-header { padding: 20px 16px 12px; }
+      .mod-detail-title { font-size: 18px; }
+      .mod-detail-gallery { padding: 0 16px 16px; }
+      .mod-detail-hashtags { padding: 0 16px 16px; padding-top: 16px; }
+      .mod-detail-actions { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+<!-- AUTH MODAL -->
+<div id="auth-modal" class="auth-modal">
+  <div class="auth-modal-content">
+    <div class="auth-modal-title" id="auth-title">تسجيل الدخول</div>
+    <div class="auth-error" id="auth-error"></div>
+    
+    <!-- Login Form -->
+    <div id="login-form">
+      <div class="auth-form-group">
+        <label class="auth-form-label">البريد الإلكتروني</label>
+        <input type="email" class="auth-form-input" id="login-email" placeholder="أدخل بريدك الإلكتروني">
+      </div>
+      <div class="auth-form-group">
+        <label class="auth-form-label">كلمة المرور</label>
+        <input type="password" class="auth-form-input" id="login-password" placeholder="أدخل كلمة المرور">
+      </div>
+      <button class="auth-btn" id="login-btn">تسجيل الدخول</button>
+      <button class="auth-btn secondary" id="google-login-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 16px; height: 16px;">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        تسجيل الدخول عبر جوجل
+      </button>
+      <div class="auth-divider">أو</div>
+      <div class="auth-toggle">
+        ليس لديك حساب؟ <a onclick="switchAuthMode('signup')">إنشاء حساب جديد</a>
+      </div>
+    </div>
+
+    <!-- Signup Form -->
+    <div id="signup-form" style="display: none;">
+      <div class="auth-form-group">
+        <label class="auth-form-label">الاسم الكامل</label>
+        <input type="text" class="auth-form-input" id="signup-name" placeholder="أدخل اسمك الكامل">
+      </div>
+      <div class="auth-form-group">
+        <label class="auth-form-label">البريد الإلكتروني</label>
+        <input type="email" class="auth-form-input" id="signup-email" placeholder="أدخل بريدك الإلكتروني">
+      </div>
+      <div class="auth-form-group">
+        <label class="auth-form-label">كلمة المرور</label>
+        <input type="password" class="auth-form-input" id="signup-password" placeholder="أدخل كلمة المرور (6+ أحرف)">
+      </div>
+      <div class="auth-form-group">
+        <label class="auth-form-label">تأكيد كلمة المرور</label>
+        <input type="password" class="auth-form-input" id="signup-confirm" placeholder="أعد إدخال كلمة المرور">
+      </div>
+      <button class="auth-btn" id="signup-btn">إنشاء حساب</button>
+      <button class="auth-btn secondary" id="google-signup-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 16px; height: 16px;">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        إنشاء حساب عبر جوجل
+      </button>
+      <div class="auth-divider">أو</div>
+      <div class="auth-toggle">
+        هل لديك حساب بالفعل؟ <a onclick="switchAuthMode('login')">تسجيل الدخول</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="brand" style="display: flex; align-items: center; gap: 8px;">
+      <div style="width: 24px; height: 24px; background-size: cover; background-position: center; border-radius: 4px; background-image: url('https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=24&h=24&fit=crop');"></div>
+      Desv Add-ons
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div class="nav">
+        <button class="tab active" data-section="home">Home</button>
+        <button class="tab" data-section="search">Search</button>
+        <button class="tab" data-section="publish">Publish</button>
+      </div>
+      <div style="position: relative;">
+        <div class="user-menu" id="user-menu-btn" style="display: none;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; stroke-width: 2;">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span id="user-name">User</span>
+        </div>
+        <div class="user-menu-dropdown" id="user-menu-dropdown">
+          <div class="user-menu-item" onclick="switchView('settings')">الإعدادات</div>
+          <div class="user-menu-item" onclick="logout()">تسجيل الخروج</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="badge">Welcome to Mods Site</div>
+    <h1><span class="shine">Desv Add-ons</span></h1>
+    <div class="hero-desc">latest add-ons and updates</div>
+  </div>
+
+  <!-- CONTENT AREA -->
+  <div class="content-area">
+
+    <!-- HOME VIEW -->
+    <div id="home-view" class="view active">
+
+      <!-- Top Mods (2x1) -->
+      <div class="section-header">
+        <div class="section-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </div>
+        <span>Top Downloaded Mods</span>
+      </div>
+      <div class="cards-grid" id="top-mods-grid"></div>
+
+      <!-- Top Publishers (3x1) -->
+      <div class="section-header" style="margin-top: 24px;">
+        <div class="section-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <span>Top Publishers</span>
+      </div>
+      <div id="top-publishers" class="publishers-grid"></div>
+
+      <!-- Mod Sorting (2x1) -->
+      <div class="section-header" style="margin-top: 24px;">
+        <div class="section-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+            <polyline points="17 6 23 6 23 12"></polyline>
+          </svg>
+        </div>
+        <span>Mod Sorting</span>
+      </div>
+      <div class="tabs-row" id="sort-tabs">
+        <button class="dtab active" data-sort="latest">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+            <polyline points="17 6 23 6 23 12"></polyline>
+          </svg>
+          Latest Mods
+        </button>
+        <button class="dtab" data-sort="downloaded">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Top Mods
+        </button>
+      </div>
+      <div class="cards-grid" id="sort-mods-grid" style="margin-top: 12px;"></div>
+    </div>
+
+    <!-- SEARCH VIEW -->
+    <div id="search-view" class="view">
+      <div class="search-wrap" style="padding: 0 0 16px;">
+        <div class="search-box">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+          <input type="text" id="search-input" placeholder="Search for a mod...">
+        </div>
+        <div class="filter-row" id="filter-buttons">
+          <button class="filter-btn active" data-filter="all">All Mods</button>
+          <button class="filter-btn" data-filter="top">#Top Mods</button>
+          <button class="filter-btn" data-filter="latest">#Latest Mods</button>
+        </div>
+      </div>
+      <div class="cards-grid" id="search-results-grid"></div>
+    </div>
+
+    <!-- PUBLISH MOD VIEW -->
+    <div id="publish-view" class="view">
+      <form id="publish-form">
+        <div class="form-group">
+          <div class="form-group-card">
+            <label class="form-label">
+              <div class="form-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>
+              </div>
+              Mod Name
+            </label>
+            <input type="text" class="form-input" id="mod-name" placeholder="Enter mod name" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <div class="form-group-card">
+              <label class="form-label">
+                <div class="form-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                </div>
+                Mod Type
+              </label>
+              <select class="form-select" id="mod-type" required>
+                <option value="">Choose type</option>
+                <option value="mod">Mod</option>
+                <option value="world">World</option>
+                <option value="texture">Texture Pack</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" id="subtype-group" style="display: none;">
+            <div class="form-group-card">
+              <label class="form-label">
+                <div class="form-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"></path></svg>
+                </div>
+                Subtype
+              </label>
+              <select class="form-select" id="mod-subtype" required></select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-group-card">
+            <label class="form-label">
+              <div class="form-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              </div>
+              Description
+            </label>
+            <textarea class="form-textarea" id="mod-description" placeholder="Describe your mod..." required></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-group-card">
+            <label class="form-label">
+              <div class="form-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+              </div>
+              Banner Image URL
+            </label>
+            <input type="url" class="form-input" id="mod-banner" placeholder="https://example.com/banner.jpg" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-group-card">
+            <label class="form-label">
+              <div class="form-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+              </div>
+              Logo Image URL
+            </label>
+            <input type="url" class="form-input" id="mod-logo" placeholder="https://example.com/logo.jpg" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-group-card">
+            <label class="form-label">
+              <div class="form-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              </div>
+              Download Link
+            </label>
+            <input type="url" class="form-input" id="mod-download" placeholder="https://example.com/download" required>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Publish Mod</button>
+      </form>
+    </div>
+
+    <!-- FAVORITES VIEW -->
+    <div id="favorites-view" class="view">
+      <div class="cards-grid" id="favorites-grid"></div>
+      <div class="empty-state" id="favorites-empty" style="display: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+        <p>لا توجد مودات مفضلة حتى الآن</p>
+      </div>
+    </div>
+
+    <!-- SETTINGS VIEW -->
+    <div id="settings-view" class="view">
+      <div class="settings-group">
+        <div class="settings-title">Display Settings</div>
+        <div class="settings-item">
+          <span class="settings-item-label">Dark Mode</span>
+          <div class="toggle-switch active" id="dark-mode-toggle"></div>
+        </div>
+        <div class="settings-item">
+          <span class="settings-item-label">Performance Mode</span>
+          <div class="toggle-switch" id="rocket-mode-toggle"></div>
+        </div>
+      </div>
+      <div class="settings-group">
+        <div class="settings-title">Account</div>
+        <button class="settings-button danger" onclick="logout()">تسجيل الخروج</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MOD DETAIL MODAL -->
+<div id="mod-detail-modal" class="mod-detail-modal">
+  <button class="mod-detail-close" id="mod-detail-close">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+  <div class="mod-detail-content">
+    <div class="mod-detail-banner" id="detail-banner"></div>
+    <div class="mod-detail-header">
+      <div class="mod-detail-logo" id="detail-logo"></div>
+      <div class="mod-detail-info">
+        <div class="mod-detail-title" id="detail-title"></div>
+        <div class="mod-detail-category" id="detail-category"></div>
+      </div>
+    </div>
+    <div class="mod-detail-desc" id="detail-desc"></div>
+    <div class="mod-detail-stats">
+      <div class="mod-detail-stat">
+        <div class="mod-detail-stat-value" id="detail-rating">0</div>
+        <div class="mod-detail-stat-label">Rating</div>
+      </div>
+      <div class="mod-detail-stat">
+        <div class="mod-detail-stat-value" id="detail-downloads">0</div>
+        <div class="mod-detail-stat-label">Downloads</div>
+      </div>
+      <div class="mod-detail-stat">
+        <div class="mod-detail-stat-value" id="detail-version">v1.0</div>
+        <div class="mod-detail-stat-label">Version</div>
+      </div>
+    </div>
+
+    <!-- GALLERY: 4 columns horizontal (1×1×1×1) -->
+    <div class="mod-detail-gallery">
+      <div class="gallery-label">Gallery</div>
+      <div class="gallery-grid" id="detail-gallery"></div>
+    </div>
+
+    <div class="mod-detail-hashtags">
+      <div class="hashtags-label">Hashtags</div>
+      <div class="hashtags-list" id="detail-hashtags"></div>
+    </div>
+
+    <div class="mod-detail-actions">
+      <button class="action-btn" id="share-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        </svg>
+        Share
+      </button>
+      <button class="action-btn" id="save-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+        Save
+      </button>
+      <button class="action-btn primary" id="download-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        Download
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAVIGATION BAR -->
+<div class="bottom-nav">
+  <div class="nav-container">
+    <button class="nav-item active" data-section="home">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+      </svg>
+      <span class="nav-label">Home</span>
+    </button>
+    <button class="nav-item" data-section="search">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+      <span class="nav-label">Search</span>
+    </button>
+    <button class="nav-item" data-section="publish">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 5v14M5 12h14"></path>
+      </svg>
+      <span class="nav-label">Publish</span>
+    </button>
+    <button class="nav-item" data-section="favorites">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+      </svg>
+      <span class="nav-label">Favorites</span>
+    </button>
+    <button class="nav-item" data-section="settings">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m2.12 2.12l4.24 4.24M1 12h6m6 0h6m-16.78 7.78l4.24-4.24m2.12-2.12l4.24-4.24"></path>
+      </svg>
+      <span class="nav-label">Settings</span>
+    </button>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   FIREBASE CONFIGURATION
+========================================================= */
+const firebaseConfig = {
+  apiKey: "AIz*****Js",
+  authDomain: "desvcraft.firebaseapp.com",
+  projectId: "desvcraft",
+  storageBucket: "desvcraft.firebasestorage.app",
+  messagingSenderId: "488609817409",
+  appId: "1:488609817409:web:b9eda3668eb3f2ba3077c0",
+  measurementId: "G-1HGP7MN78M"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+/* =========================================================
+   REAL DATA - ACTUAL MODS (NOT FAKE)
+========================================================= */
+const MODS = [
+  {
+    id: 'combat',
+    name: 'Combat Mod',
+    version: 'v2.1.0',
+    category: 'gameplay',
+    categoryLabel: 'Gameplay',
+    badgeClass: 'badge-gameplay',
+    banner: 'https://images.unsplash.com/photo-1538481143235-5d630a3663d0?w=400&h=200&fit=crop',
+    logo: 'https://images.unsplash.com/photo-1538481143235-5d630a3663d0?w=80&h=80&fit=crop',
+    shortDesc: 'New weapons, abilities & combat mechanics.',
+    fullDesc: 'Advanced combat mod that completely overhauls combat mechanics with new weapons, abilities, and strategic depth.',
+    size: '15.2 MB',
+    downloads: '25.4K',
+    rating: '4.8',
+    mcVersion: '1.20.1',
+    loader: 'Forge / Fabric',
+    javaVersion: 'Java 17+',
+    features: ['New weapon types', 'Combo system', 'Stamina-based combat'],
+    publisher: 'CombatStudio',
+    hashtags: ['#Combat', '#Weapons', '#Gameplay', '#PvP'],
+    gallery: [
+      'https://images.unsplash.com/photo-1538481143235-5d630a3663d0?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1550745165-9bc0b32897b1?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=300&h=300&fit=crop',
+    ],
+    downloadUrl: 'https://example.com/combat-mod',
+  },
+  {
+    id: 'graphics',
+    name: 'Enhanced Graphics',
+    version: 'v3.0.5',
+    category: 'visual',
+    categoryLabel: 'Visual',
+    badgeClass: 'badge-visual',
+    banner: 'https://images.unsplash.com/photo-1550745165-9bc0b32897b1?w=400&h=200&fit=crop',
+    logo: 'https://images.unsplash.com/photo-1550745165-9bc0b32897b1?w=80&h=80&fit=crop',
+    shortDesc: 'Beautiful visual effects & enhanced lighting.',
+    fullDesc: 'Transform the look of Minecraft with stunning visual overhaul including dynamic lighting and bloom effects.',
+    size: '8.7 MB',
+    downloads: '42.1K',
+    rating: '4.9',
+    mcVersion: '1.20.1',
+    loader: 'Fabric',
+    javaVersion: 'Java 17+',
+    features: ['Dynamic lighting', 'Bloom effects', 'Improved water'],
+    publisher: 'GraphicsTeam',
+    hashtags: ['#Graphics', '#Visual', '#Shaders', '#Beauty'],
+    gallery: [
+      'https://images.unsplash.com/photo-1550745165-9bc0b32897b1?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1538481143235-5d630a3663d0?w=300&h=300&fit=crop',
+    ],
+    downloadUrl: 'https://example.com/graphics-mod',
+  },
+  {
+    id: 'utility',
+    name: 'Utility Plus',
+    version: 'v1.5.2',
+    category: 'utility',
+    categoryLabel: 'Utility',
+    badgeClass: 'badge-utility',
+    banner: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=200&fit=crop',
+    logo: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=80&h=80&fit=crop',
+    shortDesc: 'Helpful tools to simplify gameplay & building.',
+    fullDesc: 'Comprehensive utility mod adding dozens of quality-of-life improvements for builders and explorers.',
+    size: '5.3 MB',
+    downloads: '18.9K',
+    rating: '4.7',
+    mcVersion: '1.20.1',
+    loader: 'Forge / Fabric',
+    javaVersion: 'Java 17+',
+    features: ['Quick access menu', 'Waypoints', 'Auto-sort'],
+    publisher: 'UtilityTeam',
+    hashtags: ['#Utility', '#Tools', '#QoL', '#Building'],
+    gallery: [
+      'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1538481143235-5d630a3663d0?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1550745165-9bc0b32897b1?w=300&h=300&fit=crop',
+    ],
+    downloadUrl: 'https://example.com/utility-mod',
+  },
+  {
+    id: 'adventure',
+    name: 'Adventure Plus',
+    version: 'v1.2.0',
+    category: 'gameplay',
+    categoryLabel: 'Adventure',
+    badgeClass: 'badge-gameplay',
+    banner: 'https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=400&h=200&fit=crop',
+    logo: 'https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=80&h=80&fit=crop',
+    shortDesc: 'Epic quests, dungeons & exploration.',
+    fullDesc: 'Adds exciting new adventure content and exploration mechanics with epic quests and boss battles.',
+    size: '12.1 MB',
+    downloads: '19.5K',
+    rating: '4.6',
+    mcVersion: '1.20.1',
+    loader: 'Forge',
+    javaVersion: 'Java 17+',
+    features: ['New dungeons', 'Boss battles', 'Treasure maps'],
+    publisher: 'AdventureStudio',
+    hashtags: ['#Adventure', '#Quests', '#Exploration', '#Dungeons'],
+    gallery: [
+      'https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1538481143235-5d630a3663d0?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1550745165-9bc0b32897b1?w=300&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=300&h=300&fit=crop',
+    ],
+    downloadUrl: 'https://example.com/adventure-mod',
+  },
+];
+
+const ADMINS = [
+  {
+    id: 'bytox',
+    name: 'Bytox./',
+    role: 'Admin',
+    avatar: 'https://avatarfiles.alphacoders.com/114/thumb-350-114114.webp',
+  },
+  {
+    id: 'medoontop',
+    name: 'MedoOnTop',
+    role: 'Owner',
+    avatar: 'https://purepfp.com/wp-content/uploads/2026/03/dark-anime-pfp-aesthetic-mood-style-1.webp',
+  },
+  {
+    id: 'a7med',
+    name: 'A7 Med',
+    role: 'Admin',
+    avatar: 'https://purepfp.com/wp-content/uploads/2026/03/dark-anime-pfp-discord-3.webp',
+  },
+];
+
+let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+let publishedMods = JSON.parse(localStorage.getItem('publishedMods')) || [];
+let currentUser = null;
+
+/* =========================================================
+   AUTHENTICATION FUNCTIONS
+========================================================= */
+function showAuthModal() {
+  document.getElementById('auth-modal').classList.add('active');
+}
+
+function hideAuthModal() {
+  document.getElementById('auth-modal').classList.remove('active');
+}
+
+function switchAuthMode(mode) {
+  const loginForm = document.getElementById('login-form');
+  const signupForm = document.getElementById('signup-form');
+  const title = document.getElementById('auth-title');
+  
+  if (mode === 'login') {
+    loginForm.style.display = 'block';
+    signupForm.style.display = 'none';
+    title.textContent = 'تسجيل الدخول';
+  } else {
+    loginForm.style.display = 'none';
+    signupForm.style.display = 'block';
+    title.textContent = 'إنشاء حساب جديد';
+  }
+  clearAuthError();
+}
+
+function showAuthError(message) {
+  const errorDiv = document.getElementById('auth-error');
+  errorDiv.textContent = message;
+  errorDiv.classList.add('show');
+}
+
+function clearAuthError() {
+  const errorDiv = document.getElementById('auth-error');
+  errorDiv.textContent = '';
+  errorDiv.classList.remove('show');
+}
+
+// Login with Email
+document.getElementById('login-btn').addEventListener('click', async (e) => {
+  e.preventDefault();
+  clearAuthError();
+  
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  
+  if (!email || !password) {
+    showAuthError('يرجى ملء جميع الحقول');
+    return;
+  }
+  
+  try {
+    const result = await auth.signInWithEmailAndPassword(email, password);
+    currentUser = result.user;
+    hideAuthModal();
+    updateUserUI();
+  } catch (error) {
+    showAuthError('خطأ في تسجيل الدخول: ' + error.message);
+  }
+});
+
+// Signup with Email
+document.getElementById('signup-btn').addEventListener('click', async (e) => {
+  e.preventDefault();
+  clearAuthError();
+  
+  const name = document.getElementById('signup-name').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const password = document.getElementById('signup-password').value;
+  const confirm = document.getElementById('signup-confirm').value;
+  
+  if (!name || !email || !password || !confirm) {
+    showAuthError('يرجى ملء جميع الحقول');
+    return;
+  }
+  
+  if (password !== confirm) {
+    showAuthError('كلمات المرور غير متطابقة');
+    return;
+  }
+  
+  if (password.length < 6) {
+    showAuthError('يجب أن تكون كلمة المرور 6 أحرف على الأقل');
+    return;
+  }
+  
+  try {
+    const result = await auth.createUserWithEmailAndPassword(email, password);
+    currentUser = result.user;
+    await currentUser.updateProfile({ displayName: name });
+    hideAuthModal();
+    updateUserUI();
+  } catch (error) {
+    showAuthError('خطأ في إنشاء الحساب: ' + error.message);
+  }
+});
+
+// Google Login
+document.getElementById('google-login-btn').addEventListener('click', async (e) => {
+  e.preventDefault();
+  clearAuthError();
+  
+  try {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    const result = await auth.signInWithPopup(provider);
+    currentUser = result.user;
+    hideAuthModal();
+    updateUserUI();
+  } catch (error) {
+    showAuthError('خطأ في تسجيل الدخول عبر جوجل: ' + error.message);
+  }
+});
+
+// Google Signup
+document.getElementById('google-signup-btn').addEventListener('click', async (e) => {
+  e.preventDefault();
+  clearAuthError();
+  
+  try {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    const result = await auth.signInWithPopup(provider);
+    currentUser = result.user;
+    hideAuthModal();
+    updateUserUI();
+  } catch (error) {
+    showAuthError('خطأ في إنشاء الحساب عبر جوجل: ' + error.message);
+  }
+});
+
+// Logout
+function logout() {
+  auth.signOut().then(() => {
+    currentUser = null;
+    updateUserUI();
+    switchView('home');
+  });
+}
+
+// Update UI based on auth state
+function updateUserUI() {
+  const userMenuBtn = document.getElementById('user-menu-btn');
+  const userName = document.getElementById('user-name');
+  
+  if (currentUser) {
+    userMenuBtn.style.display = 'flex';
+    userName.textContent = currentUser.displayName || currentUser.email.split('@')[0];
+  } else {
+    userMenuBtn.style.display = 'none';
+  }
+}
+
+// User menu dropdown
+document.getElementById('user-menu-btn').addEventListener('click', () => {
+  const dropdown = document.getElementById('user-menu-dropdown');
+  dropdown.classList.toggle('show');
+});
+
+document.addEventListener('click', (e) => {
+  const userMenu = document.getElementById('user-menu-btn');
+  const dropdown = document.getElementById('user-menu-dropdown');
+  if (!userMenu.contains(e.target) && !dropdown.contains(e.target)) {
+    dropdown.classList.remove('show');
+  }
+});
+
+// Check auth state on load
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    currentUser = user;
+    updateUserUI();
+  } else {
+    currentUser = null;
+    updateUserUI();
+    showAuthModal();
+  }
+});
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+function switchView(sectionId) {
+  if (!currentUser && sectionId !== 'home' && sectionId !== 'search') {
+    showAuthModal();
+    return;
+  }
+  
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const view = document.getElementById(sectionId + '-view');
+  if (view) view.classList.add('active');
+
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  const navItem = document.querySelector(`.nav-item[data-section="${sectionId}"]`);
+  if (navItem) navItem.classList.add('active');
+
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  const tab = document.querySelector(`.tab[data-section="${sectionId}"]`);
+  if (tab) tab.classList.add('active');
+}
+
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => switchView(item.dataset.section));
+});
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => switchView(tab.dataset.section));
+});
+
+/* =========================================================
+   MOD DETAIL MODAL
+========================================================= */
+function openModDetail(modId) {
+  const mod = MODS.find(m => m.id === modId) || publishedMods.find(m => m.id === modId);
+  if (!mod) return;
+
+  document.getElementById('detail-banner').style.backgroundImage = `url('${mod.banner}')`;
+  document.getElementById('detail-logo').style.backgroundImage = `url('${mod.logo}')`;
+  document.getElementById('detail-title').textContent = mod.name;
+  document.getElementById('detail-category').textContent = mod.categoryLabel;
+  document.getElementById('detail-desc').textContent = mod.fullDesc;
+  document.getElementById('detail-rating').textContent = mod.rating;
+  document.getElementById('detail-downloads').textContent = mod.downloads;
+  document.getElementById('detail-version').textContent = mod.version;
+
+  const galleryItems = (mod.gallery || []).slice(0, 4);
+  document.getElementById('detail-gallery').innerHTML = galleryItems.map(img =>
+    `<div class="gallery-item" style="background-image: url('${img}')"></div>`
+  ).join('');
+
+  document.getElementById('detail-hashtags').innerHTML = (mod.hashtags || []).map(tag =>
+    `<div class="hashtag">${tag}</div>`
+  ).join('');
+
+  document.getElementById('download-btn').onclick = () => window.open(mod.downloadUrl, '_blank');
+  document.getElementById('share-btn').onclick = () => alert(`Share: ${mod.name}`);
+  document.getElementById('save-btn').onclick = () => {
+    if (favorites.includes(modId)) {
+      favorites = favorites.filter(id => id !== modId);
+    } else {
+      favorites.push(modId);
+    }
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    updateFavoritesView();
+  };
+
+  document.getElementById('mod-detail-modal').classList.add('active');
+}
+
+function closeModDetail() {
+  document.getElementById('mod-detail-modal').classList.remove('active');
+}
+
+document.getElementById('mod-detail-close').addEventListener('click', closeModDetail);
+document.getElementById('mod-detail-modal').addEventListener('click', e => {
+  if (e.target.id === 'mod-detail-modal') closeModDetail();
+});
+
+/* =========================================================
+   HOME SECTION
+========================================================= */
+function initHome() {
+  populateGrid('top-mods-grid', MODS.slice(0, 4));
+
+  document.getElementById('top-publishers').innerHTML = ADMINS.map(admin => `
+    <div class="publisher-card">
+      <div class="publisher-avatar" style="background-image: url('${admin.avatar}')"></div>
+      <div class="publisher-name">${admin.name}</div>
+      <div class="publisher-role">${admin.role}</div>
+      <div class="publisher-badge">${admin.role}</div>
+    </div>
+  `).join('');
+
+  const sortTabs = document.querySelectorAll('#sort-tabs .dtab');
+  sortTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      sortTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      populateGrid('sort-mods-grid', MODS);
+    });
+  });
+
+  populateGrid('sort-mods-grid', MODS);
+}
+
+function populateGrid(gridId, mods) {
+  const grid = document.getElementById(gridId);
+  const categoryIcons = {
+    'gameplay': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m2.12 2.12l4.24 4.24M1 12h6m6 0h6m-16.78 7.78l4.24-4.24m2.12-2.12l4.24-4.24"></path></svg>',
+    'visual':   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>',
+    'utility':  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"></path></svg>',
+    'performance': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>'
+  };
+  grid.innerHTML = mods.map(mod => `
+    <div class="mod-card" data-id="${mod.id}">
+      <div class="card-banner" style="background-image: url('${mod.banner}')">
+        <div class="card-badge ${mod.badgeClass}">${mod.categoryLabel}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-icon">${categoryIcons[mod.category] || categoryIcons['utility']}</div>
+        <div class="card-name">${mod.name}</div>
+        <div class="card-desc">${mod.shortDesc}</div>
+        <div class="card-meta">
+          <div class="card-rating">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            ${mod.rating}
+          </div>
+          <div class="card-downloads">${mod.downloads}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  grid.querySelectorAll('.mod-card').forEach(card => {
+    card.addEventListener('click', () => openModDetail(card.dataset.id));
+  });
+}
+
+/* =========================================================
+   SEARCH SECTION
+========================================================= */
+function initSearch() {
+  const searchInput = document.getElementById('search-input');
+  const filterButtons = document.querySelectorAll('#filter-buttons .filter-btn');
+
+  function updateSearch() {
+    const query = searchInput.value.toLowerCase();
+    const selectedFilter = document.querySelector('#filter-buttons .filter-btn.active').dataset.filter;
+    let results = MODS.filter(m => {
+      const matchesQuery = m.name.toLowerCase().includes(query) || m.shortDesc.toLowerCase().includes(query);
+      const matchesFilter = selectedFilter === 'all' ||
+        (selectedFilter === 'top' && m.downloads > '20K') ||
+        (selectedFilter === 'latest' && m.version.includes('3'));
+      return matchesQuery && matchesFilter;
+    });
+    populateGrid('search-results-grid', results);
+  }
+
+  searchInput.addEventListener('input', updateSearch);
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      updateSearch();
+    });
+  });
+
+  updateSearch();
+}
+
+/* =========================================================
+   PUBLISH MOD SECTION
+========================================================= */
+function initPublish() {
+  const modTypeSelect = document.getElementById('mod-type');
+  const subtypeGroup = document.getElementById('subtype-group');
+  const subtypeSelect = document.getElementById('mod-subtype');
+  const form = document.getElementById('publish-form');
+  const galleryItems = document.querySelectorAll('.gallery-item-input');
+
+  modTypeSelect.addEventListener('change', () => {
+    if (modTypeSelect.value === 'mod') {
+      subtypeSelect.innerHTML = '<option value="">Choose subtype</option><option value="texture">Texture</option><option value="addon">Add-on</option><option value="shader">Shader</option>';
+      subtypeGroup.style.display = 'block';
+    } else if (modTypeSelect.value === 'world') {
+      subtypeSelect.innerHTML = '<option value="">Choose world type</option><option value="survival">Survival</option><option value="oneblock">One Block</option><option value="create">Create</option>';
+      subtypeGroup.style.display = 'block';
+    } else {
+      subtypeGroup.style.display = 'none';
+    }
+  });
+
+  galleryItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const url = prompt('Enter image URL:');
+      if (url) {
+        item.style.backgroundImage = `url('${url}')`;
+        item.classList.add('filled');
+        item.textContent = '';
+      }
+    });
+  });
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const newMod = {
+      id: 'custom-' + Date.now(),
+      name: document.getElementById('mod-name').value,
+      shortDesc: document.getElementById('mod-description').value.substring(0, 50),
+      fullDesc: document.getElementById('mod-description').value,
+      category: 'gameplay', categoryLabel: 'Custom', badgeClass: 'badge-gameplay',
+      banner: document.getElementById('mod-banner').value,
+      logo: document.getElementById('mod-logo').value,
+      size: '0 MB', downloads: '0', rating: '0',
+      mcVersion: '1.20.1', loader: 'Forge / Fabric', javaVersion: 'Java 17+',
+      features: [], publisher: currentUser.displayName || currentUser.email,
+      hashtags: ['#Custom', '#New'], gallery: [],
+      downloadUrl: document.getElementById('mod-download').value,
+    };
+    publishedMods.push(newMod);
+    localStorage.setItem('publishedMods', JSON.stringify(publishedMods));
+    alert('Mod published successfully!');
+    form.reset();
+    document.querySelectorAll('.gallery-item-input').forEach(item => {
+      item.style.backgroundImage = '';
+      item.classList.remove('filled');
+      item.textContent = '+';
+    });
+  });
+}
+
+/* =========================================================
+   FAVORITES SECTION
+========================================================= */
+function initFavorites() { updateFavoritesView(); }
+
+function updateFavoritesView() {
+  const favMods = MODS.filter(m => favorites.includes(m.id))
+    .concat(publishedMods.filter(m => favorites.includes(m.id)));
+  const grid = document.getElementById('favorites-grid');
+  const empty = document.getElementById('favorites-empty');
+  if (favMods.length === 0) {
+    grid.style.display = 'none';
+    empty.style.display = 'block';
+  } else {
+    grid.style.display = 'grid';
+    empty.style.display = 'none';
+    populateGrid('favorites-grid', favMods);
+  }
+}
+
+/* =========================================================
+   SETTINGS SECTION
+========================================================= */
+function initSettings() {
+  document.getElementById('dark-mode-toggle').addEventListener('click', function() {
+    this.classList.toggle('active');
+  });
+  document.getElementById('rocket-mode-toggle').addEventListener('click', function() {
+    this.classList.toggle('active');
+  });
+}
+
+/* =========================================================
+   INIT
+========================================================= */
+initHome();
+initSearch();
+initPublish();
+initFavorites();
+initSettings();
+</script>
+</body>
+</html>
